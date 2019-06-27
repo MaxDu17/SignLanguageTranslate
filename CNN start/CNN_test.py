@@ -47,7 +47,7 @@ fc_1 = fully_connected(flattened, 1024)
 dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 prediction = fully_connected(dropout_1, 10)
 
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = truth, logits = prediction))
+loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction))
 
 optimizer = tf.train.AdamOptimizer(learning_rate = 0.001)
 train = optimizer.minimize(loss)
@@ -67,6 +67,6 @@ with tf.Session() as sess:
 
         if i % 50 == 0:
             print("This is current loss: {}".format(loss_))
-            print("This is the prediction: {}".format(np.argmax(loss_)))
+            print("This is the prediction: {}".format(np.argmax(prediction_)))
             print("This is the real: {}".format(np.argmax(labels[i])))
 
