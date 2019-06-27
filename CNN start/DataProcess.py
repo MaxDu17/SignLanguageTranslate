@@ -30,12 +30,13 @@ class Prep():
         matrix = data[b'data']
         labels = data[b'labels']
         matrix = matrix.reshape(10000, 3, 32, 32) #this turns into the tensor that it should be in
+        matrix = matrix.transpose(0, 2, 3, 1)
         return matrix, labels
 
     #preconditions: this data must be from the process() function
     #postconditions: this plots an image
     def makeplot(self, data, i):
-        images_plot = data.transpose(0, 2, 3, 1).astype('uint8')
+        images_plot = data.astype('uint8')
         print(images_plot.shape)
         plt.imshow(images_plot[i])
         plt.show()
@@ -52,7 +53,6 @@ class Prep():
     #postconditions: returns the data and label (one-hot) arrays
     def allPrepare(self):
         matrix, labels = self.process(self.unzip())
+        matrix = matrix/255
         one_hot = self.oneHot(labels)
         return matrix, one_hot
-
-

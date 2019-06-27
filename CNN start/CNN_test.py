@@ -2,8 +2,7 @@ from DataProcess import Prep
 import tensorflow as tf
 import numpy as np
 
-datafeeder = Prep(3)
-matrix, labels = datafeeder.allPrepare()
+
 
 def make_weights(shape):
     distribution = tf.truncated_normal(shape, stddev =  0.1)
@@ -56,6 +55,18 @@ train = optimizer.minimize(loss)
 init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
+    print("I'm starting")
     sess.run( tf.global_variables_initializer())
-for i in range(10000):
-    
+    datafeeder = Prep(3)
+    matrix, labels = datafeeder.allPrepare()
+
+    for i in range(10000):
+        larger = [matrix[i]]
+        labels_ = [labels[i]]
+        prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:larger, truth:labels_, hold_prob:1})
+
+        if i % 50 == 0:
+            print("This is current loss: {}".format(loss_))
+            print("This is the prediction: {}".format(np.argmax(loss_)))
+            print("This is the real: {}".format(np.argmax(labels[i])))
+
