@@ -61,9 +61,10 @@ with tf.Session() as sess:
     datafeeder = Prep()
 
     for i in range(500):
-        data, label = datafeeder.nextBatchTrain(100)
+        data, label = datafeeder.nextBatchTrain(5)
         prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:data, truth:label, hold_prob:1})
-
+        if i % 50 == 0:
+            print("Finished epoch: {}".format(i))
         if i % 500 == 0:
             data, label = datafeeder.nextBatchTest()
             correct = 0
@@ -71,8 +72,7 @@ with tf.Session() as sess:
             for k, l in zip(prediction_, label):
                 if(tf.argmax(k) == tf.argmax(l)):
                     correct += 1
+
             print("epoch: {}".format(i))
-            print("This is the accuracy: {}".format(correct/len(prediction_))
+            print("This is the accuracy: {}".format(correct/len(prediction_)))
             print("This is the loss: {}".format(loss_))
-
-

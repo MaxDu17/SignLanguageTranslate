@@ -20,7 +20,7 @@ class Prep():
         batch = np.vstack([d[b'data'] for d in bigdata])
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.vstack([d[b'labels'] for d in bigdata])
+        labels = np.hstack([d[b'labels'] for d in bigdata])
         O_H = self.oneHot(labels)
         return batch, O_H
 
@@ -63,6 +63,7 @@ class Prep():
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+        self.trainCount = self.trainCount % 50000
         return batch, O_H
 
     def nextBatchTest(self):
