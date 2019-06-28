@@ -2,6 +2,9 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 class Prep():
+    def __init__(self):
+        self.trainCount =0
+
     def unpickle(self, file):
         with open(file, 'rb') as fo:
             dict = pickle.load(fo, encoding = 'bytes')
@@ -9,22 +12,29 @@ class Prep():
 
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
-    def unzip(self):
+    def unzip_training(self):
         files = ["data_batch_1", "data_batch_2","data_batch_3","data_batch_4","data_batch_5"]
         bigdata = list()
         for names in files:
-            print(names)
             bigdata.append(self.unpickle("data/" + names))
-
-        #bigdata is this structure:
-        #array for batch, just use one for similar
-        #then, the key is the label name, like b'data'
-        #you access the data via a dictionary access
         batch = np.vstack([d[b'data'] for d in bigdata])
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
         labels = np.vstack([d[b'labels'] for d in bigdata])
-        return batch, labels
+        O_H = self.oneHot(labels)
+        return batch, O_H
+
+    def unzip_test(self):
+        files = "test_batch"
+        bigdata = list()
+        bigdata.append(self.unpickle("data/" + files))
+
+        batch = np.vstack([d[b'data'] for d in bigdata])
+        training_length = len(batch)
+        batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
+        labels = np.vstack([d[b'labels'] for d in bigdata])
+        O_H = self.oneHot(labels)
+        return batch, O_H
 
 
     def getkey(self, data):
@@ -48,25 +58,13 @@ class Prep():
             k[l] = 1
         return carrier
 
-    #postconditions: returns the data and label (one-hot) arrays
-    def allPrepare(self):
-        matrix, labels = self.unzip()
-        matrix = matrix/255
-        one_hot = self.oneHot(labels)
-        return matrix, one_hot
+    def nextBatchTrain(self, batchNum):
+        batch, O_H = self.unzip_training()
+        batch = batch[self.trainCount: self.trainCount+batchNum]
+        O_H = O_H[self.trainCount: self.trainCount+batchNum]
+        self.trainCount += batchNum
+        return batch, O_H
 
-    #postcondition: returns a certain number of image matrices for testing
-    def testPrepare(self):
-        matrix, labels = self.unzip()
-        matrix = matrix/255
-        one_hot = self.oneHot(labels)
-        matrix = matrix[0:self.TESTSIZE]
-        one_hot = one_hot[0:self.TESTSIZE]
-        return matrix, one_hot
-
-    #postconditions: returns testsize for regulations
-    def getTest(self):
-        return self.TESTSIZE
-
-k = Prep()
-k.unzip()
+    def nextBatchTest(self):
+        batch, O_H = self.unzip_training()
+        return batch, O_H

@@ -58,22 +58,21 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
-    datafeeder = Prep(3,4)
-    matrix, labels = datafeeder.allPrepare()
+    datafeeder = Prep()
 
-    for i in range(10000):
-        larger = [matrix[i]]
-        labels_ = [labels[i]]
-        prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:larger, truth:labels_, hold_prob:1})
+    for i in range(500):
+        data, label = datafeeder.nextBatchTrain(100)
+        prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:data, truth:label, hold_prob:1})
 
         if i % 500 == 0:
+            data, label = datafeeder.nextBatchTest()
             correct = 0
-            for j in range(datafeeder.getTest()):
-                prediction_ = sess.run(prediction, feed_dict = {x:larger, truth:labels_, hold_prob:1})
-                if(np.argmax(prediction_) == np.argmax(labels[j])):
+            prediction_ = sess.run(prediction, feed_dict = {x:data, truth:label, hold_prob:1})
+            for k, l in zip(prediction_, label):
+                if(tf.argmax(k) == tf.argmax(l)):
                     correct += 1
             print("epoch: {}".format(i))
-            print("This is the accuracy: {}".format(correct/datafeeder.getTest()))
+            print("This is the accuracy: {}".format(correct/len(prediction_))
             print("This is the loss: {}".format(loss_))
 
 
