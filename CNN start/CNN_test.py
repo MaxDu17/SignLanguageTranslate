@@ -37,10 +37,11 @@ x = tf.placeholder(tf.float32, shape = [None, 32,32,3])
 truth = tf.placeholder(tf.float32, shape = [None, 10])
 hold_prob = tf.placeholder(tf.float32)
 
-conv_1 = convolutional_layer(x, shape = [4,4,3,32]) # 4 and 4 is the window, 3 is the color channels and 32 is the square dimensions
+conv_1 = convolutional_layer(x, shape = [4,4,3,32]) # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
 conv_1_pooled = max_pool(conv_1)
 conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64])
 conv_2_pooled = max_pool(conv_2)
+
 
 flattened = tf.reshape(conv_2_pooled, [-1, 8*8*64])
 fc_1 = fully_connected(flattened, 1024)
@@ -57,7 +58,7 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
-    datafeeder = Prep(3)
+    datafeeder = Prep(3,4)
     matrix, labels = datafeeder.allPrepare()
 
     for i in range(10000):
@@ -65,8 +66,14 @@ with tf.Session() as sess:
         labels_ = [labels[i]]
         prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:larger, truth:labels_, hold_prob:1})
 
-        if i % 50 == 0:
-            print("This is current loss: {}".format(loss_))
-            print("This is the prediction: {}".format(np.argmax(prediction_)))
-            print("This is the real: {}".format(np.argmax(labels[i])))
+        if i % 500 == 0:
+            correct = 0
+            for j in range(datafeeder.getTest()):
+                prediction_ = sess.run(prediction, feed_dict = {x:larger, truth:labels_, hold_prob:1})
+                if(np.argmax(prediction_) == np.argmax(labels[j])):
+                    correct += 1
+            print("epoch: {}".format(i))
+            print("This is the accuracy: {}".format(correct/datafeeder.getTest()))
+            print("This is the loss: {}".format(loss_))
+
 
