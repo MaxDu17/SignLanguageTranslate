@@ -6,7 +6,7 @@ import csv
 process = Prep()
 
 
-pbfilename = '../Graphs_and_Results/CNN_test.pb'
+pbfilename = 'Graphs_and_Results/CNN_test.pb'
 
 
 with tf.gfile.GFile(pbfilename, "rb") as f:
@@ -19,7 +19,7 @@ with tf.Graph().as_default() as graph:
                         return_elements = None,
                         name = "")
     input = graph.get_tensor_by_name("placeholders/Input:0")
-    output = graph.get_tensor_by_name("output/prediction:0")
+    output = graph.get_tensor_by_name("Output/Prediction:0")
 
 with tf.Session(graph=graph) as sess:
     batch, label = process.nextBatchTest_ConfMat()
@@ -29,5 +29,7 @@ with tf.Session(graph=graph) as sess:
         k = np.argmax(output_)
         m = np.argmax(label)
         matrix[k][m] += 1
+
+    print(matrix)
 
 
