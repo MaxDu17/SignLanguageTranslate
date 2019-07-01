@@ -23,7 +23,9 @@ with tf.Graph().as_default() as graph:
 with tf.Session(graph=graph) as sess:
     print(tf.shape(input))
     batch, label = process.nextBatchTest_ConfMat()
+    print(np.shape(batch))
     matrix = np.zeros([10, 10])
+    '''
     output_ = sess.run(output, feed_dict = {input:batch})
     for l in range(len(output_)):
         k = np.argmax(output_)
@@ -31,5 +33,6 @@ with tf.Session(graph=graph) as sess:
         matrix[k][m] += 1
 
     print(matrix)
+    '''
 
 

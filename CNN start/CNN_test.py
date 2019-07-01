@@ -2,8 +2,6 @@ from DataProcess import Prep
 import tensorflow as tf
 import numpy as np
 
-
-
 def make_weights(shape, name):
     weight_name = name + "_Weight"
     with tf.name_scope("Weights"):
