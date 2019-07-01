@@ -47,21 +47,26 @@ x = tf.placeholder(tf.float32, shape = [None, 32,32,3])
 truth = tf.placeholder(tf.float32, shape = [None, 10])
 hold_prob = tf.placeholder(tf.float32)
 
-conv_1 = convolutional_layer(x, shape = [4,4,3,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
-conv_1_pooled = max_pool(conv_1, name = "Layer_1")
-conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64], name = "Layer_2")
-conv_2_pooled = max_pool(conv_2, name = "Layer_2")
+with tf.name_scope("Layer_1"):
+    conv_1 = convolutional_layer(x, shape = [4,4,3,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
+    conv_1_pooled = max_pool(conv_1, name = "Layer_1")
 
+with tf.name_scope("Layer_2"):
+    conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64], name = "Layer_2")
+    conv_2_pooled = max_pool(conv_2, name = "Layer_2")
 
-flattened = tf.reshape(conv_2_pooled, [-1, 8*8*64], name = "Flatten")
-fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
-dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
-prediction = fully_connected(dropout_1, 10, name = "Fully_Connected_Layer_2")
+with tf.name_scope("Fully_Connected"):
+    flattened = tf.reshape(conv_2_pooled, [-1, 8*8*64], name = "Flatten")
+    fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
+    dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
+with tf.name_scope("Output"):
+    prediction = fully_connected(dropout_1, 10, name = "Fully_Connected_Layer_2")
 
-optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
-train = optimizer.minimize(loss)
+with tf.name_scope("Loss_and_Optimizer"):
+    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
+    optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
+    train = optimizer.minimize(loss)
 
 with tf.name_scope("Saver"):
     tf.summary.scalar("Loss", loss)
@@ -74,8 +79,9 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
-    writer = tf.summary.FileWriter("../Graphs_and_Results/CNN_test",
+    writer = tf.summary.FileWriter("Graphs_and_Results/CNN_test",
                                    sess.graph)  # this will write summary tensorboard
+    tf.train.write_graph(sess.graph_def, 'Graphs_and_Results/graph.pbtxt')
     datafeeder = Prep()
 
     for i in range(501):
