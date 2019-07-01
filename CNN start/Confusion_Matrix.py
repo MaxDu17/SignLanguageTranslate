@@ -18,7 +18,7 @@ with tf.Graph().as_default() as graph:
                         input_map = None,
                         return_elements = None,
                         name = "")
-    input = graph.get_tensor_by_name("placeholders/Input:0")
+    input = graph.get_tensor_by_name("Placeholders/Input:0")
     output = graph.get_tensor_by_name("Output/Prediction:0")
 
 with tf.Session(graph=graph) as sess:
