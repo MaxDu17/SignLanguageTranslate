@@ -67,6 +67,7 @@ with tf.name_scope("Saver"):
     tf.summary.scalar("Loss", loss)
     summary_op = tf.summary.merge_all()
     saver = tf.train.Saver(max_to_keep=9)
+    tf.summary.image("Training data", x, step=0)
 
 init = tf.global_variables_initializer()
 
@@ -77,7 +78,7 @@ with tf.Session() as sess:
                                    sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
-    for i in range(500):
+    for i in range(501):
         data, label = datafeeder.nextBatchTrain(100)
         prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train], feed_dict = {x:data, truth:label, hold_prob:1})
         print("Epoch: {}. Loss: {}".format(i, loss_))
