@@ -55,8 +55,12 @@ with tf.name_scope("Layer_2"):
     conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64], name = "Layer_2")
     conv_2_pooled = max_pool(conv_2, name = "Layer_2")
 
+with tf.name_scope("Layer_3"):
+    conv_3 = convolutional_layer(conv_2_pooled, shape=[4, 4, 64, 128], name="Layer_3")
+    conv_3_pooled = max_pool(conv_3, name="Layer_3")
+
 with tf.name_scope("Fully_Connected"):
-    flattened = tf.reshape(conv_2_pooled, [-1, 8*8*64], name = "Flatten")
+    flattened = tf.reshape(conv_3_pooled, [-1, 4*4*128], name = "Flatten")
     fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
     dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 
@@ -73,7 +77,7 @@ with tf.name_scope("Loss_and_Optimizer"):
 with tf.name_scope("Saver"):
     tf.summary.scalar("Loss", loss)
     summary_op = tf.summary.merge_all()
-    saver = tf.train.Saver(max_to_keep=9)
+    saver = tf.train.Saver(max_to_keep=7)
 
 init = tf.global_variables_initializer()
 
