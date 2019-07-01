@@ -73,28 +73,21 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
+    writer = tf.summary.FileWriter("../Graphs_and_Results/CNN_test",
+                                   sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
     for i in range(500):
-        data, label = datafeeder.nextBatchTrain(1)
-        prediction_, loss_, _ = sess.run([prediction, loss, train], feed_dict = {x:data, truth:label, hold_prob:1})
-        print("This is the loss: {}".format(loss_))
-        if i % 50 == 0:
-            print("Finished epoch: {}".format(i))
-        if i % 100 == 0:
-            saver.save(sess, "Graphs_and_Results/", global_step=epoch)
+        data, label = datafeeder.nextBatchTrain(100)
+        prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train], feed_dict = {x:data, truth:label, hold_prob:1})
+        print("Epoch: {}. Loss: {}".format(i, loss_))
+        if i % 100== 0 and i > 0:
+            saver.save(sess, "Graphs_and_Results/CNN_test", global_step=i)
+            writer.add_summary(summary, global_step=i)
             data, label = datafeeder.nextBatchTest()
-            print(np.shape(data))
-            print(np.shape(label))
-            input()
             correct = 0
             prediction_ = sess.run(prediction, feed_dict = {x:data, truth:label, hold_prob:1})
-            print(prediction_)
-            print(label)
-            input()
-            for k, l in zip(prediction_, label):
-                if(tf.argmax(k) == tf.argmax(l)):
-                    correct += 1
-
-            print("epoch: {}".format(i))
+            for l in range(len(label)):
+                if(np.argmax(prediction_[l]) == np.argmax(label[l])):
+                    correct +=1
             print("This is the accuracy: {}".format(correct/len(prediction_)))

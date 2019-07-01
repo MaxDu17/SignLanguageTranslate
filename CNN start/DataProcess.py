@@ -31,7 +31,7 @@ class Prep():
         batch = np.vstack([d[b'data'] for d in bigdata])
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.vstack([d[b'labels'] for d in bigdata])
+        labels = np.hstack([d[b'labels'] for d in bigdata])
         O_H = self.oneHot(labels)
         return batch, O_H
 
@@ -42,7 +42,7 @@ class Prep():
         batch = np.vstack([d[b'data'] for d in bigdata])
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.vstack([d[b'labels'] for d in bigdata])
+        labels = np.hstack([d[b'labels'] for d in bigdata])
         O_H = self.oneHot(labels)
         return batch[0:100], O_H[0:100]
 
@@ -63,7 +63,6 @@ class Prep():
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
     def oneHot(self, labels):
         dimensions = len(labels)
-        print(dimensions)
         carrier = np.zeros([dimensions, 10])
         for k, l in zip(carrier, labels):
             k[l] = 1
