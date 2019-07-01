@@ -64,6 +64,7 @@ with tf.name_scope("Output"):
     prediction_out = tf.multiply(1.0, prediction,
                              name="Prediction")
 
+
 with tf.name_scope("Loss_and_Optimizer"):
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
     optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
@@ -80,9 +81,9 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
-    writer = tf.summary.FileWriter("Graphs_and_Results/",
+    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/",
                                    sess.graph)  # this will write summary tensorboard
-    tf.train.write_graph(sess.graph_def, name = "graph.pbtxt", logdir="Graphs_and_Results")
+    tf.io.write_graph(sess.graph_def, name = "graph.pbtxt", logdir="Graphs_and_Results")
     datafeeder = Prep()
 
     for i in range(101):
