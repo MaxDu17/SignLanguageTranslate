@@ -1,6 +1,6 @@
 import pickle
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 class Prep():
     def __init__(self):
         self.trainCount =0
@@ -55,12 +55,14 @@ class Prep():
 
     #preconditions: this data must be from the process() function
     #postconditions: this plots an image
+    '''
     def makeplot(self, data, labels, i):
         images_plot = data.astype('uint8')
         print(images_plot.shape)
         plt.imshow(images_plot[i])
         print(labels[i])
         plt.show()
+    '''
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
