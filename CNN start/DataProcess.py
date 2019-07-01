@@ -18,6 +18,7 @@ class Prep():
         for names in files:
             bigdata.append(self.unpickle("data/" + names))
         batch = np.vstack([d[b'data'] for d in bigdata])
+        batch = batch/255
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
         labels = np.hstack([d[b'labels'] for d in bigdata])
@@ -29,6 +30,7 @@ class Prep():
         bigdata = list()
         bigdata.append(self.unpickle("data/" + files))
         batch = np.vstack([d[b'data'] for d in bigdata])
+        batch = batch / 255
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
         labels = np.hstack([d[b'labels'] for d in bigdata])
@@ -40,6 +42,7 @@ class Prep():
         bigdata = list()
         bigdata.append(self.unpickle("data/" + files))
         batch = np.vstack([d[b'data'] for d in bigdata])
+        batch = batch / 255
         training_length = len(batch)
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
         labels = np.hstack([d[b'labels'] for d in bigdata])
