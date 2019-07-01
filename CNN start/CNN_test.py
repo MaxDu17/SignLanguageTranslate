@@ -80,9 +80,9 @@ init = tf.global_variables_initializer()
 with tf.Session() as sess:
     print("I'm starting")
     sess.run( tf.global_variables_initializer())
-    writer = tf.summary.FileWriter("Graphs_and_Results/CNN_test",
+    writer = tf.summary.FileWriter("Graphs_and_Results/",
                                    sess.graph)  # this will write summary tensorboard
-    tf.train.write_graph(sess.graph_def, name = "PBTXT", logdir="Graphs_and_Results/graph.pbtxt")
+    tf.train.write_graph(sess.graph_def, name = "graph.pbtxt", logdir="Graphs_and_Results")
     datafeeder = Prep()
 
     for i in range(501):
