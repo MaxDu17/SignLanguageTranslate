@@ -82,7 +82,7 @@ with tf.Session() as sess:
     sess.run( tf.global_variables_initializer())
     writer = tf.summary.FileWriter("Graphs_and_Results/CNN_test",
                                    sess.graph)  # this will write summary tensorboard
-    tf.train.write_graph(sess.graph_def,name = "PBTXT", logdir="Graphs_and_Results/graph.pbtxt")
+    tf.train.write_graph(sess.graph_def, name = "PBTXT", logdir="Graphs_and_Results/graph.pbtxt")
     datafeeder = Prep()
 
     for i in range(501):

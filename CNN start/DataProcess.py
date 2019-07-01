@@ -35,7 +35,7 @@ class Prep():
         batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
         labels = np.hstack([d[b'labels'] for d in bigdata])
         O_H = self.oneHot(labels)
-        return batch, O_H
+        return batch[0:2000], O_H[0:2000]
 
     def unzip_test_small(self):
         files = "test_batch"
@@ -81,4 +81,8 @@ class Prep():
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
+        return batch, O_H
+
+    def nextBatchTest_ConfMat(self):
+        batch, O_H = self.unzip_test()
         return batch, O_H
