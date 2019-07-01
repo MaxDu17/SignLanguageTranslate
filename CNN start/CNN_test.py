@@ -43,9 +43,10 @@ def fully_connected(input, end_size, name):
     b = make_bias([end_size], name)
     return(tf.matmul(input, W) + b)
 
-x = tf.placeholder(tf.float32, shape = [None, 32,32,3])
-truth = tf.placeholder(tf.float32, shape = [None, 10])
-hold_prob = tf.placeholder(tf.float32)
+with tf.name_scope("Placeholders"):
+    x = tf.placeholder(tf.float32, shape = [None, 32,32,3], name = "Input")
+    truth = tf.placeholder(tf.float32, shape = [None, 10], name = "Label")
+    hold_prob = tf.placeholder(tf.float32)
 
 with tf.name_scope("Layer_1"):
     conv_1 = convolutional_layer(x, shape = [4,4,3,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
