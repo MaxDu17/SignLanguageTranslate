@@ -1091,6 +1091,517 @@ node {
   }
 }
 node {
+  name: "Layer_3/Weights/Layer_3_Weight/shape"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\004\000\000\000\004\000\000\000@\000\000\000\200\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight/mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight/stddev"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.10000000149011612
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight/TruncatedNormal"
+  op: "TruncatedNormal"
+  input: "Layer_3/Weights/Layer_3_Weight/shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "seed"
+    value {
+      i: 0
+    }
+  }
+  attr {
+    key: "seed2"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight/mul"
+  op: "Mul"
+  input: "Layer_3/Weights/Layer_3_Weight/TruncatedNormal"
+  input: "Layer_3/Weights/Layer_3_Weight/stddev"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight"
+  op: "Add"
+  input: "Layer_3/Weights/Layer_3_Weight/mul"
+  input: "Layer_3/Weights/Layer_3_Weight/mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable"
+  op: "VariableV2"
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 4
+        }
+        dim {
+          size: 4
+        }
+        dim {
+          size: 64
+        }
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Assign"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable"
+  input: "Layer_3/Weights/Layer_3_Weight"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/read"
+  op: "Identity"
+  input: "Layer_3/Weights/Variable"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight_1/tag"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "Layer_3/Weights/Layer_3_Weight_1"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Layer_3_Weight_1"
+  op: "HistogramSummary"
+  input: "Layer_3/Weights/Layer_3_Weight_1/tag"
+  input: "Layer_3/Weights/Variable/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Layer_3_Bias"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 0.10000000149011612
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable"
+  op: "VariableV2"
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Assign"
+  op: "Assign"
+  input: "Layer_3/Biases/Variable"
+  input: "Layer_3/Biases/Layer_3_Bias"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/read"
+  op: "Identity"
+  input: "Layer_3/Biases/Variable"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Layer_3_Bias_1/tag"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_STRING
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_STRING
+        tensor_shape {
+        }
+        string_val: "Layer_3/Biases/Layer_3_Bias_1"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Layer_3_Bias_1"
+  op: "HistogramSummary"
+  input: "Layer_3/Biases/Layer_3_Bias_1/tag"
+  input: "Layer_3/Biases/Variable/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Conv/Layer_3_Conv"
+  op: "Conv2D"
+  input: "Layer_2/Pool/Layer_2_Pool"
+  input: "Layer_3/Weights/Variable/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "explicit_paddings"
+    value {
+      list {
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/add"
+  op: "Add"
+  input: "Layer_3/Conv/Layer_3_Conv"
+  input: "Layer_3/Biases/Variable/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Relu"
+  op: "Relu"
+  input: "Layer_3/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Layer_3/Pool/Layer_3_Pool"
+  op: "MaxPool"
+  input: "Layer_3/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
   name: "Fully_Connected/Flatten/shape"
   op: "Const"
   attr {
@@ -1109,7 +1620,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\377\377\377\377\000\020\000\000"
+        tensor_content: "\377\377\377\377\000\010\000\000"
       }
     }
   }
@@ -1117,7 +1628,7 @@ node {
 node {
   name: "Fully_Connected/Flatten"
   op: "Reshape"
-  input: "Layer_2/Pool/Layer_2_Pool"
+  input: "Layer_3/Pool/Layer_3_Pool"
   input: "Fully_Connected/Flatten/shape"
   attr {
     key: "T"
@@ -1151,7 +1662,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\000\020\000\000\000\004\000\000"
+        tensor_content: "\000\010\000\000\000\004\000\000"
       }
     }
   }
@@ -1271,7 +1782,7 @@ node {
     value {
       shape {
         dim {
-          size: 4096
+          size: 2048
         }
         dim {
           size: 1024
@@ -4501,7 +5012,7 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/Flatten_grad/Shape"
   op: "Shape"
-  input: "Layer_2/Pool/Layer_2_Pool"
+  input: "Layer_3/Pool/Layer_3_Pool"
   attr {
     key: "T"
     value {
@@ -4534,11 +5045,443 @@ node {
   }
 }
 node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Pool/Layer_3_Pool_grad/MaxPoolGrad"
+  op: "MaxPoolGrad"
+  input: "Layer_3/Relu"
+  input: "Layer_3/Pool/Layer_3_Pool"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/Flatten_grad/Reshape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Relu_grad/ReluGrad"
+  op: "ReluGrad"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Pool/Layer_3_Pool_grad/MaxPoolGrad"
+  input: "Layer_3/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape"
+  op: "Shape"
+  input: "Layer_3/Conv/Layer_3_Conv"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape_1"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int_val: 128
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Sum"
+  op: "Sum"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Relu_grad/ReluGrad"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape"
+  op: "Reshape"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Sum"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Sum_1"
+  op: "Sum"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Relu_grad/ReluGrad"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape_1"
+  op: "Reshape"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Sum_1"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape_1"
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape_1"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Layer_3/add_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/ShapeN"
+  op: "ShapeN"
+  input: "Layer_2/Pool/Layer_2_Pool"
+  input: "Layer_3/Weights/Variable/read"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropInput"
+  op: "Conv2DBackpropInput"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/ShapeN"
+  input: "Layer_3/Weights/Variable/read"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "explicit_paddings"
+    value {
+      list {
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropFilter"
+  op: "Conv2DBackpropFilter"
+  input: "Layer_2/Pool/Layer_2_Pool"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/ShapeN:1"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/control_dependency"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "explicit_paddings"
+    value {
+      list {
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropFilter"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropInput"
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropInput"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropInput"
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropFilter"
+  input: "^Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/Conv2DBackpropFilter"
+      }
+    }
+  }
+}
+node {
   name: "Loss_and_Optimizer/gradients/Layer_2/Pool/Layer_2_Pool_grad/MaxPoolGrad"
   op: "MaxPoolGrad"
   input: "Layer_2/Relu"
   input: "Layer_2/Pool/Layer_2_Pool"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/Flatten_grad/Reshape"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -6872,6 +7815,626 @@ node {
   }
 }
 node {
+  name: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros/shape_as_tensor"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\004\000\000\000\004\000\000\000@\000\000\000\200\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros"
+  op: "Fill"
+  input: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros/shape_as_tensor"
+  input: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "index_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 4
+        }
+        dim {
+          size: 4
+        }
+        dim {
+          size: 64
+        }
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer/Assign"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable/Optimizer"
+  input: "Layer_3/Weights/Variable/Optimizer/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer/read"
+  op: "Identity"
+  input: "Layer_3/Weights/Variable/Optimizer"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros/shape_as_tensor"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+        tensor_content: "\004\000\000\000\004\000\000\000@\000\000\000\200\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros/Const"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros"
+  op: "Fill"
+  input: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros/shape_as_tensor"
+  input: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros/Const"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "index_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 4
+        }
+        dim {
+          size: 4
+        }
+        dim {
+          size: 64
+        }
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1/Assign"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable/Optimizer_1"
+  input: "Layer_3/Weights/Variable/Optimizer_1/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Weights/Variable/Optimizer_1/read"
+  op: "Identity"
+  input: "Layer_3/Weights/Variable/Optimizer_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer/Assign"
+  op: "Assign"
+  input: "Layer_3/Biases/Variable/Optimizer"
+  input: "Layer_3/Biases/Variable/Optimizer/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer/read"
+  op: "Identity"
+  input: "Layer_3/Biases/Variable/Optimizer"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer_1/Initializer/zeros"
+  op: "Const"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 0.0
+      }
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer_1"
+  op: "VariableV2"
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "container"
+    value {
+      s: ""
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "shared_name"
+    value {
+      s: ""
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer_1/Assign"
+  op: "Assign"
+  input: "Layer_3/Biases/Variable/Optimizer_1"
+  input: "Layer_3/Biases/Variable/Optimizer_1/Initializer/zeros"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Layer_3/Biases/Variable/Optimizer_1/read"
+  op: "Identity"
+  input: "Layer_3/Biases/Variable/Optimizer_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+}
+node {
   name: "Fully_Connected/Weights/Variable/Optimizer/Initializer/zeros/shape_as_tensor"
   op: "Const"
   attr {
@@ -6898,7 +8461,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\000\020\000\000\000\004\000\000"
+        tensor_content: "\000\010\000\000\000\004\000\000"
       }
     }
   }
@@ -6986,7 +8549,7 @@ node {
     value {
       shape {
         dim {
-          size: 4096
+          size: 2048
         }
         dim {
           size: 1024
@@ -7079,7 +8642,7 @@ node {
             size: 2
           }
         }
-        tensor_content: "\000\020\000\000\000\004\000\000"
+        tensor_content: "\000\010\000\000\000\004\000\000"
       }
     }
   }
@@ -7167,7 +8730,7 @@ node {
     value {
       shape {
         dim {
-          size: 4096
+          size: 2048
         }
         dim {
           size: 1024
@@ -8442,6 +10005,86 @@ node {
   }
 }
 node {
+  name: "Loss_and_Optimizer/Optimizer/update_Layer_3/Weights/Variable/ApplyAdam"
+  op: "ApplyAdam"
+  input: "Layer_3/Weights/Variable"
+  input: "Layer_3/Weights/Variable/Optimizer"
+  input: "Layer_3/Weights/Variable/Optimizer_1"
+  input: "Loss_and_Optimizer/beta1_power/read"
+  input: "Loss_and_Optimizer/beta2_power/read"
+  input: "Loss_and_Optimizer/Optimizer/learning_rate"
+  input: "Loss_and_Optimizer/Optimizer/beta1"
+  input: "Loss_and_Optimizer/Optimizer/beta2"
+  input: "Loss_and_Optimizer/Optimizer/epsilon"
+  input: "Loss_and_Optimizer/gradients/Layer_3/Conv/Layer_3_Conv_grad/tuple/control_dependency_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "use_nesterov"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/Optimizer/update_Layer_3/Biases/Variable/ApplyAdam"
+  op: "ApplyAdam"
+  input: "Layer_3/Biases/Variable"
+  input: "Layer_3/Biases/Variable/Optimizer"
+  input: "Layer_3/Biases/Variable/Optimizer_1"
+  input: "Loss_and_Optimizer/beta1_power/read"
+  input: "Loss_and_Optimizer/beta2_power/read"
+  input: "Loss_and_Optimizer/Optimizer/learning_rate"
+  input: "Loss_and_Optimizer/Optimizer/beta1"
+  input: "Loss_and_Optimizer/Optimizer/beta2"
+  input: "Loss_and_Optimizer/Optimizer/epsilon"
+  input: "Loss_and_Optimizer/gradients/Layer_3/add_grad/tuple/control_dependency_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "use_nesterov"
+    value {
+      b: false
+    }
+  }
+}
+node {
   name: "Loss_and_Optimizer/Optimizer/update_Fully_Connected/Weights/Variable/ApplyAdam"
   op: "ApplyAdam"
   input: "Fully_Connected/Weights/Variable"
@@ -8612,6 +10255,8 @@ node {
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_1/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Weights/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Biases/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Weights/Variable/ApplyAdam"
   attr {
@@ -8672,6 +10317,8 @@ node {
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_1/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Weights/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Biases/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Weights/Variable/ApplyAdam"
   attr {
@@ -8732,6 +10379,8 @@ node {
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_1/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Layer_2/Weights/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Biases/Variable/ApplyAdam"
+  input: "^Loss_and_Optimizer/Optimizer/update_Layer_3/Weights/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Biases/Variable/ApplyAdam"
   input: "^Loss_and_Optimizer/Optimizer/update_Output/Weights/Variable/ApplyAdam"
 }
@@ -8775,6 +10424,8 @@ node {
   input: "Layer_1/Biases/Layer_1_Bias_1"
   input: "Layer_2/Weights/Layer_2_Weight_1"
   input: "Layer_2/Biases/Layer_2_Bias_1"
+  input: "Layer_3/Weights/Layer_3_Weight_1"
+  input: "Layer_3/Biases/Layer_3_Bias_1"
   input: "Fully_Connected/Weights/Fully_Connected_Layer_1_Weight_1"
   input: "Fully_Connected/Biases/Fully_Connected_Layer_1_Bias_1"
   input: "Output/Weights/raw_pred_Weight_1"
@@ -8783,7 +10434,7 @@ node {
   attr {
     key: "N"
     value {
-      i: 9
+      i: 11
     }
   }
 }
@@ -8860,7 +10511,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 26
+            size: 32
           }
         }
         string_val: "Fully_Connected/Biases/Variable"
@@ -8881,6 +10532,12 @@ node {
         string_val: "Layer_2/Weights/Variable"
         string_val: "Layer_2/Weights/Variable/Optimizer"
         string_val: "Layer_2/Weights/Variable/Optimizer_1"
+        string_val: "Layer_3/Biases/Variable"
+        string_val: "Layer_3/Biases/Variable/Optimizer"
+        string_val: "Layer_3/Biases/Variable/Optimizer_1"
+        string_val: "Layer_3/Weights/Variable"
+        string_val: "Layer_3/Weights/Variable/Optimizer"
+        string_val: "Layer_3/Weights/Variable/Optimizer_1"
         string_val: "Loss_and_Optimizer/beta1_power"
         string_val: "Loss_and_Optimizer/beta2_power"
         string_val: "Output/Biases/Variable"
@@ -8909,9 +10566,15 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 26
+            size: 32
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -8966,6 +10629,12 @@ node {
   input: "Layer_2/Weights/Variable"
   input: "Layer_2/Weights/Variable/Optimizer"
   input: "Layer_2/Weights/Variable/Optimizer_1"
+  input: "Layer_3/Biases/Variable"
+  input: "Layer_3/Biases/Variable/Optimizer"
+  input: "Layer_3/Biases/Variable/Optimizer_1"
+  input: "Layer_3/Weights/Variable"
+  input: "Layer_3/Weights/Variable/Optimizer"
+  input: "Layer_3/Weights/Variable/Optimizer_1"
   input: "Loss_and_Optimizer/beta1_power"
   input: "Loss_and_Optimizer/beta2_power"
   input: "Output/Biases/Variable"
@@ -8978,6 +10647,12 @@ node {
     key: "dtypes"
     value {
       list {
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -9045,7 +10720,7 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 26
+            size: 32
           }
         }
         string_val: "Fully_Connected/Biases/Variable"
@@ -9066,6 +10741,12 @@ node {
         string_val: "Layer_2/Weights/Variable"
         string_val: "Layer_2/Weights/Variable/Optimizer"
         string_val: "Layer_2/Weights/Variable/Optimizer_1"
+        string_val: "Layer_3/Biases/Variable"
+        string_val: "Layer_3/Biases/Variable/Optimizer"
+        string_val: "Layer_3/Biases/Variable/Optimizer_1"
+        string_val: "Layer_3/Weights/Variable"
+        string_val: "Layer_3/Weights/Variable/Optimizer"
+        string_val: "Layer_3/Weights/Variable/Optimizer_1"
         string_val: "Loss_and_Optimizer/beta1_power"
         string_val: "Loss_and_Optimizer/beta2_power"
         string_val: "Output/Biases/Variable"
@@ -9095,9 +10776,15 @@ node {
         dtype: DT_STRING
         tensor_shape {
           dim {
-            size: 26
+            size: 32
           }
         }
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
+        string_val: ""
         string_val: ""
         string_val: ""
         string_val: ""
@@ -9139,6 +10826,12 @@ node {
     key: "dtypes"
     value {
       list {
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
+        type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
         type: DT_FLOAT
@@ -9748,7 +11441,7 @@ node {
 node {
   name: "Saver/save/Assign_18"
   op: "Assign"
-  input: "Loss_and_Optimizer/beta1_power"
+  input: "Layer_3/Biases/Variable"
   input: "Saver/save/RestoreV2:18"
   attr {
     key: "T"
@@ -9760,7 +11453,7 @@ node {
     key: "_class"
     value {
       list {
-        s: "loc:@Fully_Connected/Biases/Variable"
+        s: "loc:@Layer_3/Biases/Variable"
       }
     }
   }
@@ -9780,8 +11473,168 @@ node {
 node {
   name: "Saver/save/Assign_19"
   op: "Assign"
-  input: "Loss_and_Optimizer/beta2_power"
+  input: "Layer_3/Biases/Variable/Optimizer"
   input: "Saver/save/RestoreV2:19"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_20"
+  op: "Assign"
+  input: "Layer_3/Biases/Variable/Optimizer_1"
+  input: "Saver/save/RestoreV2:20"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_21"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable"
+  input: "Saver/save/RestoreV2:21"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_22"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable/Optimizer"
+  input: "Saver/save/RestoreV2:22"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_23"
+  op: "Assign"
+  input: "Layer_3/Weights/Variable/Optimizer_1"
+  input: "Saver/save/RestoreV2:23"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Layer_3/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_24"
+  op: "Assign"
+  input: "Loss_and_Optimizer/beta1_power"
+  input: "Saver/save/RestoreV2:24"
   attr {
     key: "T"
     value {
@@ -9810,170 +11663,202 @@ node {
   }
 }
 node {
-  name: "Saver/save/Assign_20"
-  op: "Assign"
-  input: "Output/Biases/Variable"
-  input: "Saver/save/RestoreV2:20"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Output/Biases/Variable"
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "Saver/save/Assign_21"
-  op: "Assign"
-  input: "Output/Biases/Variable/Optimizer"
-  input: "Saver/save/RestoreV2:21"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Output/Biases/Variable"
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "Saver/save/Assign_22"
-  op: "Assign"
-  input: "Output/Biases/Variable/Optimizer_1"
-  input: "Saver/save/RestoreV2:22"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Output/Biases/Variable"
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "Saver/save/Assign_23"
-  op: "Assign"
-  input: "Output/Weights/Variable"
-  input: "Saver/save/RestoreV2:23"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Output/Weights/Variable"
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
-  name: "Saver/save/Assign_24"
-  op: "Assign"
-  input: "Output/Weights/Variable/Optimizer"
-  input: "Saver/save/RestoreV2:24"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Output/Weights/Variable"
-      }
-    }
-  }
-  attr {
-    key: "use_locking"
-    value {
-      b: true
-    }
-  }
-  attr {
-    key: "validate_shape"
-    value {
-      b: true
-    }
-  }
-}
-node {
   name: "Saver/save/Assign_25"
   op: "Assign"
-  input: "Output/Weights/Variable/Optimizer_1"
+  input: "Loss_and_Optimizer/beta2_power"
   input: "Saver/save/RestoreV2:25"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Fully_Connected/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_26"
+  op: "Assign"
+  input: "Output/Biases/Variable"
+  input: "Saver/save/RestoreV2:26"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Output/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_27"
+  op: "Assign"
+  input: "Output/Biases/Variable/Optimizer"
+  input: "Saver/save/RestoreV2:27"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Output/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_28"
+  op: "Assign"
+  input: "Output/Biases/Variable/Optimizer_1"
+  input: "Saver/save/RestoreV2:28"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Output/Biases/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_29"
+  op: "Assign"
+  input: "Output/Weights/Variable"
+  input: "Saver/save/RestoreV2:29"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Output/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_30"
+  op: "Assign"
+  input: "Output/Weights/Variable/Optimizer"
+  input: "Saver/save/RestoreV2:30"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Output/Weights/Variable"
+      }
+    }
+  }
+  attr {
+    key: "use_locking"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "validate_shape"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "Saver/save/Assign_31"
+  op: "Assign"
+  input: "Output/Weights/Variable/Optimizer_1"
+  input: "Saver/save/RestoreV2:31"
   attr {
     key: "T"
     value {
@@ -10023,7 +11908,13 @@ node {
   input: "^Saver/save/Assign_23"
   input: "^Saver/save/Assign_24"
   input: "^Saver/save/Assign_25"
+  input: "^Saver/save/Assign_26"
+  input: "^Saver/save/Assign_27"
+  input: "^Saver/save/Assign_28"
+  input: "^Saver/save/Assign_29"
   input: "^Saver/save/Assign_3"
+  input: "^Saver/save/Assign_30"
+  input: "^Saver/save/Assign_31"
   input: "^Saver/save/Assign_4"
   input: "^Saver/save/Assign_5"
   input: "^Saver/save/Assign_6"
@@ -10052,6 +11943,12 @@ node {
   input: "^Layer_2/Weights/Variable/Assign"
   input: "^Layer_2/Weights/Variable/Optimizer/Assign"
   input: "^Layer_2/Weights/Variable/Optimizer_1/Assign"
+  input: "^Layer_3/Biases/Variable/Assign"
+  input: "^Layer_3/Biases/Variable/Optimizer/Assign"
+  input: "^Layer_3/Biases/Variable/Optimizer_1/Assign"
+  input: "^Layer_3/Weights/Variable/Assign"
+  input: "^Layer_3/Weights/Variable/Optimizer/Assign"
+  input: "^Layer_3/Weights/Variable/Optimizer_1/Assign"
   input: "^Loss_and_Optimizer/beta1_power/Assign"
   input: "^Loss_and_Optimizer/beta2_power/Assign"
   input: "^Output/Biases/Variable/Assign"
@@ -10082,6 +11979,12 @@ node {
   input: "^Layer_2/Weights/Variable/Assign"
   input: "^Layer_2/Weights/Variable/Optimizer/Assign"
   input: "^Layer_2/Weights/Variable/Optimizer_1/Assign"
+  input: "^Layer_3/Biases/Variable/Assign"
+  input: "^Layer_3/Biases/Variable/Optimizer/Assign"
+  input: "^Layer_3/Biases/Variable/Optimizer_1/Assign"
+  input: "^Layer_3/Weights/Variable/Assign"
+  input: "^Layer_3/Weights/Variable/Optimizer/Assign"
+  input: "^Layer_3/Weights/Variable/Optimizer_1/Assign"
   input: "^Loss_and_Optimizer/beta1_power/Assign"
   input: "^Loss_and_Optimizer/beta2_power/Assign"
   input: "^Output/Biases/Variable/Assign"
