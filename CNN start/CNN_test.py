@@ -72,7 +72,7 @@ with tf.name_scope("Saver"):
     tf.summary.scalar("Loss", loss)
     summary_op = tf.summary.merge_all()
     saver = tf.train.Saver(max_to_keep=9)
-    tf.summary.image("Training data", x, step=0)
+    tf.summary.image("Training data", x)
 
 init = tf.global_variables_initializer()
 
@@ -81,7 +81,7 @@ with tf.Session() as sess:
     sess.run( tf.global_variables_initializer())
     writer = tf.summary.FileWriter("Graphs_and_Results/CNN_test",
                                    sess.graph)  # this will write summary tensorboard
-    tf.train.write_graph(sess.graph_def, 'Graphs_and_Results/graph.pbtxt')
+    tf.train.write_graph(sess.graph_def,name = "PBTXT", logdir="Graphs_and_Results/graph.pbtxt")
     datafeeder = Prep()
 
     for i in range(501):
