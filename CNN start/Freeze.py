@@ -5,10 +5,10 @@ input_graph_path = 'Graphs_and_Results/graph.pbtxt'
 
 
 
-checkpoint_path = 'Graphs_and_Results/CNN_test-'
+checkpoint_path = 'Graphs_and_Results/CNN_test-500'
 input_saver_def_path = ''
 input_binary = False
-output_node_names = 'output/prediction'
+output_node_names = 'Output/Prediction'
 restore_op_name = 'save/restore_all'
 filename_tensor_name = 'save/Const:0'
 output_frozen_graph_name = '../Graphs_and_Results/CNN_test.pb'

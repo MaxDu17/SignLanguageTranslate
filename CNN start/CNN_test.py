@@ -62,7 +62,7 @@ with tf.name_scope("Fully_Connected"):
     dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 
 with tf.name_scope("Output"):
-    prediction = fully_connected(dropout_1, 10, name = "Fully_Connected_Layer_2")
+    prediction = fully_connected(dropout_1, 10, name = "Prediction")
 
 with tf.name_scope("Loss_and_Optimizer"):
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
