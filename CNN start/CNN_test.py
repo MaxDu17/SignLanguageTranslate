@@ -89,9 +89,10 @@ with tf.Session() as sess:
         data, label = datafeeder.nextBatchTrain(100)
         prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train], feed_dict = {x:data, truth:label, hold_prob:1})
         print("Epoch: {}. Loss: {}".format(i, loss_))
+        if i % 10 == 0:
+            writer.add_summary(summary, global_step=i)
         if i % 100== 0 and i > 0:
             saver.save(sess, "Graphs_and_Results/CNN_test", global_step=i)
-            writer.add_summary(summary, global_step=i)
             data, label = datafeeder.nextBatchTest()
             correct = 0
             prediction_ = sess.run(prediction, feed_dict = {x:data, truth:label, hold_prob:1})
