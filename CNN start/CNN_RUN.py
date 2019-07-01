@@ -61,9 +61,7 @@ with tf.name_scope("Fully_Connected"):
     dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 
 with tf.name_scope("Output"):
-    prediction = fully_connected(dropout_1, 10, name = "raw_pred")
-    prediction_out = tf.multiply(1.0, prediction,
-                             name="Prediction")
+    prediction = fully_connected(dropout_1, 10, name = "Prediction")
 
 with tf.name_scope("Loss_and_Optimizer"):
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
@@ -77,38 +75,9 @@ with tf.name_scope("Saver"):
 
 init = tf.global_variables_initializer()
 
-
-
-
-def Big_Train():
-    sess.run(tf.global_variables_initializer())
-    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/",
-                                             sess.graph)  # this will write summary tensorboard
-    tf.io.write_graph(sess.graph_def, name="graph.pbtxt", logdir="Graphs_and_Results")
-    datafeeder = Prep()
-
-    display, _ = datafeeder.nextBatchTrain(50)
-    tf.compat.v1.summary.image("50 training data examples", display, max_outputs=50)
-
-    for i in range(501):
-        data, label = datafeeder.nextBatchTrain(100)
-        prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train],
-                                                  feed_dict={x: data, truth: label, hold_prob: 1})
-        print("Epoch: {}. Loss: {}".format(i, loss_))
-        if i % 10 == 0:
-            writer.add_summary(summary, global_step=i)
-        if i % 100 == 0 and i > 0:
-            saver.save(sess, "Graphs_and_Results/CNN_test", global_step=i)
-            data, label = datafeeder.nextBatchTest()
-            correct = 0
-            prediction_ = sess.run(prediction, feed_dict={x: data, truth: label, hold_prob: 1})
-            for l in range(len(label)):
-                if (np.argmax(prediction_[l]) == np.argmax(label[l])):
-                    correct += 1
-            print("This is the accuracy: {}".format(correct / len(prediction_)))
-
-def confMat():
-    sess.run(tf.global_variables_initializer())
+with tf.Session() as sess:
+    print("I'm starting")
+    sess.run( tf.global_variables_initializer())
     ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
     if ckpt and ckpt.model_checkpoint_path:
         saver.restore(sess, ckpt.model_checkpoint_path)
@@ -126,17 +95,4 @@ def confMat():
         matrix[k][m] += 1
 
     print(matrix)
-
-
-def main():
-    with tf.Session() as sess:
-        print("---the model is starting-----")
-        query = input("What mode do you want? Train (t) or Confusion Matrix (m)?")
-        if query == "t":
-            Big_Train()
-        elif query == "m":
-            confMat()
-
-if __name__ == '__main__':
-    main()
 
