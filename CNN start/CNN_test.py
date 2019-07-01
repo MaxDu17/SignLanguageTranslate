@@ -74,7 +74,6 @@ with tf.name_scope("Saver"):
     tf.summary.scalar("Loss", loss)
     summary_op = tf.summary.merge_all()
     saver = tf.train.Saver(max_to_keep=9)
-    tf.summary.image("Training data", x)
 
 init = tf.global_variables_initializer()
 
@@ -85,6 +84,9 @@ with tf.Session() as sess:
                                    sess.graph)  # this will write summary tensorboard
     tf.io.write_graph(sess.graph_def, name = "graph.pbtxt", logdir="Graphs_and_Results")
     datafeeder = Prep()
+
+    display, _ = datafeeder.nextBatchTrain(50)
+    tf.summary.image("50 training data examples", display, max_outputs=50)
 
     for i in range(101):
         data, label = datafeeder.nextBatchTrain(100)
