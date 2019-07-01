@@ -62,7 +62,7 @@ with tf.name_scope("Layer_3"):
 with tf.name_scope("Fully_Connected"):
     flattened = tf.reshape(conv_3_pooled, [-1, 4*4*128], name = "Flatten")
     fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
-    dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
+    dropout_1 = tf.nn.dropout(fc_1, rate = 1-hold_prob)
 
 with tf.name_scope("Output"):
     prediction = fully_connected(dropout_1, 10, name = "raw_pred")
@@ -88,12 +88,12 @@ def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
     writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/",
                                              sess.graph)  # this will write summary tensorboard
-    tf.io.write_graph(sess.graph_def, name="graph.pbtxt", logdir="Graphs_and_Results")
     datafeeder = Prep()
 
-    display, _ = datafeeder.nextBatchTrain(50)
-    tf.compat.v1.summary.image("50 training data examples", display, max_outputs=50)
-
+    display, _ = datafeeder.nextBatchTrain(10)
+    tf.compat.v1.summary.image("10 training data examples", display, max_outputs=10)
+    print(np.shape(display))
+    input()
     for i in range(501):
         data, label = datafeeder.nextBatchTrain(100)
         prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train],
