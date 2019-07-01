@@ -80,7 +80,7 @@ init = tf.global_variables_initializer()
 
 
 
-def Big_Train():
+def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
     writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/",
                                              sess.graph)  # this will write summary tensorboard
@@ -107,7 +107,7 @@ def Big_Train():
                     correct += 1
             print("This is the accuracy: {}".format(correct / len(prediction_)))
 
-def confMat():
+def confMat(sess):
     sess.run(tf.global_variables_initializer())
     ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
     if ckpt and ckpt.model_checkpoint_path:
@@ -131,11 +131,11 @@ def confMat():
 def main():
     with tf.Session() as sess:
         print("---the model is starting-----")
-        query = input("What mode do you want? Train (t) or Confusion Matrix (m)?")
+        query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
         if query == "t":
-            Big_Train()
+            Big_Train(sess)
         elif query == "m":
-            confMat()
+            confMat(sess)
 
 if __name__ == '__main__':
     main()
