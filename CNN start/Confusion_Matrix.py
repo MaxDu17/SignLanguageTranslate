@@ -1,8 +1,7 @@
 import tensorflow as tf
 from DataProcess import Prep
 import numpy as np
-import csv
-#THIS RUNS WEATHER FORECAST MODELS
+
 process = Prep()
 
 
@@ -22,6 +21,7 @@ with tf.Graph().as_default() as graph:
     output = graph.get_tensor_by_name("Output/Prediction:0")
 
 with tf.Session(graph=graph) as sess:
+    print(tf.shape(input))
     batch, label = process.nextBatchTest_ConfMat()
     matrix = np.zeros([10, 10])
     output_ = sess.run(output, feed_dict = {input:batch})
