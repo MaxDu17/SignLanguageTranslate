@@ -481,13 +481,6 @@ node {
     }
   }
   attr {
-    key: "explicit_paddings"
-    value {
-      list {
-      }
-    }
-  }
-  attr {
     key: "padding"
     value {
       s: "SAME"
@@ -988,13 +981,6 @@ node {
         i: 1
         i: 1
         i: 1
-      }
-    }
-  }
-  attr {
-    key: "explicit_paddings"
-    value {
-      list {
       }
     }
   }
@@ -1597,6 +1583,39 @@ node {
   }
 }
 node {
+  name: "Fully_Connected/dropout/sub/x"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "Fully_Connected/dropout/sub"
+  op: "Sub"
+  input: "Fully_Connected/dropout/sub/x"
+  input: "Fully_Connected/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
   name: "Fully_Connected/dropout/random_uniform/min"
   op: "Const"
   attr {
@@ -1704,31 +1723,10 @@ node {
   }
 }
 node {
-  name: "Fully_Connected/dropout/sub/x"
-  op: "Const"
-  attr {
-    key: "dtype"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 1.0
-      }
-    }
-  }
-}
-node {
-  name: "Fully_Connected/dropout/sub"
-  op: "Sub"
-  input: "Fully_Connected/dropout/sub/x"
-  input: "Fully_Connected/sub"
+  name: "Fully_Connected/dropout/add"
+  op: "Add"
+  input: "Fully_Connected/dropout/sub"
+  input: "Fully_Connected/dropout/random_uniform"
   attr {
     key: "T"
     value {
@@ -1737,43 +1735,21 @@ node {
   }
 }
 node {
-  name: "Fully_Connected/dropout/truediv/x"
-  op: "Const"
+  name: "Fully_Connected/dropout/Floor"
+  op: "Floor"
+  input: "Fully_Connected/dropout/add"
   attr {
-    key: "dtype"
+    key: "T"
     value {
       type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "value"
-    value {
-      tensor {
-        dtype: DT_FLOAT
-        tensor_shape {
-        }
-        float_val: 1.0
-      }
     }
   }
 }
 node {
   name: "Fully_Connected/dropout/truediv"
   op: "RealDiv"
-  input: "Fully_Connected/dropout/truediv/x"
+  input: "Fully_Connected/add"
   input: "Fully_Connected/dropout/sub"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-}
-node {
-  name: "Fully_Connected/dropout/GreaterEqual"
-  op: "GreaterEqual"
-  input: "Fully_Connected/dropout/random_uniform"
-  input: "Fully_Connected/sub"
   attr {
     key: "T"
     value {
@@ -1784,8 +1760,8 @@ node {
 node {
   name: "Fully_Connected/dropout/mul"
   op: "Mul"
-  input: "Fully_Connected/add"
   input: "Fully_Connected/dropout/truediv"
+  input: "Fully_Connected/dropout/Floor"
   attr {
     key: "T"
     value {
@@ -1794,42 +1770,7 @@ node {
   }
 }
 node {
-  name: "Fully_Connected/dropout/Cast"
-  op: "Cast"
-  input: "Fully_Connected/dropout/GreaterEqual"
-  attr {
-    key: "DstT"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "SrcT"
-    value {
-      type: DT_BOOL
-    }
-  }
-  attr {
-    key: "Truncate"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "Fully_Connected/dropout/mul_1"
-  op: "Mul"
-  input: "Fully_Connected/dropout/mul"
-  input: "Fully_Connected/dropout/Cast"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-}
-node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight/shape"
+  name: "Output/Weights/raw_pred_Weight/shape"
   op: "Const"
   attr {
     key: "dtype"
@@ -1853,7 +1794,7 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight/mean"
+  name: "Output/Weights/raw_pred_Weight/mean"
   op: "Const"
   attr {
     key: "dtype"
@@ -1874,7 +1815,7 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight/stddev"
+  name: "Output/Weights/raw_pred_Weight/stddev"
   op: "Const"
   attr {
     key: "dtype"
@@ -1895,9 +1836,9 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight/TruncatedNormal"
+  name: "Output/Weights/raw_pred_Weight/TruncatedNormal"
   op: "TruncatedNormal"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight/shape"
+  input: "Output/Weights/raw_pred_Weight/shape"
   attr {
     key: "T"
     value {
@@ -1924,10 +1865,10 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight/mul"
+  name: "Output/Weights/raw_pred_Weight/mul"
   op: "Mul"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight/TruncatedNormal"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight/stddev"
+  input: "Output/Weights/raw_pred_Weight/TruncatedNormal"
+  input: "Output/Weights/raw_pred_Weight/stddev"
   attr {
     key: "T"
     value {
@@ -1936,10 +1877,10 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight"
+  name: "Output/Weights/raw_pred_Weight"
   op: "Add"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight/mul"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight/mean"
+  input: "Output/Weights/raw_pred_Weight/mul"
+  input: "Output/Weights/raw_pred_Weight/mean"
   attr {
     key: "T"
     value {
@@ -1986,7 +1927,7 @@ node {
   name: "Output/Weights/Variable/Assign"
   op: "Assign"
   input: "Output/Weights/Variable"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight"
+  input: "Output/Weights/raw_pred_Weight"
   attr {
     key: "T"
     value {
@@ -2034,7 +1975,7 @@ node {
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight_1/tag"
+  name: "Output/Weights/raw_pred_Weight_1/tag"
   op: "Const"
   attr {
     key: "dtype"
@@ -2049,15 +1990,15 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "Output/Weights/Fully_Connected_Layer_2_Weight_1"
+        string_val: "Output/Weights/raw_pred_Weight_1"
       }
     }
   }
 }
 node {
-  name: "Output/Weights/Fully_Connected_Layer_2_Weight_1"
+  name: "Output/Weights/raw_pred_Weight_1"
   op: "HistogramSummary"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight_1/tag"
+  input: "Output/Weights/raw_pred_Weight_1/tag"
   input: "Output/Weights/Variable/read"
   attr {
     key: "T"
@@ -2067,7 +2008,7 @@ node {
   }
 }
 node {
-  name: "Output/Biases/Fully_Connected_Layer_2_Bias"
+  name: "Output/Biases/raw_pred_Bias"
   op: "Const"
   attr {
     key: "dtype"
@@ -2126,7 +2067,7 @@ node {
   name: "Output/Biases/Variable/Assign"
   op: "Assign"
   input: "Output/Biases/Variable"
-  input: "Output/Biases/Fully_Connected_Layer_2_Bias"
+  input: "Output/Biases/raw_pred_Bias"
   attr {
     key: "T"
     value {
@@ -2174,7 +2115,7 @@ node {
   }
 }
 node {
-  name: "Output/Biases/Fully_Connected_Layer_2_Bias_1/tag"
+  name: "Output/Biases/raw_pred_Bias_1/tag"
   op: "Const"
   attr {
     key: "dtype"
@@ -2189,15 +2130,15 @@ node {
         dtype: DT_STRING
         tensor_shape {
         }
-        string_val: "Output/Biases/Fully_Connected_Layer_2_Bias_1"
+        string_val: "Output/Biases/raw_pred_Bias_1"
       }
     }
   }
 }
 node {
-  name: "Output/Biases/Fully_Connected_Layer_2_Bias_1"
+  name: "Output/Biases/raw_pred_Bias_1"
   op: "HistogramSummary"
-  input: "Output/Biases/Fully_Connected_Layer_2_Bias_1/tag"
+  input: "Output/Biases/raw_pred_Bias_1/tag"
   input: "Output/Biases/Variable/read"
   attr {
     key: "T"
@@ -2209,7 +2150,7 @@ node {
 node {
   name: "Output/MatMul"
   op: "MatMul"
-  input: "Fully_Connected/dropout/mul_1"
+  input: "Fully_Connected/dropout/mul"
   input: "Output/Weights/Variable/read"
   attr {
     key: "T"
@@ -2235,6 +2176,39 @@ node {
   op: "Add"
   input: "Output/MatMul"
   input: "Output/Biases/Variable/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Output/Prediction/x"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "Output/Prediction"
+  op: "Mul"
+  input: "Output/Prediction/x"
+  input: "Output/add"
   attr {
     key: "T"
     value {
@@ -3721,7 +3695,7 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Output/MatMul_grad/MatMul_1"
   op: "MatMul"
-  input: "Fully_Connected/dropout/mul_1"
+  input: "Fully_Connected/dropout/mul"
   input: "Loss_and_Optimizer/gradients/Output/add_grad/tuple/control_dependency"
   attr {
     key: "T"
@@ -3789,209 +3763,9 @@ node {
   }
 }
 node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape"
-  op: "Shape"
-  input: "Fully_Connected/dropout/mul"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "out_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape_1"
-  op: "Shape"
-  input: "Fully_Connected/dropout/Cast"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "out_type"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/BroadcastGradientArgs"
-  op: "BroadcastGradientArgs"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Mul"
-  op: "Mul"
-  input: "Loss_and_Optimizer/gradients/Output/MatMul_grad/tuple/control_dependency"
-  input: "Fully_Connected/dropout/Cast"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Sum"
-  op: "Sum"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Mul"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/BroadcastGradientArgs"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape"
-  op: "Reshape"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Sum"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Mul_1"
-  op: "Mul"
-  input: "Fully_Connected/dropout/mul"
-  input: "Loss_and_Optimizer/gradients/Output/MatMul_grad/tuple/control_dependency"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Sum_1"
-  op: "Sum"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Mul_1"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/BroadcastGradientArgs:1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tidx"
-    value {
-      type: DT_INT32
-    }
-  }
-  attr {
-    key: "keep_dims"
-    value {
-      b: false
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape_1"
-  op: "Reshape"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Sum_1"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Shape_1"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "Tshape"
-    value {
-      type: DT_INT32
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/group_deps"
-  op: "NoOp"
-  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape"
-  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape_1"
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/control_dependency"
-  op: "Identity"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape"
-  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape"
-      }
-    }
-  }
-}
-node {
-  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/control_dependency_1"
-  op: "Identity"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape_1"
-  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/group_deps"
-  attr {
-    key: "T"
-    value {
-      type: DT_FLOAT
-    }
-  }
-  attr {
-    key: "_class"
-    value {
-      list {
-        s: "loc:@Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/Reshape_1"
-      }
-    }
-  }
-}
-node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/Shape"
   op: "Shape"
-  input: "Fully_Connected/add"
+  input: "Fully_Connected/dropout/truediv"
   attr {
     key: "T"
     value {
@@ -4008,7 +3782,7 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/Shape_1"
   op: "Shape"
-  input: "Fully_Connected/dropout/truediv"
+  input: "Fully_Connected/dropout/Floor"
   attr {
     key: "T"
     value {
@@ -4037,8 +3811,8 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/Mul"
   op: "Mul"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/control_dependency"
-  input: "Fully_Connected/dropout/truediv"
+  input: "Loss_and_Optimizer/gradients/Output/MatMul_grad/tuple/control_dependency"
+  input: "Fully_Connected/dropout/Floor"
   attr {
     key: "T"
     value {
@@ -4091,8 +3865,8 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/Mul_1"
   op: "Mul"
-  input: "Fully_Connected/add"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_1_grad/tuple/control_dependency"
+  input: "Fully_Connected/dropout/truediv"
+  input: "Loss_and_Optimizer/gradients/Output/MatMul_grad/tuple/control_dependency"
   attr {
     key: "T"
     value {
@@ -4189,6 +3963,241 @@ node {
   }
 }
 node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape"
+  op: "Shape"
+  input: "Fully_Connected/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape_1"
+  op: "Shape"
+  input: "Fully_Connected/dropout/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "out_type"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/BroadcastGradientArgs"
+  op: "BroadcastGradientArgs"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv"
+  op: "RealDiv"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/tuple/control_dependency"
+  input: "Fully_Connected/dropout/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Sum"
+  op: "Sum"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/BroadcastGradientArgs"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape"
+  op: "Reshape"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Sum"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Neg"
+  op: "Neg"
+  input: "Fully_Connected/add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv_1"
+  op: "RealDiv"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Neg"
+  input: "Fully_Connected/dropout/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv_2"
+  op: "RealDiv"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv_1"
+  input: "Fully_Connected/dropout/sub"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/mul"
+  op: "Mul"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/tuple/control_dependency"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/RealDiv_2"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Sum_1"
+  op: "Sum"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/mul"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/BroadcastGradientArgs:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tidx"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "keep_dims"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape_1"
+  op: "Reshape"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Sum_1"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Shape_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "Tshape"
+    value {
+      type: DT_INT32
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/group_deps"
+  op: "NoOp"
+  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape"
+  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape_1"
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/control_dependency"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape"
+  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape"
+      }
+    }
+  }
+}
+node {
+  name: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/control_dependency_1"
+  op: "Identity"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape_1"
+  input: "^Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/group_deps"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/Reshape_1"
+      }
+    }
+  }
+}
+node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/add_grad/Shape"
   op: "Shape"
   input: "Fully_Connected/MatMul"
@@ -4244,7 +4253,7 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/add_grad/Sum"
   op: "Sum"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/tuple/control_dependency"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/control_dependency"
   input: "Loss_and_Optimizer/gradients/Fully_Connected/add_grad/BroadcastGradientArgs"
   attr {
     key: "T"
@@ -4286,7 +4295,7 @@ node {
 node {
   name: "Loss_and_Optimizer/gradients/Fully_Connected/add_grad/Sum_1"
   op: "Sum"
-  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/mul_grad/tuple/control_dependency"
+  input: "Loss_and_Optimizer/gradients/Fully_Connected/dropout/truediv_grad/tuple/control_dependency"
   input: "Loss_and_Optimizer/gradients/Fully_Connected/add_grad/BroadcastGradientArgs:1"
   attr {
     key: "T"
@@ -4796,13 +4805,6 @@ node {
     }
   }
   attr {
-    key: "explicit_paddings"
-    value {
-      list {
-      }
-    }
-  }
-  attr {
     key: "padding"
     value {
       s: "SAME"
@@ -4852,13 +4854,6 @@ node {
         i: 1
         i: 1
         i: 1
-      }
-    }
-  }
-  attr {
-    key: "explicit_paddings"
-    value {
-      list {
       }
     }
   }
@@ -5228,13 +5223,6 @@ node {
     }
   }
   attr {
-    key: "explicit_paddings"
-    value {
-      list {
-      }
-    }
-  }
-  attr {
     key: "padding"
     value {
       s: "SAME"
@@ -5284,13 +5272,6 @@ node {
         i: 1
         i: 1
         i: 1
-      }
-    }
-  }
-  attr {
-    key: "explicit_paddings"
-    value {
-      list {
       }
     }
   }
@@ -8744,8 +8725,8 @@ node {
   input: "Layer_2/Biases/Layer_2_Bias_1"
   input: "Fully_Connected/Weights/Fully_Connected_Layer_1_Weight_1"
   input: "Fully_Connected/Biases/Fully_Connected_Layer_1_Bias_1"
-  input: "Output/Weights/Fully_Connected_Layer_2_Weight_1"
-  input: "Output/Biases/Fully_Connected_Layer_2_Bias_1"
+  input: "Output/Weights/raw_pred_Weight_1"
+  input: "Output/Biases/raw_pred_Bias_1"
   input: "Saver/Loss"
   attr {
     key: "N"
@@ -10115,5 +10096,5 @@ node {
   input: "^Output/Weights/Variable/Optimizer_1/Assign"
 }
 versions {
-  producer: 38
+  producer: 27
 }

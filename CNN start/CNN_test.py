@@ -62,7 +62,9 @@ with tf.name_scope("Fully_Connected"):
     dropout_1 = tf.nn.dropout(fc_1, keep_prob = hold_prob)
 
 with tf.name_scope("Output"):
-    prediction = fully_connected(dropout_1, 10, name = "Prediction")
+    prediction = fully_connected(dropout_1, 10, name = "raw_pred")
+    prediction_out = tf.multiply(1.0, prediction,
+                             name="Prediction")
 
 with tf.name_scope("Loss_and_Optimizer"):
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
@@ -85,7 +87,7 @@ with tf.Session() as sess:
     tf.train.write_graph(sess.graph_def, name = "graph.pbtxt", logdir="Graphs_and_Results")
     datafeeder = Prep()
 
-    for i in range(501):
+    for i in range(101):
         data, label = datafeeder.nextBatchTrain(100)
         prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train], feed_dict = {x:data, truth:label, hold_prob:1})
         print("Epoch: {}. Loss: {}".format(i, loss_))
