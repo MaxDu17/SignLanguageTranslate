@@ -106,7 +106,7 @@ class Prep():
             logger = csv.writer(test, lineterminator="\n")
             logger.writerow(O_H[i])
             util.save_image(batch[i], sub_path)
-            print("saving: {}".augment(i))
+            print("saving: {}".format(i))
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
