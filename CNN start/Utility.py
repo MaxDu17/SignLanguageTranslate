@@ -24,15 +24,22 @@ class Utility(): #this class will help with software stuff
     def flip_ud(self, matrix):
          return np.flipud(matrix)
 
+    def rot_ck(self, matrix):
+        return np.rot90(matrix, k = 3)
+
+    def rot_cck(self, matrix):
+        return np.rot90(matrix, k = 1)
+
     def add_noise(self, matrix):
         shape = np.shape(matrix)
-        noise = np.random.randint(5, size=shape, dtype='uint8')
+        noise = np.random.randint(10, size=shape, dtype='uint8')
+        print(noise)
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 for k in range(len(matrix[0][0])):
                     if (matrix[i][j][k] != 255):
-                        print("yes")
                         matrix[i][j][k] += noise[i][j][k]
+
         return matrix
 
     def trans_left(self, matrix, amount):
@@ -42,21 +49,25 @@ class Utility(): #this class will help with software stuff
                     matrix[j][i] = matrix[j][i - amount]
                 elif (i < len(matrix[0][0]) - 1):
                     matrix[j][i] = 0
+        return matrix
 
     def trans_right(self, matrix, amount):
         for i in range(len(matrix[0][0]), 1, -1):
             for j in range(len(matrix[0])):
                 if (i < len(matrix[0][0]) - amount):
                     matrix[j][i] = matrix[j][i + amount]
+        return matrix
 
     def trans_up(self, matrix, amount):
         for i in range(len(matrix[0]), 1, -1):
             for j in range(len(matrix[0][0])):
                 if (i < len(matrix[0]) - amount):
                     matrix[j][i] = matrix[j][i + amount]
+        return matrix
 
     def trans_down(self, matrix, amount):
         for i in range(len(matrix[0]), 1, -1):
             for j in range(len(matrix[0][0])):
                 if (i < len(matrix[0]) - amount):
                     matrix[j][i] = matrix[j][i - amount]
+        return matrix
