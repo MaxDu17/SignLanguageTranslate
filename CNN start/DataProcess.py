@@ -1,6 +1,7 @@
 import pickle
 import numpy as np
-#import matplotlib.pyplot as plt
+from Utility import Utility
+util = Utility()
 class Prep():
     def __init__(self):
         self.trainCount =0
@@ -53,17 +54,6 @@ class Prep():
     def getkey(self, data):
         print(data)
 
-    #preconditions: this data must be from the process() function
-    #postconditions: this plots an image
-    '''
-    def makeplot(self, data, labels, i):
-        images_plot = data.astype('uint8')
-        print(images_plot.shape)
-        plt.imshow(images_plot[i])
-        print(labels[i])
-        plt.show()
-    '''
-
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
     def oneHot(self, labels):
@@ -88,3 +78,14 @@ class Prep():
     def nextBatchTest_ConfMat(self):
         batch, O_H = self.unzip_test()
         return batch, O_H
+
+    def test_Util(self):
+        batch, _ = self.nextBatchTest()
+        batch = batch[0]
+        batch = batch * 255
+        util.display_image(batch)
+        new = util.add_noise(batch)
+        util.display_image(new)
+
+k = Prep()
+k.test_Util()
