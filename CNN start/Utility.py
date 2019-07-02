@@ -42,21 +42,21 @@ class Utility(): #this class will help with software stuff
 
         return matrix
 
-    def trans_left(self, matrix, amount):
-        for i in range(len(matrix[0][0]), 1, -1):
-            for j in range(len(matrix[0])):
-                if (i < len(matrix[0][0]) - amount):
-                    matrix[j][i] = matrix[j][i - amount]
-                elif (i < len(matrix[0][0]) - 1):
-                    matrix[j][i] = 0
+    def trans_right(self, matrix_, amount):
+        matrix = np.rot90(matrix_)
+        for i in range(len(matrix)-amount):
+            matrix[i] = matrix[i+amount]
+        matrix = np.rot90(matrix, k = 3)
         return matrix
 
-    def trans_right(self, matrix, amount):
-        for i in range(len(matrix[0][0]), 1, -1):
-            for j in range(len(matrix[0])):
-                if (i < len(matrix[0][0]) - amount):
-                    matrix[j][i] = matrix[j][i + amount]
+
+    def trans_left(self, matrix_, amount):
+        matrix = np.rot90(matrix_)
+        for i in range(len(matrix)-amount, amount-1, -1):
+            matrix[i] = matrix[i-amount]
+        matrix = np.rot90(matrix, k=3)
         return matrix
+
 
     def trans_up(self, matrix, amount):
         for i in range(len(matrix)-amount):
@@ -65,6 +65,6 @@ class Utility(): #this class will help with software stuff
 
 
     def trans_down(self, matrix, amount):
-        for i in range(len(matrix)-amount, 0, -1):
+        for i in range(len(matrix)-amount, amount-1, -1):
             matrix[i] = matrix[i-amount]
         return matrix

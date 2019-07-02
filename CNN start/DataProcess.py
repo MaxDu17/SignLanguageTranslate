@@ -79,13 +79,10 @@ class Prep():
         batch, O_H = self.unzip_test()
         return batch, O_H
 
-    def test_Util(self):
+    def test_Aug(self): #this is more of a private behind-the-hood function that tests the util library
         batch, _ = self.nextBatchTest()
         batch = batch[0]
         batch = batch * 255
         util.display_image(batch)
-        new = util.trans_down(batch, 2)
+        new = util.trans_left(batch, 2)
         util.display_image(new)
-
-k = Prep()
-k.test_Util()
