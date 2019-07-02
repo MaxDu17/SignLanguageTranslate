@@ -68,6 +68,7 @@ class Prep():
             new_batch.append(util.trans_vert(batch[i], 1))
             new_batch.append(util.trans_hor(batch[i], -1))
             new_batch.append(util.trans_hor(batch[i], 1))
+            print(i)
         return new_batch, new_key
 
 
