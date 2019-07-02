@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
 class Utility(): #this class will help with software stuff
 
     #preconditions: file_object must be a csv file
@@ -18,6 +19,11 @@ class Utility(): #this class will help with software stuff
         plt.imshow(images_plot)
         plt.show()
 
+    def save_image(self, matrix, path):
+        print(np.shape(matrix))
+        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+        img.save(path)
+
     def flip_lr(self, matrix):
          return np.fliplr(matrix)
 
@@ -33,7 +39,6 @@ class Utility(): #this class will help with software stuff
     def add_noise(self, matrix):
         shape = np.shape(matrix)
         noise = np.random.randint(10, size=shape, dtype='uint8')
-        print(noise)
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 for k in range(len(matrix[0][0])):

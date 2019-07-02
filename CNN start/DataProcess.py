@@ -84,5 +84,7 @@ class Prep():
         batch = batch[0]
         batch = batch * 255
         util.display_image(batch)
-        new = util.trans_left(batch, 2)
+        new = util.add_noise(batch)
         util.display_image(new)
+        util.save_image(new, 'plot.png')
+
