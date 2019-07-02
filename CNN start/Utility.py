@@ -24,8 +24,6 @@ class Utility(): #this class will help with software stuff
         img = img.resize((width, height))
         return np.asarray(img)
 
-
-
     def save_image(self, matrix, path):
         img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
         img.save(path)
@@ -75,9 +73,3 @@ class Utility(): #this class will help with software stuff
         f = 0  # up/down (i.e. 5/-5)
         img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
         return np.asarray(img)
-
-
-    def trans_down(self, matrix, amount):
-        for i in range(len(matrix)-amount, amount-1, -1):
-            matrix[i] = matrix[i-amount]
-        return matrix

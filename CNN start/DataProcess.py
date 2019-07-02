@@ -50,6 +50,26 @@ class Prep():
         O_H = self.oneHot(labels)
         return batch[0:100], O_H[0:100]
 
+    def augment(self, batch, O_H):
+        # we can expand this set from 50000 to 500000 with 10 transformations
+        # the two rotations, the two reflections, and the added noise for now, up down, left right, normal
+        new_batch = list()
+        new_key = list()
+        for i in range(len(batch)):
+            for k in range(10): #a dumb way to get the data you want
+                new_batch.append(O_H[i])
+            new_batch.append(batch[i])
+            new_batch.append(util.add_noise(batch[i]))
+            new_batch.append(util.rot_ck(batch[i]))
+            new_batch.append(util.rot_cck(batch[i]))
+            new_batch.append(util.flip_lr(batch[i]))
+            new_batch.append(util.flip_ud(batch[i]))
+            new_batch.append(util.trans_vert(batch[i], -1))
+            new_batch.append(util.trans_vert(batch[i], 1))
+            new_batch.append(util.trans_hor(batch[i], -1))
+            new_batch.append(util.trans_hor(batch[i], 1))
+        return new_batch, new_key
+
 
     def getkey(self, data):
         print(data)
@@ -63,13 +83,18 @@ class Prep():
             k[l] = 1
         return carrier
 
-    def nextBatchTrain(self, batchNum):
+    def nextBatchTrain(self, batchNum, large):
         batch, O_H = self.unzip_training()
+        modulus = 50000
+        if large:
+            batch, O_H = self.augment(batch, O_H)
+            modulus = 500000
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
-        self.trainCount = self.trainCount % 50000
+        self.trainCount = self.trainCount % modulus
         return batch, O_H
+
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
@@ -88,4 +113,7 @@ class Prep():
         util.display_image(k)
 
 k = Prep()
-k.test_Aug()
+batch, O_H = k.unzip_training()
+batch, O_H = k.augment(batch, O_H)
+print(np.shape(batch))
+
