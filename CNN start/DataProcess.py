@@ -83,8 +83,9 @@ class Prep():
         batch, _ = self.nextBatchTest()
         batch = batch[0]
         batch = batch * 255
-        util.display_image(batch)
-        new = util.add_noise(batch)
-        util.display_image(new)
-        util.save_image(new, 'plot.png')
+        k = util.trans_vert(batch, 10)
+        print(np.shape(k))
+        util.display_image(k)
 
+k = Prep()
+k.test_Aug()

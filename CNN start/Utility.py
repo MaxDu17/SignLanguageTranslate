@@ -19,8 +19,14 @@ class Utility(): #this class will help with software stuff
         plt.imshow(images_plot)
         plt.show()
 
+    def resize_image(self, matrix, width, height):
+        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+        img = img.resize((width, height))
+        return np.asarray(img)
+
+
+
     def save_image(self, matrix, path):
-        print(np.shape(matrix))
         img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
         img.save(path)
 
@@ -47,26 +53,28 @@ class Utility(): #this class will help with software stuff
 
         return matrix
 
-    def trans_right(self, matrix_, amount):
-        matrix = np.rot90(matrix_)
-        for i in range(len(matrix)-amount):
-            matrix[i] = matrix[i+amount]
-        matrix = np.rot90(matrix, k = 3)
-        return matrix
 
+    def trans_vert(self, matrix, amount):
+        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+        a = 1
+        b = 0
+        c = 0  # left/right (i.e. 5/-5)
+        d = 0
+        e = 1
+        f = amount  # up/down (i.e. 5/-5)
+        img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
+        return np.asarray(img)
 
-    def trans_left(self, matrix_, amount):
-        matrix = np.rot90(matrix_)
-        for i in range(len(matrix)-amount, amount-1, -1):
-            matrix[i] = matrix[i-amount]
-        matrix = np.rot90(matrix, k=3)
-        return matrix
-
-
-    def trans_up(self, matrix, amount):
-        for i in range(len(matrix)-amount):
-            matrix[i] = matrix[i+amount]
-        return matrix
+    def trans_hor(self, matrix, amount):
+        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+        a = 1
+        b = 0
+        c = amount  # left/right (i.e. 5/-5)
+        d = 0
+        e = 1
+        f = 0  # up/down (i.e. 5/-5)
+        img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
+        return np.asarray(img)
 
 
     def trans_down(self, matrix, amount):
