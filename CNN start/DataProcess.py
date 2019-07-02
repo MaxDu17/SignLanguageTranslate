@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+import csv
 from Utility import Utility
 util = Utility()
 class Prep():
@@ -56,19 +57,20 @@ class Prep():
         new_batch = list()
         new_key = list()
         for i in range(len(batch)):
-            for k in range(10): #a dumb way to get the data you want
-                new_batch.append(O_H[i])
+            for k in range(5): #a dumb way to get the data you want
+                new_key.append(O_H[i])
             new_batch.append(batch[i])
             new_batch.append(util.add_noise(batch[i]))
             new_batch.append(util.rot_ck(batch[i]))
             new_batch.append(util.rot_cck(batch[i]))
             new_batch.append(util.flip_lr(batch[i]))
+            '''
             new_batch.append(util.flip_ud(batch[i]))
             new_batch.append(util.trans_vert(batch[i], -1))
             new_batch.append(util.trans_vert(batch[i], 1))
             new_batch.append(util.trans_hor(batch[i], -1))
             new_batch.append(util.trans_hor(batch[i], 1))
-            print(i)
+            '''
         return new_batch, new_key
 
 
@@ -87,14 +89,21 @@ class Prep():
     def nextBatchTrain(self, batchNum, large):
         batch, O_H = self.unzip_training()
         modulus = 50000
-        if large:
-            batch, O_H = self.augment(batch, O_H)
-            modulus = 500000
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
         self.trainCount = self.trainCount % modulus
         return batch, O_H
+
+    def save_augment(self, batch, O_H):
+        PATH = "../../BIG" #only works on linux
+        for i in range(len(batch)):
+            sub_path = PATH + '/' + str(i) + '.png'
+            test = open("../../BIG/all.csv", "w")
+            logger = csv.writer(test, lineterminator="\n")
+            logger.writerow(O_H[i])
+            util.save_image(batch[i], sub_path)
+            print(i)
 
 
     def nextBatchTest(self):
