@@ -10,7 +10,7 @@ for i in range(len(matrix)):
         matrix[i][j] = float(matrix[i][j])
 
 fig=plt.figure()
-ax = fig.add_subplot(111)
+ax = fig.add_subplot(111) #111 is an argument in the form of 3 numbers
 color = ax.matshow(matrix)
 fig.colorbar(color)
 print(matrix)

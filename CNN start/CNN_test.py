@@ -132,8 +132,8 @@ def confMat(sess):
 
     for iterate in matrix:
         logger.writerow(iterate)
+    print(['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'])
     print(matrix)
-
 
 
 def main():
