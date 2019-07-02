@@ -64,6 +64,7 @@ class Prep():
             new_batch.append(util.rot_ck(batch[i]))
             new_batch.append(util.rot_cck(batch[i]))
             new_batch.append(util.flip_lr(batch[i]))
+            print("Augment: {}".format(i))
             '''
             new_batch.append(util.flip_ud(batch[i]))
             new_batch.append(util.trans_vert(batch[i], -1))
@@ -95,7 +96,9 @@ class Prep():
         self.trainCount = self.trainCount % modulus
         return batch, O_H
 
-    def save_augment(self, batch, O_H):
+    def save_augment(self):
+        batch, O_H = self.unzip_training()
+        batch, O_H = self.augment(batch, O_H)
         PATH = "../../BIG" #only works on linux
         for i in range(len(batch)):
             sub_path = PATH + '/' + str(i) + '.png'
@@ -103,8 +106,7 @@ class Prep():
             logger = csv.writer(test, lineterminator="\n")
             logger.writerow(O_H[i])
             util.save_image(batch[i], sub_path)
-            print(i)
-
+            print("saving: {}".augment(i))
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
@@ -114,16 +116,9 @@ class Prep():
         batch, O_H = self.unzip_test()
         return batch, O_H
 
-    def test_Aug(self): #this is more of a private behind-the-hood function that tests the util library
-        batch, _ = self.nextBatchTest()
-        batch = batch[0]
-        batch = batch * 255
-        k = util.trans_vert(batch, 10)
-        print(np.shape(k))
-        util.display_image(k)
 
 k = Prep()
-batch, O_H = k.unzip_training()
-batch, O_H = k.augment(batch, O_H)
-print(np.shape(batch))
+k.save_augment()
+
+
 
