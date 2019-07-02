@@ -56,7 +56,7 @@ class Prep():
         # the two rotations, the two reflections, and the added noise for now, up down, left right, normal
         new_batch = list()
         new_key = list()
-        for i in range(len(batch)):
+        for i in range(100):
             for k in range(5): #a dumb way to get the data you want
                 new_key.append(O_H[i])
             new_batch.append(batch[i])
