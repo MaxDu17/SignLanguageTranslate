@@ -59,15 +59,12 @@ class Utility(): #this class will help with software stuff
         return matrix
 
     def trans_up(self, matrix, amount):
-        for i in range(len(matrix[0]), 1, -1):
-            for j in range(len(matrix[0][0])):
-                if (i < len(matrix[0]) - amount):
-                    matrix[j][i] = matrix[j][i + amount]
+        for i in range(len(matrix)-amount):
+            matrix[i] = matrix[i+amount]
         return matrix
 
+
     def trans_down(self, matrix, amount):
-        for i in range(len(matrix[0]), 1, -1):
-            for j in range(len(matrix[0][0])):
-                if (i < len(matrix[0]) - amount):
-                    matrix[j][i] = matrix[j][i - amount]
+        for i in range(len(matrix)-amount, 0, -1):
+            matrix[i] = matrix[i-amount]
         return matrix

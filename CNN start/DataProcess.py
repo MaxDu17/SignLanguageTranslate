@@ -84,7 +84,7 @@ class Prep():
         batch = batch[0]
         batch = batch * 255
         util.display_image(batch)
-        new = util.rot_ck(batch)
+        new = util.trans_down(batch, 2)
         util.display_image(new)
 
 k = Prep()
