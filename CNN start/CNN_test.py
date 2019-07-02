@@ -1,6 +1,7 @@
 from DataProcess import Prep
 import tensorflow as tf
 import numpy as np
+import csv
 import os
 
 def make_weights(shape, name):
@@ -92,8 +93,6 @@ def Big_Train(sess):
 
     display, _ = datafeeder.nextBatchTrain(10)
     tf.compat.v1.summary.image("10 training data examples", display, max_outputs=10)
-    print(np.shape(display))
-    input()
     for i in range(501):
         data, label = datafeeder.nextBatchTrain(100)
         prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train],
@@ -120,7 +119,7 @@ def confMat(sess):
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest_ConfMat()
-    correct = 0
+
     matrix = np.zeros([10, 10])
 
     prediction_ = sess.run(prediction, feed_dict={x: data, truth: label, hold_prob: 1})
@@ -128,8 +127,13 @@ def confMat(sess):
         k = np.argmax(prediction_[l])
         m = np.argmax(label[l])
         matrix[k][m] += 1
+    test = open("Graphs_and_Results/confusion.csv", "w")
+    logger = csv.writer(test, lineterminator="\n")
 
+    for iterate in matrix:
+        logger.writerow(iterate)
     print(matrix)
+
 
 
 def main():
