@@ -29,7 +29,8 @@ for i in range(1, 83):
 #we shrink, crop, and augment the dataset
 #this is for dom, only
 
-
+documentation_ = open("augmentations.csv", "r")
+documentation = csv.writer(documentation_, lineterminator = "\n")
 for i in range(len(labels)):
     print("I'm on image: {}".format(i))
     img_path = basepath + str(i) + ".jpg"
@@ -48,6 +49,7 @@ for i in range(len(labels)):
     ################
     #here is some programming debauchery
     print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))
+    documentation.writerow([aug_num])
     if aug_num == 1:
         tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
 
