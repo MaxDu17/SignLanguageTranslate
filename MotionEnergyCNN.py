@@ -103,11 +103,18 @@ init = tf.global_variables_initializer()
 
 def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
+    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
+    if ckpt and ckpt.model_checkpoint_path:
+        if input("Do you want to restore previous session? (y/n)") == 'y':
+            saver.restore(sess, ckpt.model_checkpoint_path)
+        else:
+            print("session discarded")
+
     writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/CNNv1/",
                                              sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
-    for i in range(501):
+    for i in range(1501):
         data, dom_label, non_label = datafeeder.nextBatchTrain(100)
 
         prediction_dom_, prediction_non_, loss_dom_, loss_non_, summary, _ = sess.run(
