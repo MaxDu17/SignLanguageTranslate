@@ -77,7 +77,7 @@ with tf.name_scope("Loss_and_Optimizer"):
     loss_dom = tf.reduce_mean(
         tf.nn.softmax_cross_entropy_with_logits_v2(labels=dom, logits=prediction_dom, name="Cross_entropy_loss_DOM"))
 
-    optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
+    optimizer = tf.train.AdamOptimizer(learning_rate = 0.0001, name = "Optimizer")
     train = optimizer.minimize(loss_dom)
 
 with tf.name_scope("Saver"):
