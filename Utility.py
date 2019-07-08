@@ -66,8 +66,8 @@ class Utility(): #this class will help with software stuff
         return matrix
 
 
-    def trans_vert(self, matrix, amount):
-        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+    def trans_vert(self, matrix, amount, type):
+        img = Image.fromarray(matrix.astype(np.uint8), type)
         a = 1
         b = 0
         c = 0  # left/right (i.e. 5/-5)
@@ -77,8 +77,8 @@ class Utility(): #this class will help with software stuff
         img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
         return np.asarray(img)
 
-    def trans_hor(self, matrix, amount):
-        img = Image.fromarray(matrix.astype(np.uint8), 'RGB')
+    def trans_hor(self, matrix, amount, type):
+        img = Image.fromarray(matrix.astype(np.uint8), type)
         a = 1
         b = 0
         c = amount  # left/right (i.e. 5/-5)
