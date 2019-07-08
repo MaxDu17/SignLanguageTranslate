@@ -83,6 +83,8 @@ class Prep():
         self.trainCount = self.trainCount % modulus
         return image, dom
 
+    def getDistributions(self):
+        pass
 
 '''
 k = Prep()

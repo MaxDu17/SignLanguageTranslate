@@ -5,7 +5,7 @@ import random
 from collections import Counter
 
 tool = Utility()
-
+#VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
 basepath = "DATASET_Motion/"
 savepath = "DATASET_augmented/"
 k = open("dom_labels.csv", 'r')
