@@ -124,8 +124,8 @@ def Big_Train(sess):
         print("Epoch: {}. Dom_Loss: {}. Non_loss: {}. Big_loss: {}".format(i, loss_dom_, loss_non_, loss_dom_ + loss_non_))
         if i % 10 == 0:
             writer.add_summary(summary, global_step=i)
-            print("This is the prediction: {}".format(prediction_non_))
-            print("This is the label: {}".format(non_label))
+            print("This is the prediction: {}".format(prediction_non_[0]))
+            print("This is the label: {}".format(non_label[0]))
         if i % 100 == 0:
             saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
