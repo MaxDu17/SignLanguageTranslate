@@ -3,6 +3,8 @@ import tensorflow as tf
 import numpy as np
 import csv
 import os
+from Utility import Utility
+util = Utility()
 from DataProcess import DataStructure
 
 def make_weights(shape, name):
@@ -104,7 +106,7 @@ def Big_Train(sess):
 
         prediction_dom_, loss_dom_, summary, _ = sess.run(
             [prediction_dom, loss_dom, summary_op, train],
-            feed_dict={x: data, dom: dom_label, hold_prob: 1})
+            feed_dict={x: data, dom: dom_label, hold_prob: 0.7})
 
         print("Epoch: {}. Dom_Loss: {}".format(i, loss_dom_))
         if i % 10 == 0:
@@ -114,41 +116,33 @@ def Big_Train(sess):
         if i % 100 == 0:
             saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
+def VisualizeVar(sess, name = "Layer_1/Weights/Variable"):
+    var = [k for k in tf.global_variables() if k.op.name == name]
+    var_ = np.asarray(sess.run(var))
 
-def confMat(sess):
-    sess.run(tf.global_variables_initializer())
-    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
-    if ckpt and ckpt.model_checkpoint_path:
-        saver.restore(sess, ckpt.model_checkpoint_path)
-
-    datafeeder = Prep()
-
-    data, label = datafeeder.nextBatchTest_ConfMat()
-
-    matrix = np.zeros([10, 10])
-
-    prediction_ = sess.run(prediction, feed_dict={x: data, truth: label, hold_prob: 1})
-    for l in range(len(prediction_)):
-        k = np.argmax(prediction_[l])
-        m = np.argmax(label[l])
-        matrix[k][m] += 1
-    test = open("Graphs_and_Results/confusion.csv", "w")
-    logger = csv.writer(test, lineterminator="\n")
-
-    for iterate in matrix:
-        logger.writerow(iterate)
-    print(['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'])
-    print(matrix)
-
+    #this may change
+    matrix= var_.reshape(4, 4, 32).transpose(2, 0, 1)
+    matrix = abs(matrix)*255
+    util.display_image(matrix[1])
 
 def main():
     with tf.Session() as sess:
         print("---the model is starting-----")
-        query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
+        query = input("What mode do you want? Train (t) or Confusion Matrix (m) or Visualize (v)?\n")
         if query == "t":
             Big_Train(sess)
         elif query == "m":
+            raise Exception("Under Construction")
             confMat(sess)
+        elif query == "v":
+            sess.run(tf.global_variables_initializer())
+            ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/CNNv1/'))
+            if ckpt and ckpt.model_checkpoint_path:
+                saver.restore(sess, ckpt.model_checkpoint_path)
+            else:
+                raise Exception("No saved model available")
+
+            VisualizeVar(sess) #, input("What variable? These are available: {}\n".format([k.op.name for k in tf.global_variables()])))
 
 if __name__ == '__main__':
     main()
