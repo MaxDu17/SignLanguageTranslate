@@ -106,7 +106,7 @@ def Big_Train(sess):
             [prediction_dom, loss_dom, summary_op, train],
             feed_dict={x: data, dom: dom_label, hold_prob: 1})
 
-        print("Epoch: {}. Dom_Loss: {}. Non_loss: {}. Big_loss: {}".format(i, loss_dom_, loss_non_, loss_dom_ + loss_non_))
+        print("Epoch: {}. Dom_Loss: {}".format(i, loss_dom_))
         if i % 10 == 0:
             writer.add_summary(summary, global_step=i)
             print("This is the prediction: {}".format(prediction_dom_[0]))
