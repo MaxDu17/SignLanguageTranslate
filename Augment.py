@@ -10,9 +10,8 @@ basepath = "DATASET_Motion/"
 savepath = "DATASET_augmented/"
 k = open(basepath + "labels.csv", 'r')
 labels = list(csv.reader(k))
-
 #we shrink, crop, and augment the dataset
-for i in range(3):
+for i in range(len(labels)):
     print("I'm on image: {}".format(i))
     img_path = basepath + str(i) + ".jpg"
     matrix = tool.load_image_to_mat(img_path)
@@ -37,7 +36,7 @@ for i in range(3):
     print("\trotating counter clockwise")
     matrix_CCK = tool.rot_cck(matrix)
     tool.save_image(matrix=matrix_CCK, path=savepath + str(i) + "_4.jpg", type="L")
-    
+
     print("\tadding noise")
     matrix_noise = tool.add_noise_L(matrix)
     tool.save_image(matrix=matrix_noise, path=savepath + str(i) + "_5.jpg", type="L")
