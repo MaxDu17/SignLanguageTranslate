@@ -16,8 +16,8 @@
       <file leaf-file-name="MotionEnergyCNN.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="75" column="81" lean-forward="true" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
+            <state relative-caret-position="476">
+              <caret line="93" column="41" lean-forward="true" selection-start-line="93" selection-start-column="41" selection-end-line="93" selection-end-column="41" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -663,8 +663,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="75" column="81" lean-forward="true" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
+        <state relative-caret-position="476">
+          <caret line="93" column="41" lean-forward="true" selection-start-line="93" selection-start-column="41" selection-end-line="93" selection-end-column="41" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>

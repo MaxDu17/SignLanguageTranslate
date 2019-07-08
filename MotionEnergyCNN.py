@@ -61,23 +61,37 @@ with tf.name_scope("Layer_3"):
     conv_3 = convolutional_layer(conv_2_pooled, shape=[4, 4, 64, 128], name="Layer_3")
     conv_3_pooled = max_pool(conv_3, name="Layer_3")
 
-with tf.name_scope("Fully_Connected"):
-    flattened = tf.reshape(conv_3_pooled, [-1, 6*6*128], name = "Flatten")
-    fc_1 = fully_connected(flattened, 1152, name = "Fully_Connected_Layer_1")
-    dropout_1 = tf.nn.dropout(fc_1, rate = 1-hold_prob)
-    fc_2 = fully_connected(dropout_1, 576, name="Fully_Connected_Layer_2")
+with tf.name_scope("Fully_Connected_DOM"):
+    flattened_dom = tf.reshape(conv_3_pooled, [-1, 6*6*128], name = "Flatten_DOM")
+    fc_1_dom = fully_connected(flattened_dom, 1152, name = "Fully_Connected_Layer_1_DOM")
+    dropout_1_dom = tf.nn.dropout(fc_1_dom, rate = 1-hold_prob)
+    fc_2_dom = fully_connected(dropout_1_dom, 576, name="Fully_Connected_Layer_2_DOM")
+
+with tf.name_scope("Fully_Connected_NON"):
+    flattened_non = tf.reshape(conv_3_pooled, [-1, 6*6*128], name = "Flatten_NON")
+    fc_1_non = fully_connected(flattened_non, 1152, name = "Fully_Connected_Layer_1_NON")
+    dropout_1_non = tf.nn.dropout(fc_1_non, rate = 1-hold_prob)
+    fc_2_non = fully_connected(dropout_1_non, 576, name="Fully_Connected_Layer_2_NON")
 
 with tf.name_scope("Output"):
-    prediction = fully_connected(fc_2, 83, name = "raw_pred")
-
+    prediction_dom = fully_connected(fc_2_dom, 83, name="raw_pred_DOM")
+    prediction_non = fully_connected(fc_2_non, 83, name = "raw_pred_NON")
 
 with tf.name_scope("Loss_and_Optimizer"):
-    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
+    loss_dom = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits_v2(labels=dom, logits=prediction_dom, name="Cross_entropy_loss_DOM"))
+    loss_non = tf.reduce_mean(
+        tf.nn.softmax_cross_entropy_with_logits_v2(labels=non, logits=prediction_non, name="Cross_entropy_loss_NON"))
+    
+    big_loss = tf.add(loss_dom, loss_non, name = "Loss_Concat")
+
     optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
-    train = optimizer.minimize(loss)
+    train = optimizer.minimize(big_loss)
 
 with tf.name_scope("Saver"):
-    tf.summary.scalar("Loss", loss)
+    tf.summary.scalar("Loss", loss_dom)
+    tf.summary.scalar("Loss", loss_non)
+    tf.summary.scalar("Loss", big_loss)
     summary_op = tf.summary.merge_all()
     saver = tf.train.Saver(max_to_keep=7)
 
