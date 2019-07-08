@@ -74,6 +74,16 @@ class Prep():
         self.trainCount = self.trainCount % modulus
         return image, dom, non
 
+    def nextBatchTrain_dom(self, batchNum):
+        image, dom, non = self.unzip_train()
+        modulus = len(image)
+        image = image[self.trainCount: self.trainCount+batchNum]
+        dom = dom[self.trainCount: self.trainCount+batchNum]
+        self.trainCount += batchNum
+        self.trainCount = self.trainCount % modulus
+        return image, dom
+
+
 '''
 k = Prep()
 images, dom, non = k.nextBatchTrain(11)
