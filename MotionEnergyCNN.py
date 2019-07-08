@@ -82,7 +82,7 @@ with tf.name_scope("Loss_and_Optimizer"):
         tf.nn.softmax_cross_entropy_with_logits_v2(labels=dom, logits=prediction_dom, name="Cross_entropy_loss_DOM"))
     loss_non = tf.reduce_mean(
         tf.nn.softmax_cross_entropy_with_logits_v2(labels=non, logits=prediction_non, name="Cross_entropy_loss_NON"))
-    
+
     big_loss = tf.add(loss_dom, loss_non, name = "Loss_Concat")
 
     optimizer = tf.train.AdamOptimizer(learning_rate = 0.001, name = "Optimizer")
@@ -102,28 +102,21 @@ init = tf.global_variables_initializer()
 
 def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
-    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/",
+    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/CNNv1",
                                              sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
-    display, _ = datafeeder.nextBatchTrain(10)
-    tf.compat.v1.summary.image("10 training data examples", display, max_outputs=10)
     for i in range(501):
-        data, label = datafeeder.nextBatchTrain(100)
-        prediction_, loss_, summary, _ = sess.run([prediction, loss, summary_op, train],
-                                                  feed_dict={x: data, truth: label, hold_prob: 1})
-        print("Epoch: {}. Loss: {}".format(i, loss_))
+        data, dom_label, non_label = datafeeder.nextBatchTrain(100)
+
+        prediction_dom_, prediction_non_, loss_dom_, loss_non_, summary, _ = sess.run(
+            [prediction_dom, prediction_non, loss_dom, loss_non, summary_op, train],
+            feed_dict={x: data, dom: dom_label, non: non_label, hold_prob: 1})
+
+        print("Epoch: {}. Dom_Loss: {}. Non_loss: {}. Big_loss: {}".format(i, loss_dom_, loss_non_, loss_dom_ + loss_non_))
         if i % 10 == 0:
             writer.add_summary(summary, global_step=i)
-        if i % 100 == 0 and i > 0:
-            saver.save(sess, "Graphs_and_Results/CNN_test", global_step=i)
-            data, label = datafeeder.nextBatchTest()
-            correct = 0
-            prediction_ = sess.run(prediction, feed_dict={x: data, truth: label, hold_prob: 1})
-            for l in range(len(label)):
-                if (np.argmax(prediction_[l]) == np.argmax(label[l])):
-                    correct += 1
-            print("This is the accuracy: {}".format(correct / len(prediction_)))
+            #add testing function here
 
 def confMat(sess):
     sess.run(tf.global_variables_initializer())

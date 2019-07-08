@@ -3,14 +3,26 @@ import numpy as np
 import csv
 from Utility import Utility
 util = Utility()
+class DataStructure:
+    def __init__(self, dom, non, data):
+        self.dom = dom
+        self.non = non
+        self.data = data
+    def get_dom(self):
+        return self.dom
+    def get_non(self):
+        return self.non
+    def get_data(self):
+        return self.data
+
 class Prep():
     def __init__(self):
         self.trainCount =0
 
     def unpickle(self, file):
         with open(file, 'rb') as fo:
-            dict = pickle.load(fo, encoding = 'bytes')
-        return dict
+            objects = pickle.load(fo, encoding = 'bytes')
+        return objects
 
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
@@ -66,36 +78,14 @@ class Prep():
 
     def nextBatchTrain(self, batchNum, large):
         batch, O_H = self.unzip_training()
-        modulus = 50000
+        modulus = 4580
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
         self.trainCount = self.trainCount % modulus
         return batch, O_H
 
-    def save_augment(self):
-        batch, O_H = self.unzip_training()
-        batch, O_H = self.augment(batch, O_H)
-        PATH = "../../BIG" #only works on linux
-        for i in range(len(batch)):
-            sub_path = PATH + '/' + str(i) + '.png'
-            test = open("../../BIG/all.csv", "w")
-            logger = csv.writer(test, lineterminator="\n")
-            logger.writerow(O_H[i])
-            util.save_image(batch[i], sub_path)
-            print("saving: {}".format(i))
 
-    def nextBatchTest(self):
-        batch, O_H = self.unzip_test_small()
-        return batch, O_H
-
-    def nextBatchTest_ConfMat(self):
-        batch, O_H = self.unzip_test()
-        return batch, O_H
-
-
-k = Prep()
-k.save_augment()
 
 
 
