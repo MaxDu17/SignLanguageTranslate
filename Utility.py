@@ -44,7 +44,7 @@ class Utility(): #this class will help with software stuff
     def rot_cck(self, matrix):
         return np.rot90(matrix, k = 1)
 
-    def add_noise(self, matrix):
+    def add_noise_RGB(self, matrix):
         shape = np.shape(matrix)
         noise = np.random.randint(10, size=shape, dtype='uint8')
         for i in range(len(matrix)):
@@ -53,6 +53,16 @@ class Utility(): #this class will help with software stuff
                     if (matrix[i][j][k] != 255):
                         matrix[i][j][k] += noise[i][j][k]
 
+        return matrix
+
+    def add_noise_L(self, matrix): #this is for greyscale
+        shape = np.shape(matrix)
+        carrier = matrix.copy()
+        noise = np.random.randint(10, size=shape, dtype='uint8')
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if (matrix[i][j]!= 255):
+                    carrier[i][j] += noise[i][j]
         return matrix
 
 
