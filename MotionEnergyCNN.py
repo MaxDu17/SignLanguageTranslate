@@ -42,7 +42,8 @@ def fully_connected(input, end_size, name):
     in_size = int(input.get_shape()[1])
     W = make_weights([in_size, end_size], name)
     b = make_bias([end_size], name)
-    return(tf.matmul(input, W) + b)
+    raw = tf.matmul(input, W) + b
+    return(tf.nn.sigmoid(raw))
 
 with tf.name_scope("Placeholders"):
     x = tf.placeholder(tf.float32, shape = [None, 48,48,1], name = "Input")
@@ -103,7 +104,7 @@ init = tf.global_variables_initializer()
 
 def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
-    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/CNNv1'))
+    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/CNNv1/'))
     if ckpt and ckpt.model_checkpoint_path:
         if input("Do you want to restore previous session? (y/n)") == 'y':
             saver.restore(sess, ckpt.model_checkpoint_path)
