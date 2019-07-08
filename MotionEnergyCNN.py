@@ -103,7 +103,7 @@ init = tf.global_variables_initializer()
 
 def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
-    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
+    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/CNNv1'))
     if ckpt and ckpt.model_checkpoint_path:
         if input("Do you want to restore previous session? (y/n)") == 'y':
             saver.restore(sess, ckpt.model_checkpoint_path)
@@ -124,6 +124,8 @@ def Big_Train(sess):
         print("Epoch: {}. Dom_Loss: {}. Non_loss: {}. Big_loss: {}".format(i, loss_dom_, loss_non_, loss_dom_ + loss_non_))
         if i % 10 == 0:
             writer.add_summary(summary, global_step=i)
+            print("This is the prediction: {}".format(prediction_dom_))
+            print("This is the label: {}".format(dom_label))
         if i % 100 == 0:
             saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
