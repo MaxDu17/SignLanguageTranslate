@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 import csv
 import os
+from DataProcess import DataStructure
 
 def make_weights(shape, name):
     weight_name = name + "_Weight"
@@ -44,7 +45,7 @@ def fully_connected(input, end_size, name):
     return(tf.matmul(input, W) + b)
 
 with tf.name_scope("Placeholders"):
-    x = tf.placeholder(tf.float32, shape = [None, 32,32,1], name = "Input")
+    x = tf.placeholder(tf.float32, shape = [None, 48,48,1], name = "Input")
     dom = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_dom")
     non = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_non")
     hold_prob = tf.placeholder(tf.float32)
@@ -102,7 +103,7 @@ init = tf.global_variables_initializer()
 
 def Big_Train(sess):
     sess.run(tf.global_variables_initializer())
-    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/CNNv1",
+    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/CNNv1/",
                                              sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
@@ -116,6 +117,8 @@ def Big_Train(sess):
         print("Epoch: {}. Dom_Loss: {}. Non_loss: {}. Big_loss: {}".format(i, loss_dom_, loss_non_, loss_dom_ + loss_non_))
         if i % 10 == 0:
             writer.add_summary(summary, global_step=i)
+        if i % 100 == 0:
+            saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
 
 def confMat(sess):

@@ -1,17 +1,20 @@
 import pickle
 import numpy as np
-import csv
 from Utility import Utility
 util = Utility()
-class DataStructure:
+
+class DataStructure: #this is for the pickle's use
     def __init__(self, dom, non, data):
         self.dom = dom
         self.non = non
         self.data = data
+
     def get_dom(self):
         return self.dom
+
     def get_non(self):
         return self.non
+
     def get_data(self):
         return self.data
 
@@ -27,6 +30,7 @@ class Prep():
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
     def unzip_train(self):
+
         big_list = self.unpickle("SignLanguageData")
         label_list_dom = list()
         label_list_non = list()
@@ -62,13 +66,14 @@ class Prep():
 
     def nextBatchTrain(self, batchNum):
         image, dom, non = self.unzip_train()
-        modulus = 4580
+        modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         non = non[self.trainCount: self.trainCount + batchNum]
         self.trainCount += batchNum
         self.trainCount = self.trainCount % modulus
         return image, dom, non
+
 '''
 k = Prep()
 images, dom, non = k.nextBatchTrain(11)
