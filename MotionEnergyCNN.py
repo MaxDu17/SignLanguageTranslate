@@ -89,9 +89,9 @@ with tf.name_scope("Loss_and_Optimizer"):
     train = optimizer.minimize(big_loss)
 
 with tf.name_scope("Saver"):
-    tf.summary.scalar("Loss", loss_dom)
-    tf.summary.scalar("Loss", loss_non)
-    tf.summary.scalar("Loss", big_loss)
+    tf.summary.scalar("Loss_dom", loss_dom)
+    tf.summary.scalar("Loss_non", loss_non)
+    tf.summary.scalar("Loss_ALL", big_loss)
     summary_op = tf.summary.merge_all()
     saver = tf.train.Saver(max_to_keep=7)
 

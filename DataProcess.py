@@ -33,38 +33,15 @@ class Prep():
         img_list = list()
 
         for k in big_list:
-            label_list_dom.append(k.get_dom())
-            label_list_non.append(k.get_non())
+            label_list_dom.append(self.Hot_Vec(k.get_dom()))
+            label_list_non.append(self.Hot_Vec(k.get_non()))
             img_list.append(k.get_data()/255)  #remember to normalize
+        img_list = np.asarray(img_list)
+        label_list_dom = np.asarray(label_list_dom)
+        label_list_non = np.asarray(label_list_non)
 
-
-    def unzip_test(self):
-        files = "test_batch"
-        bigdata = list()
-        bigdata.append(self.unpickle("data/" + files))
-        batch = np.vstack([d[b'data'] for d in bigdata])
-        batch = batch / 255
-        training_length = len(batch)
-        batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.hstack([d[b'labels'] for d in bigdata])
-        O_H = self.oneHot(labels)
-        return batch[0:2000], O_H[0:2000]
-
-    def unzip_test_small(self):
-        files = "test_batch"
-        bigdata = list()
-        bigdata.append(self.unpickle("data/" + files))
-        batch = np.vstack([d[b'data'] for d in bigdata])
-        batch = batch / 255
-        training_length = len(batch)
-        batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.hstack([d[b'labels'] for d in bigdata])
-        O_H = self.oneHot(labels)
-        return batch[0:100], O_H[0:100]
-
-
-    def getkey(self, data):
-        print(data)
+        img_list = img_list.reshape(len(big_list), 48, 48, 1) #ignore the pycharm warning here
+        return img_list, label_list_dom, label_list_non
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
@@ -72,18 +49,31 @@ class Prep():
         dimensions = 83
         carrier = np.zeros([dimensions])
         for k in selection:
-            carrier[k] = 1
+            if (k == 0):
+                raise Exception(
+                    "Something isn't right--we have a reference to gesture 0 in the data, which shouldn't exist")
+            if(k == 999 and len(selection) == 1):
+                carrier[0] = 1
+            elif(k == 999 and len(selection) != 1):
+                raise Exception("Something isn't right--we have a null value and a non-null value in the same cell")
+            else:
+                carrier[k] = 1
         return carrier
 
     def nextBatchTrain(self, batchNum):
-
+        image, dom, non = self.unzip_train()
         modulus = 4580
-        batch = batch[self.trainCount: self.trainCount+batchNum]
-        O_H = O_H[self.trainCount: self.trainCount+batchNum]
+        image = image[self.trainCount: self.trainCount+batchNum]
+        dom = dom[self.trainCount: self.trainCount+batchNum]
+        non = non[self.trainCount: self.trainCount + batchNum]
         self.trainCount += batchNum
         self.trainCount = self.trainCount % modulus
-        return batch, O_H
-
+        return image, dom, non
+'''
 k = Prep()
-k.unzip_train()
-
+images, dom, non = k.nextBatchTrain(11)
+util.display_image(images[0].reshape(48,48)*255)
+print(dom[10])
+print("-------")
+print(non[10])
+'''
