@@ -1,0 +1,8 @@
+model_checkpoint_path: "Sign-1500"
+all_model_checkpoint_paths: "Sign-900"
+all_model_checkpoint_paths: "Sign-1000"
+all_model_checkpoint_paths: "Sign-1100"
+all_model_checkpoint_paths: "Sign-1200"
+all_model_checkpoint_paths: "Sign-1300"
+all_model_checkpoint_paths: "Sign-1400"
+all_model_checkpoint_paths: "Sign-1500"
