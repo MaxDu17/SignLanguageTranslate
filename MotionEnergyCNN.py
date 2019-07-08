@@ -44,12 +44,13 @@ def fully_connected(input, end_size, name):
     return(tf.matmul(input, W) + b)
 
 with tf.name_scope("Placeholders"):
-    x = tf.placeholder(tf.float32, shape = [None, 32,32,3], name = "Input")
-    truth = tf.placeholder(tf.float32, shape = [None, 10], name = "Label")
+    x = tf.placeholder(tf.float32, shape = [None, 32,32,1], name = "Input")
+    dom = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_dom")
+    non = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_non")
     hold_prob = tf.placeholder(tf.float32)
 
 with tf.name_scope("Layer_1"):
-    conv_1 = convolutional_layer(x, shape = [4,4,3,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
+    conv_1 = convolutional_layer(x, shape = [4,4,1,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
     conv_1_pooled = max_pool(conv_1, name = "Layer_1")
 
 with tf.name_scope("Layer_2"):
@@ -61,14 +62,14 @@ with tf.name_scope("Layer_3"):
     conv_3_pooled = max_pool(conv_3, name="Layer_3")
 
 with tf.name_scope("Fully_Connected"):
-    flattened = tf.reshape(conv_3_pooled, [-1, 4*4*128], name = "Flatten")
-    fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
+    flattened = tf.reshape(conv_3_pooled, [-1, 6*6*128], name = "Flatten")
+    fc_1 = fully_connected(flattened, 1152, name = "Fully_Connected_Layer_1")
     dropout_1 = tf.nn.dropout(fc_1, rate = 1-hold_prob)
+    fc_2 = fully_connected(dropout_1, 576, name="Fully_Connected_Layer_2")
 
 with tf.name_scope("Output"):
-    prediction = fully_connected(dropout_1, 10, name = "raw_pred")
-    prediction_out = tf.multiply(1.0, prediction,
-                             name="Prediction")
+    prediction = fully_connected(fc_2, 83, name = "raw_pred")
+
 
 with tf.name_scope("Loss_and_Optimizer"):
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels = truth, logits = prediction, name = "Softmax_loss"))
