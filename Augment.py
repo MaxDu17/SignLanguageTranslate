@@ -29,7 +29,7 @@ for i in range(1, 83):
 #we shrink, crop, and augment the dataset
 #this is for dom, only
 
-documentation_ = open("augmentations.csv", "r")
+documentation_ = open("augmentations.csv", "w")
 documentation = csv.writer(documentation_, lineterminator = "\n")
 for i in range(len(labels)):
     print("I'm on image: {}".format(i))
