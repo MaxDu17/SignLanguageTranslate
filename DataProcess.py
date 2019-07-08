@@ -51,29 +51,6 @@ class Prep():
         O_H = self.oneHot(labels)
         return batch[0:100], O_H[0:100]
 
-    def augment(self, batch, O_H):
-        # we can expand this set from 50000 to 500000 with 10 transformations
-        # the two rotations, the two reflections, and the added noise for now, up down, left right, normal
-        new_batch = list()
-        new_key = list()
-        for i in range(100):
-            for k in range(5): #a dumb way to get the data you want
-                new_key.append(O_H[i])
-            new_batch.append(batch[i])
-            new_batch.append(util.add_noise(batch[i]))
-            new_batch.append(util.rot_ck(batch[i]))
-            new_batch.append(util.rot_cck(batch[i]))
-            new_batch.append(util.flip_lr(batch[i]))
-            print("Augment: {}".format(i))
-            '''
-            new_batch.append(util.flip_ud(batch[i]))
-            new_batch.append(util.trans_vert(batch[i], -1))
-            new_batch.append(util.trans_vert(batch[i], 1))
-            new_batch.append(util.trans_hor(batch[i], -1))
-            new_batch.append(util.trans_hor(batch[i], 1))
-            '''
-        return new_batch, new_key
-
 
     def getkey(self, data):
         print(data)
