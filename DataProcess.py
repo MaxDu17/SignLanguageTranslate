@@ -26,18 +26,17 @@ class Prep():
 
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
-    def unzip_training(self):
-        files = ["data_batch_1", "data_batch_2","data_batch_3","data_batch_4","data_batch_5"]
-        bigdata = list()
-        for names in files:
-            bigdata.append(self.unpickle("data/" + names))
-        batch = np.vstack([d[b'data'] for d in bigdata])
-        batch = batch/255
-        training_length = len(batch)
-        batch = batch.reshape(training_length, 3,32,32).transpose(0,2,3,1)
-        labels = np.hstack([d[b'labels'] for d in bigdata])
-        O_H = self.oneHot(labels)
-        return batch, O_H
+    def unzip_train(self):
+        big_list = self.unpickle("SignLanguageData")
+        label_list_dom = list()
+        label_list_non = list()
+        img_list = list()
+
+        for k in big_list:
+            label_list_dom.append(k.get_dom())
+            label_list_non.append(k.get_non())
+            img_list.append(k.get_data()/255)  #remember to normalize
+
 
     def unzip_test(self):
         files = "test_batch"
@@ -69,15 +68,15 @@ class Prep():
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
-    def oneHot(self, labels):
-        dimensions = len(labels)
-        carrier = np.zeros([dimensions, 10])
-        for k, l in zip(carrier, labels):
-            k[l] = 1
+    def Hot_Vec(self, selection):
+        dimensions = 83
+        carrier = np.zeros([dimensions])
+        for k in selection:
+            carrier[k] = 1
         return carrier
 
-    def nextBatchTrain(self, batchNum, large):
-        batch, O_H = self.unzip_training()
+    def nextBatchTrain(self, batchNum):
+
         modulus = 4580
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
@@ -85,7 +84,6 @@ class Prep():
         self.trainCount = self.trainCount % modulus
         return batch, O_H
 
-
-
-
+k = Prep()
+k.unzip_train()
 

@@ -3,26 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-100.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-100.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-100.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-200.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-200.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-200.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-300.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-300.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-300.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-400.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-400.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-400.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-500.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-500.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/CNN_test-500.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/checkpoint" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/confusion.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/events.out.tfevents.1562014397.set-xps-1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/graph.pbtxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MotionEnergyCNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyCNN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,7 +16,7 @@
       <file leaf-file-name="MotionEnergyCNN.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="881">
+            <state relative-caret-position="575">
               <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -48,20 +28,8 @@
       <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatasetMaker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DatasetMaker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="15" selection-end-column="24" />
+            <state relative-caret-position="320">
+              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -647,16 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
-          <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/csv_to_mat.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -679,18 +637,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DatasetMaker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="15" selection-end-column="24" />
+        <state relative-caret-position="184">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="125" lean-forward="true" selection-start-line="125" selection-end-line="125" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+        <state relative-caret-position="320">
+          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
