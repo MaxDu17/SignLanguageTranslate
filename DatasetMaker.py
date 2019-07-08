@@ -1,7 +1,7 @@
 import pickle
 import csv
-import numpy as np
 from Utility import Utility
+#this turns the images and labels into one pickle file as DataStructure objects
 
 class DataStructure:
     def __init__(self, dom, non, data):

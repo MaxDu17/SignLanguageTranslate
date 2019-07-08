@@ -14,6 +14,14 @@ class Utility(): #this class will help with software stuff
                 matrix[i][j] = float(matrix[i][j])
         return matrix
 
+    def cast_csv_to_int(self, file_object):
+        logger = csv.reader(file_object)
+        matrix = list(logger)
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                matrix[i][j] = int(matrix[i][j])
+        return matrix
+    
     def display_image(self, matrix): #this prints out a 3d image
         images_plot = matrix.astype('uint8')
         plt.imshow(images_plot)
