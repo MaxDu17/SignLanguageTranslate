@@ -131,31 +131,6 @@ def Big_Train(sess):
             saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
 
-def confMat(sess):
-    sess.run(tf.global_variables_initializer())
-    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/'))
-    if ckpt and ckpt.model_checkpoint_path:
-        saver.restore(sess, ckpt.model_checkpoint_path)
-
-    datafeeder = Prep()
-
-    data, label = datafeeder.nextBatchTest_ConfMat()
-
-    matrix = np.zeros([10, 10])
-
-    prediction_ = sess.run(prediction, feed_dict={x: data, truth: label, hold_prob: 1})
-    for l in range(len(prediction_)):
-        k = np.argmax(prediction_[l])
-        m = np.argmax(label[l])
-        matrix[k][m] += 1
-    test = open("Graphs_and_Results/confusion.csv", "w")
-    logger = csv.writer(test, lineterminator="\n")
-
-    for iterate in matrix:
-        logger.writerow(iterate)
-    print(['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'])
-    print(matrix)
-
 
 def main():
     with tf.Session() as sess:
@@ -164,8 +139,8 @@ def main():
         if query == "t":
             Big_Train(sess)
         elif query == "m":
-            confMat(sess)
-
+            print("Under construction")
+            quit()
 if __name__ == '__main__':
     main()
 
