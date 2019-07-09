@@ -35,9 +35,8 @@ for i in range(len(labels)):
     print("I'm on image: {}".format(i))
     img_path = basepath + str(i) + ".jpg"
     matrix = tool.load_image_to_mat(img_path)
-    matrix = [k[80:560] for k in matrix]
     matrix = np.asarray(matrix)
-    matrix = tool.resize_image(matrix, 48, 48, "L")
+    matrix = tool.resize_image(matrix, 96, 96, "L")
 
     #this section simply takes the known augmentation factor and takes an average (because there are more than one
     #per row sometimes

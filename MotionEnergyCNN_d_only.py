@@ -116,6 +116,7 @@ def Big_Train(sess):
         if i % 100 == 0:
             saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
             #add testing function here
+
 def VisualizeVar(sess, name = "Layer_1/Weights/Variable"):
     var = [k for k in tf.global_variables() if k.op.name == name]
     var_ = np.asarray(sess.run(var))
