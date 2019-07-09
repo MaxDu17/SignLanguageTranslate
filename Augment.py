@@ -103,10 +103,10 @@ for i in range(len(labels)):
                 matrix_noise = tool.add_noise_L(matrix)
                 tool.save_image(matrix=matrix_noise, path=savepath + str(i) + "_" + str(j+5) + ".jpg", type="L")
             elif choice == 2:
-                matrix_right = tool.trans_hor(matrix, random.randint(1, 6), "L")
+                matrix_right = tool.trans_hor(matrix, random.randint(-6, 6), "L")
                 tool.save_image(matrix=matrix_right, path=savepath + str(i) + "_" + str(j+5) + ".jpg", type="L")
             else:
-                matrix_left = tool.trans_hor(matrix, -1 * random.randint(1, 6), "L")
+                matrix_left = tool.trans_vert(matrix, random.randint(-6, 6), "L")
                 tool.save_image(matrix=matrix_left, path=savepath +  str(i) + "_" + str(j+5) + ".jpg", type="L")
 
 

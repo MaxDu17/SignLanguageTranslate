@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/Augment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Augment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN_d_only.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
-              <caret line="20" column="66" lean-forward="true" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="66" />
+              <caret line="20" column="66" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="66" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -42,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="269">
-              <caret line="78" column="28" lean-forward="true" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
+              <caret line="78" column="28" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -53,8 +52,8 @@
       <file leaf-file-name="Augment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Augment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="52" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
+            <state relative-caret-position="408">
+              <caret line="108" column="71" selection-start-line="108" selection-start-column="71" selection-end-line="108" selection-end-column="71" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -78,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/csv_to_mat.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="12" selection-end-column="10" />
+              <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="10" />
               <folding>
                 <element signature="e#52#83#0" expanded="true" />
               </folding>
@@ -666,7 +665,7 @@
     <entry file="file://$PROJECT_DIR$/csv_to_mat.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="12" selection-end-column="10" />
+          <caret line="8" selection-start-line="8" selection-end-line="12" selection-end-column="10" />
           <folding>
             <element signature="e#52#83#0" expanded="true" />
           </folding>
@@ -676,7 +675,7 @@
     <entry file="file://$PROJECT_DIR$/MotionEnergyCNN_d_only.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="20" column="66" lean-forward="true" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="66" />
+          <caret line="20" column="66" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="66" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -686,7 +685,7 @@
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="269">
-          <caret line="78" column="28" lean-forward="true" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
+          <caret line="78" column="28" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -695,8 +694,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Augment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="52" selection-start-line="7" selection-start-column="52" selection-end-line="7" selection-end-column="52" />
+        <state relative-caret-position="408">
+          <caret line="108" column="71" selection-start-line="108" selection-start-column="71" selection-end-line="108" selection-end-column="71" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
