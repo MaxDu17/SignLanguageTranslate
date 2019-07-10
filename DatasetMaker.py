@@ -22,6 +22,7 @@ non_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/non_labels.csv")
 big_list = list()
 basepath = "../LINKED/Storage/Data/DATASET_augmented/"
 for i in range(len(dom_reader)):
+    print(i)
     dom = [int(k) for k in dom_reader[i]]
     non = [int(k) for k in non_reader[i]]
     for j in range(200):
