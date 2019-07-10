@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DatasetMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/DatasetMaker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SignLanguageData" beforeDir="false" afterPath="$PROJECT_DIR$/SignLanguageData" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -76,8 +76,8 @@
       <file leaf-file-name="DatasetMaker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DatasetMaker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+            <state relative-caret-position="402">
+              <caret line="31" column="48" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="48" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -89,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/Frequency Analysis.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
-              <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -151,9 +151,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3357" />
-    <option name="y" value="287" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="3333" />
+    <option name="y" value="196" />
     <option name="width" value="1294" />
     <option name="height" value="694" />
   </component>
@@ -319,7 +319,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3192" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="3192" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14857745" />
@@ -619,7 +619,7 @@
     <entry file="file://$PROJECT_DIR$/Frequency Analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -658,8 +658,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DatasetMaker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+        <state relative-caret-position="402">
+          <caret line="31" column="48" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="48" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
