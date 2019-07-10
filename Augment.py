@@ -23,7 +23,6 @@ counted = Counter(big_list)
 documentation_ = open("augmentations.csv", "w")
 documentation = csv.writer(documentation_, lineterminator = "\n")
 for i in range(len(labels)):
-    print("I'm on image: {}".format(i))
     img_path = basepath + str(i) + ".jpg"
     matrix = tool.load_image_to_mat(img_path)
     matrix = np.asarray(matrix)
@@ -33,11 +32,6 @@ for i in range(len(labels)):
     #per row sometimes
     aug_num = int(round((200/counted[str(labels[i][0])])))
 
-    if aug_num > 1:
-        aug_num = aug_num -1 #this is the EXISTING one
-    if labels[i][0] == "1":
-        print(aug_num)
-    continue
     ################
     #here is some programming debauchery
     print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))

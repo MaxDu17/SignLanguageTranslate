@@ -48,7 +48,7 @@ def fully_connected(input, end_size, name):
     return(tf.nn.sigmoid(raw))
 
 with tf.name_scope("Placeholders"):
-    x = tf.placeholder(tf.float32, shape = [None, 48,48,1], name = "Input")
+    x = tf.placeholder(tf.float32, shape = [None, 96,96,1], name = "Input")
     dom = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_dom")
     hold_prob = tf.placeholder(tf.float32)
 
