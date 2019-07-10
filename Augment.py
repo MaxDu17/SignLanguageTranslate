@@ -7,8 +7,8 @@ from collections import Counter
 tool = Utility()
 #VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
 basepath = "DATASET_Motion/"
-savepath = "DATASET_augmented/"
-k = open("dom_labels.csv", 'r')
+savepath = "../LINKED/Storage/Data/DATASET_augmented/"
+k = open("DATASET_Motion/dom_labels.csv", 'r')
 labels = list(csv.reader(k))
 
 #this just find the frequency distribution of the csv
@@ -16,15 +16,6 @@ big_list = list()
 for k in labels:
     big_list.extend(k)
 counted = Counter(big_list)
-
-#these calculate individual values of conversions (aka how many times you need to augment PER value)
-conversion_dict = {} #these hold the mappings of all non-zero values
-for i in range(1, 83):
-    occurence = counted[str(i)]
-    if(occurence != 0):
-        scaling_factor = int(round(100/occurence))
-        conversion_dict[str(i)] = scaling_factor
-
 
 #we shrink, crop, and augment the dataset
 #this is for dom, only
@@ -40,11 +31,9 @@ for i in range(len(labels)):
 
     #this section simply takes the known augmentation factor and takes an average (because there are more than one
     #per row sometimes
-    aug_list = list()
-    for k in labels[i]:
-        aug_list.append(conversion_dict[k])
-    aug_num = int(round(np.sum(aug_list)/len(aug_list)))
-    aug_num = aug_num -1 #this is the EXISTING one
+    aug_num = int(200/counted[str(labels[i][0])])
+    if aug_num > 1:
+        aug_num = aug_num -1 #this is the EXISTING one
     ################
     #here is some programming debauchery
     print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))
@@ -102,10 +91,10 @@ for i in range(len(labels)):
                 matrix_noise = tool.add_noise_L(matrix)
                 tool.save_image(matrix=matrix_noise, path=savepath + str(i) + "_" + str(j+5) + ".jpg", type="L")
             elif choice == 2:
-                matrix_right = tool.trans_hor(matrix, random.randint(-6, 6), "L")
+                matrix_right = tool.trans_hor(matrix, random.randint(-10, 10), "L")
                 tool.save_image(matrix=matrix_right, path=savepath + str(i) + "_" + str(j+5) + ".jpg", type="L")
             else:
-                matrix_left = tool.trans_vert(matrix, random.randint(-6, 6), "L")
+                matrix_left = tool.trans_vert(matrix, random.randint(-10, 10), "L")
                 tool.save_image(matrix=matrix_left, path=savepath +  str(i) + "_" + str(j+5) + ".jpg", type="L")
 
 
