@@ -32,7 +32,14 @@ class Prep():
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
     def unzip_train(self, shuffle_):
-        big_list = self.unpickle("SignLanguageData")
+        try:
+            big_list = self.unpickle("SignLanguageData")
+        except:
+            try:
+                big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
+            except:
+                raise Exception("You big dummy--you forgot to plug in the data drive!")
+
         if shuffle_:
             random.shuffle(big_list) #this is so we don't get repeats
         label_list_dom = list()
@@ -92,7 +99,7 @@ class Prep():
             self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
         return image, dom
-    
+
 '''
 k = Prep()
 images, dom, non = k.nextBatchTrain(11)
