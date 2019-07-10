@@ -58,7 +58,7 @@ class Utility(): #this class will help with software stuff
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 for k in range(len(matrix[0][0])):
-                    if (matrix[i][j][k] != 255):
+                    if (matrix[i][j][k] != 245):
                         matrix[i][j][k] += noise[i][j][k]
 
         return matrix
