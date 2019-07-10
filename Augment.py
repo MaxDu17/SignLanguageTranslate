@@ -31,7 +31,7 @@ for i in range(len(labels)):
 
     #this section simply takes the known augmentation factor and takes an average (because there are more than one
     #per row sometimes
-    aug_num = int(200/counted[str(labels[i][0])])
+    aug_num = int(round((200/counted[str(labels[i][0])])))
     if aug_num > 1:
         aug_num = aug_num -1 #this is the EXISTING one
     ################
