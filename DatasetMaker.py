@@ -33,5 +33,5 @@ for i in range(len(dom_reader)):
         except:
             break
 
-dbfile = open("SignLanguageData", "ab")
+dbfile = open("../LINKED/Storage/Data/SignLanguageData", "ab")
 pickle.dump(big_list, dbfile)
