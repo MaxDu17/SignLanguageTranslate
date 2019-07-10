@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 from Utility import Utility
 util = Utility()
+import random
 
 class DataStructure: #this is for the pickle's use
     def __init__(self, dom, non, data):
@@ -21,6 +22,7 @@ class DataStructure: #this is for the pickle's use
 class Prep():
     def __init__(self):
         self.trainCount =0
+        self.shuffle_status = True
 
     def unpickle(self, file):
         with open(file, 'rb') as fo:
@@ -29,9 +31,10 @@ class Prep():
 
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
-    def unzip_train(self):
-
+    def unzip_train(self, shuffle_):
         big_list = self.unpickle("SignLanguageData")
+        if shuffle_:
+            random.shuffle(big_list) #this is so we don't get repeats
         label_list_dom = list()
         label_list_non = list()
         img_list = list()
@@ -44,7 +47,7 @@ class Prep():
         label_list_dom = np.asarray(label_list_dom)
         label_list_non = np.asarray(label_list_non)
 
-        img_list = img_list.reshape(len(big_list), 48, 48, 1) #ignore the pycharm warning here
+        img_list = img_list.reshape(len(big_list), 96, 96, 1) #ignore the pycharm warning here
         return img_list, label_list_dom, label_list_non
 
     #preconditions: labels must be in range 0-9
@@ -65,32 +68,36 @@ class Prep():
         return carrier
 
     def nextBatchTrain(self, batchNum):
-        image, dom, non = self.unzip_train()
+        image, dom, non = self.unzip_train(self.shuffle_status)
+        self.shuffle_status = False
         modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         non = non[self.trainCount: self.trainCount + batchNum]
         self.trainCount += batchNum
+        if self.trainCount >= modulus:
+            self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
         return image, dom, non
 
     def nextBatchTrain_dom(self, batchNum):
-        image, dom, non = self.unzip_train()
+
+        image, dom, non = self.unzip_train(self.shuffle_status)
+        self.shuffle_status = False
         modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+        if self.trainCount >= modulus:
+            self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
         return image, dom
-
-    def getDistributions(self):
-        pass
-
+    
 '''
 k = Prep()
 images, dom, non = k.nextBatchTrain(11)
-util.display_image(images[0].reshape(48,48)*255)
-print(dom[10])
+util.display_image(images[9].reshape(96,96)*255)
+print(dom[9])
 print("-------")
-print(non[10])
+print(non[9])
 '''
