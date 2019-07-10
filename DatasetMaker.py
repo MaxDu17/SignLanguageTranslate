@@ -16,8 +16,8 @@ class DataStructure:
         return self.data
 
 tool = Utility()
-dom_reader = list(csv.reader(open("dom_labels.csv")))
-non_reader = list(csv.reader(open("non_labels.csv")))
+dom_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/dom_labels.csv")))
+non_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/non_labels.csv")))
 
 big_list = list()
 basepath = "../LINKED/Storage/Data/DATASET_augmented/"
