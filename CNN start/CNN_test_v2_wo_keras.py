@@ -6,68 +6,81 @@ import os
 hold_prob = 0.6
 
 class CustomLayer(tf.keras.layers.Layer): #this uses a keras layer structure but with a custom layer
-    def __init__(self):
-        super(CustomLayer, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(CustomLayer, self).__init__(*args, **kwargs)
+
+    def build(self, input_shape):
         self.w_conv_1 = self.add_weight(
             shape=[4,4,3,32],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name="a")
+
         self.b_conv_1 = self.add_weight(
             shape=[32],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "b")
         self.w_conv_2 = self.add_weight(
             shape=[4, 4, 32, 64],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "c")
         self.b_conv_2 = self.add_weight(
             shape=[64],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "d")
         self.w_conv_3 = self.add_weight(
             shape=[4, 4, 64, 128],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "e")
         self.b_conv_3 = self.add_weight(
             shape=[128],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "f")
         self.w_fc_1 = self.add_weight(
             shape=[4*4*128, 1024],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "g")
         self.b_fc_1 = self.add_weight(
             shape=[1024],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "i")
         self.w_fc_2  = self.add_weight(
             shape=[1024,10],
             dtype=tf.float32,
             initializer=tf.keras.initializers.ones(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "j")
         self.b_fc_2 = self.add_weight(
             shape=[10],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "k")
 
     @tf.function
     def call(self, input, training = None):
@@ -98,9 +111,23 @@ def Big_Train():
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
-    model= CustomLayer()
+    model= tf.keras.Sequential([CustomLayer()])
+    data, label = datafeeder.nextBatchTrain_all()
+    model.compile(optimizer = optimizer, loss = loss_function)
 
-    print(len(model.trainable_weights))
+    for i in range(5):
+        data, label = datafeeder.nextBatchTrain_all()
+        tensorboard = tf.keras.callbacks.TensorBoard(log_dir = "Graphs_and_Results/logs")
+        cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/k.ckpt", verbose = 1, save_weights_only = True, period = 1)
+        model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
+        #model.save_weights("Graphs_and_Results/" + str(i) + ".h5")
+
+
+    data, label = datafeeder.nextBatchTest()
+
+    loss, acc = model.evaluate(data, label)
+    print(acc)
+    '''
     for i in range(501):
 
         data, label = datafeeder.nextBatchTrain(1)
@@ -108,18 +135,24 @@ def Big_Train():
         with tf.GradientTape() as tape:
             loss = loss_function(y_true = label, y_pred = output)
             print(loss)
-            grads = tape.gradient(loss, model.trainable_weights)
-            print(grads)
-            optimizer.apply_gradients(zip(grads, model.trainable_weights))
-            print(loss.numpy())
+    
+        grads = tape.gradient(loss, model.trainable_weights)
+        print(grads)
+        optimizer.apply_gradients(zip(grads, model.trainable_weights))
+        print(loss.numpy())
+        
+    '''
 
-
+def Conf_mat():
+    pass
 
 def main():
     print("---the model is starting-----")
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
+    if query == "m":
+        Conf_mat()
 
 
 if __name__ == '__main__':
