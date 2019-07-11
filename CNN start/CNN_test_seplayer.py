@@ -6,10 +6,8 @@ import os
 hold_prob = 0.6
 
 class CustomLayer(tf.keras.layers.Layer): #this uses a keras layer structure but with a custom layer
-    def __init__(self, *args, **kwargs):
-        super(CustomLayer, self).__init__(*args, **kwargs)
-
-    def build(self, input_shape):
+    def __init__(self):
+        super(CustomLayer, self).__init__()
         self.w_conv_1 = self.add_weight(
             shape=[4,4,3,32],
             dtype=tf.float32,
@@ -100,13 +98,9 @@ def Big_Train():
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
-    model= tf.keras.Sequential([CustomLayer()])
+    model= CustomLayer()
 
-    data, label = datafeeder.nextBatchTrain(100)
-    model.compile(optimizer = optimizer, loss = loss_function)
-    model.fit(data, label, batch_size = 100, epochs = 500)
-
-    '''
+    print(len(model.trainable_weights))
     for i in range(501):
 
         data, label = datafeeder.nextBatchTrain(1)
@@ -114,13 +108,12 @@ def Big_Train():
         with tf.GradientTape() as tape:
             loss = loss_function(y_true = label, y_pred = output)
             print(loss)
-    
-        grads = tape.gradient(loss, model.trainable_weights)
-        print(grads)
-        optimizer.apply_gradients(zip(grads, model.trainable_weights))
-        print(loss.numpy())
-        
-    '''
+            grads = tape.gradient(loss, model.trainable_weights)
+            print(grads)
+            optimizer.apply_gradients(zip(grads, model.trainable_weights))
+            print(loss.numpy())
+
+
 
 def main():
     print("---the model is starting-----")

@@ -74,6 +74,10 @@ class Prep():
         batch = np.float32(batch)
         return batch, O_H
 
+    def nextBatchTrain_all(self):
+        batch, O_H = self.unzip_training()
+        return batch, O_H
+
     def save_augment(self):
         batch, O_H = self.unzip_training()
         batch, O_H = self.augment(batch, O_H)
