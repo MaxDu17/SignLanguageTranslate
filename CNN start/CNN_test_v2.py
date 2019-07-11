@@ -101,11 +101,15 @@ def Big_Train():
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
     model= tf.keras.Sequential([CustomLayer()])
-
-    data, label = datafeeder.nextBatchTrain(100)
+    data, label = datafeeder.nextBatchTrain_all()
     model.compile(optimizer = optimizer, loss = loss_function)
-    model.fit(data, label, batch_size = 100, epochs = 500)
+    model.fit(data, label, batch_size = 100,  epochs = 501)
+    #model.save_weights("Graphs_and_Results/test.h5")
 
+
+    data, label = datafeeder.nextBatchTest()
+    loss, acc = model.evaluate(data, label)
+    print(acc)
     '''
     for i in range(501):
 
