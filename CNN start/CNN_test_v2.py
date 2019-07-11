@@ -136,9 +136,10 @@ def Conf_mat():
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
+    print(np.shape(data))
+    print(np.shape(label))
+    predictions = model.evaulate(data, label, batch_size = 100)
 
-    loss, acc = model.evaluate(data, label)
-    print(acc)
 
 def main():
     print("---the model is starting-----")
