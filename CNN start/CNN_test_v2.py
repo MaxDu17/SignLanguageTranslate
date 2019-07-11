@@ -114,31 +114,27 @@ def Big_Train():
     model= tf.keras.Sequential([CustomLayer()])
     model.compile(optimizer = optimizer, loss = loss_function)
 
-    for i in range(5):
+    for i in range(1):
         data, label = datafeeder.nextBatchTrain_all()
         tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
                                                      write_graph=True, write_grads=True, update_freq='epoch')
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
         model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
-    model.save_weights("Graphs_and_Results/best.h5")
+    model.save("Graphs_and_Results/best.h5")
 
 
 
 
 def Conf_mat():
-    datafeeder = Prep()
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    model = tf.keras.Sequential([CustomLayer()])
-    model.compile(optimizer=optimizer, loss=loss_function)
-    model.load_weights("Graphs_and_Results/current.ckpt")
+    model = tf.keras.models.load_model("Graphs_and_Results/best.h5")
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
     print(np.shape(data))
     print(np.shape(label))
-    predictions = model.evaulate(data, label, batch_size = 100)
+    loss, acc = model.evaulate(data, label, batch_size = 100)
+    print(acc)
 
 
 def main():
