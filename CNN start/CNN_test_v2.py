@@ -117,8 +117,9 @@ def Big_Train():
 
     for i in range(5):
         data, label = datafeeder.nextBatchTrain_all()
-        tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1, write_graph=True, write_grads=True, update_freq='epoch')
-        cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/k.ckpt", verbose = 1, save_weights_only = True, period = 1)
+        tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
+                                                     write_graph=True, write_grads=True, update_freq='epoch')
+        cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
         model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
         #model.save_weights("Graphs_and_Results/" + str(i) + ".h5")
 
@@ -127,21 +128,6 @@ def Big_Train():
 
     loss, acc = model.evaluate(data, label)
     print(acc)
-    '''
-    for i in range(501):
-
-        data, label = datafeeder.nextBatchTrain(1)
-        output = model.call(data, 0.6)
-        with tf.GradientTape() as tape:
-            loss = loss_function(y_true = label, y_pred = output)
-            print(loss)
-    
-        grads = tape.gradient(loss, model.trainable_weights)
-        print(grads)
-        optimizer.apply_gradients(zip(grads, model.trainable_weights))
-        print(loss.numpy())
-        
-    '''
 
 def Conf_mat():
     pass
