@@ -112,7 +112,6 @@ def Big_Train():
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
     model= tf.keras.Sequential([CustomLayer()])
-    data, label = datafeeder.nextBatchTrain_all()
     model.compile(optimizer = optimizer, loss = loss_function)
 
     for i in range(5):
@@ -121,16 +120,20 @@ def Big_Train():
                                                      write_graph=True, write_grads=True, update_freq='epoch')
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
         model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
-        #model.save_weights("Graphs_and_Results/" + str(i) + ".h5")
+    model.save_weights("Graphs_and_Results/best.h5")
 
+
+
+
+def Conf_mat():
+    model = tf.keras.Sequential([CustomLayer()])
+    model.compile(optimizer=optimizer, loss=loss_function)
+    datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
 
     loss, acc = model.evaluate(data, label)
     print(acc)
-
-def Conf_mat():
-    pass
 
 def main():
     print("---the model is starting-----")

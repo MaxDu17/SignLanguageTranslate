@@ -79,6 +79,7 @@ class Prep():
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
+        batch = np.float32(batch)
         return batch, O_H
 
     def nextBatchTest_ConfMat(self):

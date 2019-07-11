@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN start/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/DataProcess.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,18 +26,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="120" column="75" lean-forward="true" selection-start-line="120" selection-start-column="75" selection-end-line="120" selection-end-column="75" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CNN_test_v2_wo_keras.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2_wo_keras.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,11 +35,23 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="116" column="20" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CNN start/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-48">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+            <state relative-caret-position="462">
+              <caret line="70" column="51" selection-start-line="70" selection-start-column="51" selection-end-line="70" selection-end-column="51" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -182,10 +183,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-15" />
-    <option name="y" value="-15" />
-    <option name="width" value="3233" />
-    <option name="height" value="1833" />
+    <option name="x" value="3192" />
+    <option name="y" value="-8" />
+    <option name="width" value="176" />
+    <option name="height" value="44" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -354,10 +355,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1293" height="693" extended-state="6" />
+    <frame x="3192" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22416534" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14857745" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
@@ -679,8 +680,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CNN start/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+        <state relative-caret-position="462">
+          <caret line="70" column="51" selection-start-line="70" selection-start-column="51" selection-end-line="70" selection-end-column="51" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -696,8 +697,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="120" column="75" lean-forward="true" selection-start-line="120" selection-start-column="75" selection-end-line="120" selection-end-column="75" />
+        <state relative-caret-position="309">
+          <caret line="116" column="20" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="20" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
