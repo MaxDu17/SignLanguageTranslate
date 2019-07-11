@@ -1,8 +1,6 @@
 import pickle
 import numpy as np
 import csv
-from Utility import Utility
-util = Utility()
 class Prep():
     def __init__(self):
         self.trainCount =0
@@ -78,17 +76,6 @@ class Prep():
         batch, O_H = self.unzip_training()
         return batch, O_H
 
-    def save_augment(self):
-        batch, O_H = self.unzip_training()
-        batch, O_H = self.augment(batch, O_H)
-        PATH = "../../BIG" #only works on linux
-        for i in range(len(batch)):
-            sub_path = PATH + '/' + str(i) + '.png'
-            test = open("../../BIG/all.csv", "w")
-            logger = csv.writer(test, lineterminator="\n")
-            logger.writerow(O_H[i])
-            util.save_image(batch[i], sub_path)
-            print("saving: {}".format(i))
 
     def nextBatchTest(self):
         batch, O_H = self.unzip_test_small()
