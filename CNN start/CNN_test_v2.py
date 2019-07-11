@@ -126,8 +126,13 @@ def Big_Train():
 
 
 def Conf_mat():
+    datafeeder = Prep()
+
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([CustomLayer()])
     model.compile(optimizer=optimizer, loss=loss_function)
+    model.load_weights("Graphs_and_Results/current.ckpt")
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
