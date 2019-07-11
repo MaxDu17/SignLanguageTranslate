@@ -119,7 +119,7 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_all()
         tensorboard = tf.keras.callbacks.TensorBoard(log_dir = "Graphs_and_Results/logs")
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/k.ckpt", verbose = 1, save_weights_only = True, period = 1)
-        model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard])
+        model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
         #model.save_weights("Graphs_and_Results/" + str(i) + ".h5")
 
 
