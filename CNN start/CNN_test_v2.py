@@ -115,7 +115,7 @@ def Big_Train():
     data, label = datafeeder.nextBatchTrain_all()
     model.compile(optimizer = optimizer, loss = loss_function)
 
-    for i in range(2):
+    for i in range(5):
         data, label = datafeeder.nextBatchTrain_all()
         tensorboard = tf.keras.callbacks.TensorBoard(log_dir = "Graphs_and_Results/logs")
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/k.ckpt", verbose = 1, save_weights_only = True, period = 1)
@@ -144,7 +144,7 @@ def Big_Train():
     '''
 
 def Conf_mat():
-
+    pass
 
 def main():
     print("---the model is starting-----")
