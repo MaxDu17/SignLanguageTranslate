@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ME_CNN_d_only_V2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN start/CNN_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/CNN_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/batches.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_batch_1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_batch_2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_batch_3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_batch_4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/data_batch_5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/readme.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test_batch" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionEnergyCNN.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
+      <file leaf-file-name="ME_CNN_d_only_V2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ME_CNN_d_only_V2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2159">
-              <caret line="132" selection-start-line="132" selection-end-line="132" />
+            <state relative-caret-position="241">
+              <caret line="86" selection-start-line="86" selection-end-line="86" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -25,14 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyCNN_d_only.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MotionEnergyCNN_d_only.py">
+      <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="100" column="29" lean-forward="true" selection-start-line="100" selection-start-column="29" selection-end-line="100" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="493">
+              <caret line="90" column="18" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -40,8 +48,8 @@
       <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-380">
-              <caret line="26" column="29" lean-forward="true" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+            <state relative-caret-position="442">
+              <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -140,7 +148,6 @@
         <option value="$PROJECT_DIR$/CNN_test.py" />
         <option value="$PROJECT_DIR$/csv_to_mat.py" />
         <option value="$PROJECT_DIR$/TransferLearning.py" />
-        <option value="$PROJECT_DIR$/CNN start/CNN_test.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN.py" />
         <option value="$PROJECT_DIR$/Simple_Augment.py" />
         <option value="$PROJECT_DIR$/Frequency Analysis.py" />
@@ -149,14 +156,17 @@
         <option value="$PROJECT_DIR$/Augment.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
+        <option value="$PROJECT_DIR$/ME_CNN_d_only_V2.py" />
+        <option value="$PROJECT_DIR$/CNN start/CNN_test.py" />
+        <option value="$PROJECT_DIR$/CNN start/CNN_test_v2.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3333" />
-    <option name="y" value="196" />
-    <option name="width" value="1294" />
-    <option name="height" value="694" />
+    <option name="x" value="3847" />
+    <option name="y" value="328" />
+    <option name="width" value="518" />
+    <option name="height" value="278" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -182,8 +192,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019" />
       <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\CNN start" />
+      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -370,34 +380,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/csv_to_mat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="52" />
-          <folding>
-            <element signature="e#52#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Augment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="43" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CNN_test.py" />
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
@@ -563,23 +545,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CNN_test.py" />
-    <entry file="file://$PROJECT_DIR$/CNN start/CNN_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="34" lean-forward="true" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2159">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -637,6 +602,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN_d_only.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="100" column="29" selection-start-line="100" selection-start-column="29" selection-end-line="100" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="132" selection-start-line="132" selection-end-line="132" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CNN start/DataProcess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Utility.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="564">
@@ -647,23 +651,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+    <entry file="file://$PROJECT_DIR$/CNN start/CNN_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-380">
-          <caret line="26" column="29" lean-forward="true" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+        <state relative-caret-position="391">
+          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN_d_only.py">
+    <entry file="file://$PROJECT_DIR$/ME_CNN_d_only_V2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="100" column="29" lean-forward="true" selection-start-line="100" selection-start-column="29" selection-end-line="100" selection-end-column="29" />
+        <state relative-caret-position="241">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Miniconda3/Lib/site-packages/tensorflow/python/keras/losses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="950" column="4" selection-start-line="950" selection-start-column="4" selection-end-line="950" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="90" column="18" selection-start-line="90" selection-start-column="18" selection-end-line="90" selection-end-column="18" />
         </state>
       </provider>
     </entry>

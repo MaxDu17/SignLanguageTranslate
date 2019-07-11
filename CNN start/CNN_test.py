@@ -7,7 +7,7 @@ import os
 def make_weights(shape, name):
     weight_name = name + "_Weight"
     with tf.name_scope("Weights"):
-        distribution = tf.truncated_normal(shape, stddev =  0.1, name = weight_name)
+        distribution = tf.random.truncated_normal(shape, stddev =  0.1, name = weight_name)
         var = tf.Variable(distribution)
         tf.summary.histogram(weight_name, var)
         return var
