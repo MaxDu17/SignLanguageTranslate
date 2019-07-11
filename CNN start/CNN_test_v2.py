@@ -15,61 +15,72 @@ class CustomLayer(tf.keras.layers.Layer): #this uses a keras layer structure but
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name="a")
+
         self.b_conv_1 = self.add_weight(
             shape=[32],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "b")
         self.w_conv_2 = self.add_weight(
             shape=[4, 4, 32, 64],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "c")
         self.b_conv_2 = self.add_weight(
             shape=[64],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "d")
         self.w_conv_3 = self.add_weight(
             shape=[4, 4, 64, 128],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "e")
         self.b_conv_3 = self.add_weight(
             shape=[128],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "f")
         self.w_fc_1 = self.add_weight(
             shape=[4*4*128, 1024],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "g")
         self.b_fc_1 = self.add_weight(
             shape=[1024],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "i")
         self.w_fc_2  = self.add_weight(
             shape=[1024,10],
             dtype=tf.float32,
             initializer=tf.keras.initializers.ones(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "j")
         self.b_fc_2 = self.add_weight(
             shape=[10],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
-            trainable=True)
+            trainable=True,
+            name = "k")
 
     @tf.function
     def call(self, input, training = None):
@@ -103,14 +114,16 @@ def Big_Train():
     model= tf.keras.Sequential([CustomLayer()])
     data, label = datafeeder.nextBatchTrain_all()
     model.compile(optimizer = optimizer, loss = loss_function)
-    model.fit(data, label, batch_size = 100,  epochs = 5)
-    model.save_weights("Graphs_and_Results/test.h5")
+
+    for i in range(5):
+        data, label = datafeeder.nextBatchTrain_all()
+        model.fit(data, label, batch_size = 100,  epochs = 1)
+        model.save_weights("Graphs_and_Results/" + str(i) + ".h5")
 
 
     data, label = datafeeder.nextBatchTest()
     loss, acc = model.evaluate(data, label)
     print(acc)
-    model.save_weights("Graphs_and_Results/test.h5")
     '''
     for i in range(501):
 
