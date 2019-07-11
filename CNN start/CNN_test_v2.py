@@ -4,6 +4,103 @@ import numpy as np
 import csv
 import os
 var_list = list()
+
+
+class CustomLayer(tf.keras.layers.Layer): #this uses a keras layer structure but with a custom layer
+    def __init__(self, *args, **kwargs):
+        super(CustomLayer, self).__init__(*args, **kwargs)
+
+    def build(self, input_shape=None):
+        self.w_conv_1 = self.add_weight(
+            shape=[4,4,3,32],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.b_conv_1 = self.add_bias(
+            shape=[32],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.w_conv_2 = self.add_weight(
+            shape=[4, 4, 32, 64],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.b_conv_2 = self.add_bias(
+            shape=[64],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.w_conv_3 = self.add_weight(
+            shape=[4, 4, 64, 128],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.b_conv_3 = self.add_bias(
+            shape=[128],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.w_fc_1 = self.add_weight(
+            shape=[4*4*128, 1024],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.b_fc_1 = self.add_bias(
+            shape=[1024],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.w_fc_2  = self.add_weight(
+            shape=[1024,10],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.ones(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+        self.b_fc_2 = self.add_bias(
+            shape=[10],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True)
+
+    @tf.function
+    def call(self, input, training = None):
+        conv_1 = tf.nn.relu(tf.nn.conv2d(input, self.w_conv_1, strides = [1,1,1,1], padding = 'SAME', name = "conv_1"))
+        conv_1 = conv_1 + self.b_conv_1
+        pooled_1 = tf.nn.max_pool(conv_1, ksize = [1,2,2,1], strides = [1,2,2,1], padding = 'SAME', name = "pool_1")
+
+        conv_2 = tf.nn.relu(tf.nn.conv2d(pooled_1, self.w_conv_2, strides=[1, 1, 1, 1], padding='SAME', name="conv_2"))
+        conv_2 = conv_2 + self.b_conv_2
+        pooled_2 = tf.nn.max_pool(conv_2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool_2")
+
+        conv_3 = tf.nn.relu(tf.nn.conv2d(pooled_2, self.w_conv_3, strides=[1, 1, 1, 1], padding='SAME', name="conv_3"))
+        conv_3 = conv_3 + self.b_conv_3
+        pooled_3 = tf.nn.max_pool(conv_3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool_3")
+
+        flattened = tf.reshape(pooled_3, [-1, 4 * 4 * 128], name="Flatten")
+        fc_1 = tf.matmul(flattened, self.w_fc_1) + self.b_fc_1
+        fc_2 = tf.matmul(fc_1, self.w_fc_2) + self.b_fc_2
+
+with tf.name_scope("Fully_Connected"):
+    flattened = tf.reshape(conv_3_pooled, [-1, 4*4*128], name = "Flatten")
+    fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
+    dropout_1 = tf.nn.dropout(fc_1, rate = 1-hold_prob)
+
+with tf.name_scope("Output"):
+    prediction = fully_connected(dropout_1, 10, name = "raw_pred")
+    prediction = tf.nn.softmax(prediction)
+
+
+
 def make_weights(shape, name):
     weight_name = name + "_Weight"
     with tf.name_scope("Weights"):
@@ -22,12 +119,14 @@ def make_bias(shape, name):
         var_list.append(var)
         return var
 
+@tf.function
 def conv2d(input, filter, name):
     conv_name = name +"_Conv"
     with tf.name_scope("Conv"):
         output = tf.nn.conv2d(input, filter, strides = [1,1,1,1], padding = 'SAME', name = conv_name) #this essentially does the filter operation keeping the dimensions the same
         return output
 
+@tf.function
 def max_pool(input, name):
     pool_name = name + "_Pool"
     with tf.name_scope("Pool"):
@@ -45,30 +144,7 @@ def fully_connected(input, end_size, name):
     b = make_bias([end_size], name)
     return(tf.matmul(input, W) + b)
 
-@tf.function
-def model(input, hold_prob):
-    with tf.name_scope("Layer_1"):
-        conv_1 = convolutional_layer(input, shape = [4,4,3,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
-        conv_1_pooled = max_pool(conv_1, name = "Layer_1")
 
-    with tf.name_scope("Layer_2"):
-        conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64], name = "Layer_2")
-        conv_2_pooled = max_pool(conv_2, name = "Layer_2")
-
-    with tf.name_scope("Layer_3"):
-        conv_3 = convolutional_layer(conv_2_pooled, shape=[4, 4, 64, 128], name="Layer_3")
-        conv_3_pooled = max_pool(conv_3, name="Layer_3")
-
-    with tf.name_scope("Fully_Connected"):
-        flattened = tf.reshape(conv_3_pooled, [-1, 4*4*128], name = "Flatten")
-        fc_1 = fully_connected(flattened, 1024, name = "Fully_Connected_Layer_1")
-        dropout_1 = tf.nn.dropout(fc_1, rate = 1-hold_prob)
-
-    with tf.name_scope("Output"):
-        prediction = fully_connected(dropout_1, 10, name = "raw_pred")
-        prediction = tf.nn.softmax(prediction)
-
-    return prediction
 
 
 def Big_Train():
@@ -76,13 +152,16 @@ def Big_Train():
     datafeeder = Prep()
 
     optimizer = tf.keras.optimizers.Adam()
-    loss_function = tf.keras.losses.sparse_categorical_crossentropy()
+    loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True)
 
-    display, _ = datafeeder.nextBatchTrain(10)
-    tf.compat.v1.summary.image("10 training data examples", display, max_outputs=10)
     for i in range(501):
-        data, label = datafeeder.nextBatchTrain(100)
+
+        data, label = datafeeder.nextBatchTrain(1)
         output = model(data, 0.6)
+        print(var_list)
+        output = np.reshape(output, newshape=(10))
+        label = np.reshape(label, newshape=(10))
+
         with tf.GradientTape() as tape:
             loss = loss_function(y_true = label, y_pred = output)
 

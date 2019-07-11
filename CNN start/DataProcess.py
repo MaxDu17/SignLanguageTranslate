@@ -64,13 +64,14 @@ class Prep():
             k[l] = 1
         return carrier
 
-    def nextBatchTrain(self, batchNum, large):
+    def nextBatchTrain(self, batchNum):
         batch, O_H = self.unzip_training()
         modulus = 50000
         batch = batch[self.trainCount: self.trainCount+batchNum]
         O_H = O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
         self.trainCount = self.trainCount % modulus
+        batch = np.float32(batch)
         return batch, O_H
 
     def save_augment(self):
@@ -92,10 +93,5 @@ class Prep():
     def nextBatchTest_ConfMat(self):
         batch, O_H = self.unzip_test()
         return batch, O_H
-
-
-k = Prep()
-k.save_augment()
-
 
 
