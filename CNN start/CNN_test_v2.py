@@ -103,7 +103,7 @@ def Big_Train():
     model= tf.keras.Sequential([CustomLayer()])
     data, label = datafeeder.nextBatchTrain_all()
     model.compile(optimizer = optimizer, loss = loss_function)
-    model.fit(data, label, batch_size = 100,  epochs = 501)
+    model.fit(data, label, batch_size = 100,  epochs = 5)
     #model.save_weights("Graphs_and_Results/test.h5")
 
 
