@@ -109,7 +109,7 @@ def Big_Train():
     x = Convolve([4, 4, 64, 128])(x)
     x = Convolve([4, 4, 128, 256])(x)
     x = Flatten([-1, 6*6*256])(x)
-    x = FC([4 * 4 * 128, 2240])(x)
+    x = FC([6*6*256, 2240])(x)
     x = FC([2240, 560])(x)
     x = FC([560, output_size])(x)
     outputs = Softmax([])(x)
