@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 import csv
 import os
-hold_prob = 0.6
+hold_prob = 1
 
 class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but with a custom layer
     def __init__(self, shape, *args, **kwargs):
@@ -15,7 +15,7 @@ class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but wi
             shape=self.shape,
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
-            regularizer=tf.keras.regularizers.l2(0.02),
+            #regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name="Convolve")
 
@@ -23,7 +23,7 @@ class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but wi
             shape=self.shape[3],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
-            regularizer=tf.keras.regularizers.l2(0.02),
+            #regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name = "Convolve_Bias")
 
@@ -71,24 +71,21 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
             shape=self.shape,
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
-            regularizer=tf.keras.regularizers.l2(0.02),
+            #regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name="Fully_Connected_Weight")
         self.b_fc_1 = self.add_weight(
             shape=self.shape[1],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
-            regularizer=tf.keras.regularizers.l2(0.02),
+            #regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name="Fully_Connected_Bias")
 
     @tf.function
     def call(self, input, training=None):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
-        if training:
-            fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
-        else:
-            fc_1 = hold_prob * fc_1
+        fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 
 def Big_Train():
@@ -109,7 +106,7 @@ def Big_Train():
 
     model = tf.keras.Model(inputs= inputs, outputs = outputs)
     print(model.summary())
-    model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
+    model.compile(optimizer = optimizer, loss = loss_function)
 
     data, label = datafeeder.nextBatchTrain_all()
     tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
