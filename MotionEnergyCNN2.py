@@ -118,12 +118,12 @@ def Big_Train():
     print(model.summary())
     model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
 
-    data, label = datafeeder.nextBatchTrain_dom_all()
+    data, label = datafeeder.nextBatchTrain_dom(1000)
     tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results/Version1', histogram_freq=1,
                                                  write_graph=True, write_grads=True, update_freq='batch')
     cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/Version1/current.ckpt", verbose=1, save_weights_only=True,
                                             period=1)
-    model.fit(data, label, batch_size=100, epochs=5, callbacks=[tensorboard, cp])
+    model.fit(data, label, batch_size=100, epochs=10, callbacks=[tensorboard, cp])
     model.save_weights("Graphs_and_Results/Version1/best_weights.h5")
 
 
