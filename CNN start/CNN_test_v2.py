@@ -106,7 +106,7 @@ def Big_Train():
 
     model = tf.keras.Model(inputs= inputs, outputs = outputs)
     print(model.summary())
-    model.compile(optimizer = optimizer, loss = loss_function)
+    model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
 
     data, label = datafeeder.nextBatchTrain_all()
     tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
