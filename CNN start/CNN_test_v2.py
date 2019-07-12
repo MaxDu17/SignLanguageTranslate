@@ -91,7 +91,6 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
             fc_1 = hold_prob * fc_1
         return fc_1
 
-
 def Big_Train():
 
     datafeeder = Prep()
@@ -112,15 +111,12 @@ def Big_Train():
     print(model.summary())
     model.compile(optimizer = optimizer, loss = loss_function)
 
-    for i in range(501):
-        data, label = datafeeder.nextBatchTrain(100)
-        tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
-                                                     write_graph=True, write_grads=True, update_freq='epoch')
-        cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
-        model.fit(data, label,  epochs = 1, callbacks = [tensorboard, cp])
+    data, label = datafeeder.nextBatchTrain_all()
+    tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
+                                                 write_graph=True, write_grads=True, update_freq='batch')
+    cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
+    model.fit(data, label, batch_size = 100, epochs = 5, callbacks = [tensorboard, cp])
     model.save_weights("Graphs_and_Results/best_weights.h5")
-
-
 
 
 def Conf_mat():
