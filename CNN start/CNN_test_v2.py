@@ -136,9 +136,8 @@ def Conf_mat():
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
-    print(np.shape(data))
-    print(np.shape(label))
-    acc = model.evaulate(data, label, batch_size = 100)
+
+    acc = model.evaluate(data, label, batch_size = 100)
     print(acc)
 
 
