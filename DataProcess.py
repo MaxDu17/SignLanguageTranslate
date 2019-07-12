@@ -72,7 +72,6 @@ class Prep():
         modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
-        non = non[self.trainCount: self.trainCount + batchNum]
         self.trainCount += batchNum
         if self.trainCount >= modulus:
             self.shuffle_status = True
@@ -94,5 +93,5 @@ class Prep():
 
     def nextBatchTrain_dom_all(self):
         self.shuffle_status = True
-        image, dom, non = self.unzip_train(self.shuffle_status)
+        image, dom = self.unzip_train(self.shuffle_status)
         return image, dom

@@ -13,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionEnergyCNN2.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionEnergyCNN2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="163" column="26" lean-forward="true" selection-start-line="163" selection-start-column="26" selection-end-line="163" selection-end-column="26" />
+            <state relative-caret-position="336">
+              <caret line="157" column="20" lean-forward="true" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -25,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="68" column="69" selection-start-line="68" selection-start-column="69" selection-end-line="68" selection-end-column="69" />
+            <state relative-caret-position="234">
+              <caret line="73" column="60" selection-start-line="73" selection-start-column="60" selection-end-line="73" selection-end-column="60" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -641,22 +641,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="68" column="69" selection-start-line="68" selection-start-column="69" selection-end-line="68" selection-end-column="69" />
+        <state relative-caret-position="336">
+          <caret line="157" column="20" lean-forward="true" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
+    <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="163" column="26" lean-forward="true" selection-start-line="163" selection-start-column="26" selection-end-line="163" selection-end-column="26" />
+        <state relative-caret-position="234">
+          <caret line="73" column="60" selection-start-line="73" selection-start-column="60" selection-end-line="73" selection-end-column="60" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
