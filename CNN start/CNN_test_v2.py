@@ -109,7 +109,7 @@ def Big_Train():
 
     model = tf.keras.Model(inputs= inputs, outputs = outputs)
     print(model.summary())
-    model.compile(optimizer = optimizer, loss = loss_function, metrics = ['loss', 'accuracy'])
+    model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
 
     data, label = datafeeder.nextBatchTrain_all()
     tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
@@ -134,14 +134,14 @@ def Conf_mat():
 
     model = tf.keras.Model(inputs=inputs, outputs=outputs)
     print(model.summary())
-    model.compile(optimizer=optimizer, loss=loss_function, metrics = ['loss', 'accuracy'])
+    model.compile(optimizer=optimizer, loss=loss_function, metrics = ['accuracy'])
     model.load_weights("Graphs_and_Results/best_weights.h5")
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
     print(np.shape(data))
     print(np.shape(label))
-    loss, acc = model.evaulate(data, label, batch_size = 100)
+    acc = model.evaulate(data, label, batch_size = 100)
     print(acc)
 
 
