@@ -46,7 +46,6 @@ class Prep():
         label_list_dom = list()
         label_list_non = list()
         img_list = list()
-
         for k in big_list:
             label_list_dom.append(self.Hot_Vec(k.get_dom()))
             label_list_non.append(self.Hot_Vec(k.get_non()))
@@ -60,20 +59,12 @@ class Prep():
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
-    def Hot_Vec(self, selection):
+    def Hot_Vec(self, selection): #we have removed a case for the 999 null status, we will add them later
         one_hot_dict, _, size = util.get_dictionaries()
         carrier = np.zeros([size])
         for k in selection:
             mapping = one_hot_dict[k] #so that none of the nodes are sparse
             carrier[mapping] = 1
-            '''
-            if(k == 999 and len(selection) == 1): #we are going to ignore these cases for now
-                carrier[0] = 1
-            elif(k == 999 and len(selection) != 1):
-                raise Exception("Something isn't right--we have a null value and a non-null value in the same cell")
-            else:
-                carrier[k] = 1
-            '''
 
         return carrier
 
@@ -104,15 +95,11 @@ class Prep():
         return image, dom
 
     def nextBatchTrain_dom_all(self):
-
+        self.shuffle_status = True
         image, dom, non = self.unzip_train(self.shuffle_status)
         return image, dom
 
-'''
+
 k = Prep()
-images, dom, non = k.nextBatchTrain(11)
-util.display_image(images[9].reshape(96,96)*255)
-print(dom[9])
-print("-------")
-print(non[9])
-'''
+images, dom = k.nextBatchTrain_dom_all()
+

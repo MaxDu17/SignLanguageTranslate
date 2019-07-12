@@ -56,14 +56,14 @@ class Utility(): #this class will help with software stuff
         one_hot_dict = dict()  # so this will take the values (keys) and map them to array elements (sequential)
 
         i = 0
-        for element in k:
+        for element in unique_list:
             one_hot_dict[element] = i
             i = i + 1
 
         look_up_dict = dict()  # so this is the inverse mapping
 
         i = 0
-        for element in k:
+        for element in unique_list:
             look_up_dict[i] = element
             i = i + 1
         return one_hot_dict, look_up_dict, i
@@ -123,6 +123,3 @@ class Utility(): #this class will help with software stuff
         f = 0  # up/down (i.e. 5/-5)
         img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
         return np.asarray(img)
-
-k = Utility()
-k.get_dictionaries()
