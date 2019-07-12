@@ -44,18 +44,16 @@ class Prep():
         if shuffle_:
             random.shuffle(big_list) #this is so we don't get repeats
         label_list_dom = list()
-        label_list_non = list()
         img_list = list()
         for k in big_list:
             label_list_dom.append(self.Hot_Vec(k.get_dom()))
-            label_list_non.append(self.Hot_Vec(k.get_non()))
             img_list.append(k.get_data()/255)  #remember to normalize
         img_list = np.asarray(img_list)
         label_list_dom = np.asarray(label_list_dom)
-        label_list_non = np.asarray(label_list_non)
+
 
         img_list = img_list.reshape(len(big_list), 96, 96, 1) #ignore the pycharm warning here
-        return img_list, label_list_dom, label_list_non
+        return img_list, label_list_dom
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
@@ -83,7 +81,7 @@ class Prep():
 
     def nextBatchTrain_dom(self, batchNum):
 
-        image, dom, non = self.unzip_train(self.shuffle_status)
+        image, dom = self.unzip_train(self.shuffle_status)
         self.shuffle_status = False
         modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
