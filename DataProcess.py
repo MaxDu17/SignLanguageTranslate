@@ -66,8 +66,8 @@ class Prep():
 
         return carrier
 
-    def nextBatchTrain(self, batchNum):
-        image, dom, non = self.unzip_train(self.shuffle_status)
+    def nextBatchTrain(self, batchNum): #not functional at the moment
+        image, dom = self.unzip_train(self.shuffle_status)
         self.shuffle_status = False
         modulus = len(image)
         image = image[self.trainCount: self.trainCount+batchNum]
@@ -77,7 +77,7 @@ class Prep():
         if self.trainCount >= modulus:
             self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
-        return image, dom, non
+        return image, dom
 
     def nextBatchTrain_dom(self, batchNum):
 
