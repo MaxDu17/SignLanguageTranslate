@@ -104,7 +104,7 @@ def Big_Train():
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     inputs = tf.keras.Input(shape=[96, 96, 1])
 
-    x = Convolve([4, 4, 3, 32])(inputs)
+    x = Convolve([4, 4, 1, 32])(inputs)
     x = Convolve([4, 4, 32, 64])(x)
     x = Convolve([4, 4, 64, 128])(x)
     x = Convolve([4, 4, 128, 256])(x)
