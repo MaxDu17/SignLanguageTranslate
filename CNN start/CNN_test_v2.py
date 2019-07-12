@@ -130,7 +130,7 @@ def Conf_mat():
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([CustomLayer()])
     model.compile(optimizer=optimizer, loss=loss_function)
-    model = tf.keras.models.load_model("Graphs_and_Results/best_weights.h5")
+    model.load_weights("Graphs_and_Results/best_weights.h5")
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
