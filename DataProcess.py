@@ -60,18 +60,21 @@ class Prep():
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
     def Hot_Vec(self, selection):
-        dimensions = 83
-        carrier = np.zeros([dimensions])
+        one_hot_dict, _, size = util.get_dictionaries()
+        carrier = np.zeros([size])
         for k in selection:
             if (k == 0):
                 raise Exception(
                     "Something isn't right--we have a reference to gesture 0 in the data, which shouldn't exist")
-            if(k == 999 and len(selection) == 1):
+            '''
+            if(k == 999 and len(selection) == 1): #we are going to ignore these cases for now
                 carrier[0] = 1
             elif(k == 999 and len(selection) != 1):
                 raise Exception("Something isn't right--we have a null value and a non-null value in the same cell")
             else:
                 carrier[k] = 1
+            '''
+
         return carrier
 
     def nextBatchTrain(self, batchNum):
@@ -98,6 +101,11 @@ class Prep():
         if self.trainCount >= modulus:
             self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
+        return image, dom
+
+    def nextBatchTrain_dom_all(self):
+
+        image, dom, non = self.unzip_train(self.shuffle_status)
         return image, dom
 
 '''

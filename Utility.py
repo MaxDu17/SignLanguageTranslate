@@ -40,6 +40,34 @@ class Utility(): #this class will help with software stuff
         pic = Image.open(path)
         return np.asarray(pic)
 
+    def get_dictionaries(self):
+        k = open("DATASET_Motion/dom_labels.csv", "r")#this contains the labels in order
+        dom = list(csv.reader(k))
+        dom = [int(k[0]) for k in dom]
+
+        duplicate_carrier = dict()
+        for element in dom:
+            duplicate_carrier[element] = 1 #so this is quite a quirky way of removing duplicates
+
+        unique_list = list(duplicate_carrier.keys())
+        unique_list = [int(j) for j in unique_list]
+        unique_list.sort()
+
+        one_hot_dict = dict()  # so this will take the values (keys) and map them to array elements (sequential)
+
+        i = 0
+        for element in k:
+            one_hot_dict[element] = i
+            i = i + 1
+
+        look_up_dict = dict()  # so this is the inverse mapping
+
+        i = 0
+        for element in k:
+            look_up_dict[i] = element
+            i = i + 1
+        return one_hot_dict, look_up_dict, i
+
     def flip_lr(self, matrix):
          return np.fliplr(matrix)
 
@@ -95,3 +123,6 @@ class Utility(): #this class will help with software stuff
         f = 0  # up/down (i.e. 5/-5)
         img = img.transform(img.size, Image.AFFINE, (a, b, c, d, e, f))
         return np.asarray(img)
+
+k = Utility()
+k.get_dictionaries()

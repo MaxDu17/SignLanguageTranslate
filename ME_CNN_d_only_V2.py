@@ -7,123 +7,158 @@ from Utility import Utility
 util = Utility()
 from DataProcess import DataStructure
 
-def make_weights(shape, name):
-    weight_name = name + "_Weight"
-    with tf.name_scope("Weights"):
-        distribution = tf.truncated_normal(shape, stddev =  0.1, name = weight_name)
-        var = tf.Variable(distribution)
-        tf.summary.histogram(weight_name, var)
-        return var
+hold_prob = 1
 
-def make_bias(shape, name):
-    bias_name = name + "_Bias"
-    with tf.name_scope("Biases"):
-        distribution = tf.constant(0.1, shape = shape, name = bias_name)
-        var = tf.Variable(distribution)
-        tf.summary.histogram(bias_name, var)
-        return var
 
-def conv2d(input, filter, name):
-    conv_name = name +"_Conv"
-    with tf.name_scope("Conv"):
-        output = tf.nn.conv2d(input, filter, strides = [1,1,1,1], padding = 'SAME', name = conv_name) #this essentially does the filter operation keeping the dimensions the same
-        return output
+class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
+    def __init__(self, shape, *args, **kwargs):
+        super(Convolve, self).__init__(*args, **kwargs)
+        self.shape = shape
 
-def max_pool(input, name):
-    pool_name = name + "_Pool"
-    with tf.name_scope("Pool"):
-        output = tf.nn.max_pool(input, ksize = [1,2,2,1], strides = [1,2,2,1], padding = 'SAME', name = pool_name) #ksize is the window size, and it just pools every 4 grid into 1 (need to work out why later)
-        return output
+    def build(self, input_shape):
+        self.w_conv_1 = self.add_weight(
+            shape=self.shape,
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            # regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True,
+            name="Convolve")
 
-def convolutional_layer(input, shape, name):
-    W = make_weights(shape, name)
-    b = make_bias([shape[3]], name)
-    return tf.nn.relu(conv2d(input, W, name) + b)
+        self.b_conv_1 = self.add_weight(
+            shape=self.shape[3],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            # regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True,
+            name="Convolve_Bias")
 
-def fully_connected(input, end_size, name):
-    in_size = int(input.get_shape()[1])
-    W = make_weights([in_size, end_size], name)
-    b = make_bias([end_size], name)
-    raw = tf.matmul(input, W) + b
-    return(tf.nn.sigmoid(raw))
+    @tf.function
+    def call(self, input, training=None):
+        conv_1 = tf.nn.relu(tf.nn.conv2d(input, self.w_conv_1, strides=[1, 1, 1, 1], padding='SAME', name="conv_1"))
+        conv_1 = conv_1 + self.b_conv_1
+        pooled_1 = tf.nn.max_pool(conv_1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool_1")
+        return pooled_1
 
-with tf.name_scope("Placeholders"):
-    x = tf.placeholder(tf.float32, shape = [None, 96,96,1], name = "Input")
-    dom = tf.placeholder(tf.float32, shape = [None, 83], name = "Label_dom")
-    hold_prob = tf.placeholder(tf.float32)
 
-with tf.name_scope("Layer_1"):
-    conv_1 = convolutional_layer(x, shape = [4,4,1,32], name = "Layer_1") # 4 and 4 is the window, 3 is the color channels and 32 is number of output layers (filters)
-    conv_1_pooled = max_pool(conv_1, name = "Layer_1")
+class Flatten(tf.keras.layers.Layer):
+    def __init__(self, shape, *args, **kwargs):
+        super(Flatten, self).__init__(*args, **kwargs)
+        self.shape = shape
 
-with tf.name_scope("Layer_2"):
-    conv_2 = convolutional_layer(conv_1_pooled, shape = [4,4,32,64], name = "Layer_2")
-    conv_2_pooled = max_pool(conv_2, name = "Layer_2")
+    def build(self, input_shape):
+        self.size = self.shape
+        pass
 
-with tf.name_scope("Layer_3"):
-    conv_3 = convolutional_layer(conv_2_pooled, shape=[4, 4, 64, 128], name="Layer_3")
-    conv_3_pooled = max_pool(conv_3, name="Layer_3")
+    @tf.function
+    def call(self, input, training=None):
+        flattened = tf.reshape(input, self.size, name="Flatten")
+        return flattened
 
-with tf.name_scope("Fully_Connected_DOM"):
-    flattened_dom = tf.reshape(conv_3_pooled, [-1, 6*6*128], name = "Flatten_DOM")
-    fc_1_dom = fully_connected(flattened_dom, 1152, name = "Fully_Connected_Layer_1_DOM")
-    dropout_1_dom = tf.nn.dropout(fc_1_dom, rate = 1-hold_prob)
-    fc_2_dom = fully_connected(dropout_1_dom, 576, name="Fully_Connected_Layer_2_DOM")
 
-with tf.name_scope("Output"):
-    prediction_dom = fully_connected(fc_2_dom, 83, name="raw_pred_DOM")
+class Softmax(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
+    def __init__(self, *args, **kwargs):
+        super(Softmax, self).__init__(*args, **kwargs)
 
-with tf.name_scope("Loss_and_Optimizer"):
-    loss_dom = tf.reduce_mean(
-        tf.keras.losses.categorical_crossentropy(labels=dom, logits=prediction_dom, name="Cross_entropy_loss_DOM"))
+    def build(self, input_shape):
+        pass
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001, name = "Optimizer")
-    train = optimizer.minimize(loss_dom)
+    @tf.function
+    def call(self, input, training=None):
+        prediction = tf.nn.softmax(input)
+        return prediction
 
-with tf.name_scope("Saver"):
-    tf.summary.scalar("Loss_dom", loss_dom)
-    summary_op = tf.summary.merge_all()
-    saver = tf.train.Saver(max_to_keep=7)
 
-init = tf.global_variables_initializer()
+class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
+    def __init__(self, shape, *args, **kwargs):
+        super(FC, self).__init__(*args, **kwargs)
+        self.shape = shape
+
+    def build(self, input_shape):
+        self.w_fc_1 = self.add_weight(
+            shape=self.shape,
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.TruncatedNormal(),
+            # regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True,
+            name="Fully_Connected_Weight")
+        self.b_fc_1 = self.add_weight(
+            shape=self.shape[1],
+            dtype=tf.float32,
+            initializer=tf.keras.initializers.zeros(),
+            # regularizer=tf.keras.regularizers.l2(0.02),
+            trainable=True,
+            name="Fully_Connected_Bias")
+
+    @tf.function
+    def call(self, input, training=None):
+        fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
+        fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
+        return fc_1
 
 
 def Big_Train():
-    ckpt = tf.train.get_checkpoint_state(os.path.dirname('Graphs_and_Results/CNNv1/'))
-    if ckpt and ckpt.model_checkpoint_path:
-        if input("Do you want to restore previous session? (y/n)") == 'y':
-            saver.restore(sess, ckpt.model_checkpoint_path)
-        else:
-            print("session discarded")
-
-    writer = tf.compat.v1.summary.FileWriter("Graphs_and_Results/CNNv1/",
-                                             sess.graph)  # this will write summary tensorboard
     datafeeder = Prep()
 
-    for i in range(1501):
-        data, dom_label = datafeeder.nextBatchTrain_dom(100)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+    inputs = tf.keras.Input(shape=[96, 96, 1])
 
-        prediction_dom_, loss_dom_, summary, _ = sess.run(
-            [prediction_dom, loss_dom, summary_op, train],
-            feed_dict={x: data, dom: dom_label, hold_prob: 0.7})
+    x = Convolve([4, 4, 3, 32])(inputs)
+    x = Convolve([4, 4, 32, 64])(x)
+    x = Convolve([4, 4, 64, 128])(x)
+    x = Flatten([-1, 4 * 4 * 128])(x)
+    x = FC([4 * 4 * 128, 1024])(x)
+    x = FC([1024, 10])(x)
+    outputs = Softmax([])(x)
 
-        print("Epoch: {}. Dom_Loss: {}".format(i, loss_dom_))
-        if i % 10 == 0:
-            writer.add_summary(summary, global_step=i)
-            print("This is the prediction: {}".format(prediction_dom_[0]))
-            print("This is the label: {}".format(dom_label[0]))
-        if i % 100 == 0:
-            saver.save(sess, "Graphs_and_Results/CNNv1/Sign", global_step=i)
-            #add testing function here
+    model = tf.keras.Model(inputs=inputs, outputs=outputs)
+    print(model.summary())
+    model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
+
+    data, label = datafeeder.nextBatchTrain_dom_all()
+    tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
+                                                 write_graph=True, write_grads=True, update_freq='batch')
+    cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose=1, save_weights_only=True,
+                                            period=1)
+    model.fit(data, label, batch_size=100, epochs=5, callbacks=[tensorboard, cp])
+    model.save_weights("Graphs_and_Results/best_weights.h5")
+
+
+def Conf_mat():
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+    inputs = tf.keras.Input(shape=[32, 32, 3])
+
+    x = Convolve([4, 4, 3, 32])(inputs)
+    x = Convolve([4, 4, 32, 64])(x)
+    x = Convolve([4, 4, 64, 128])(x)
+    x = Flatten([-1, 4 * 4 * 128])(x)
+    x = FC([4 * 4 * 128, 1024])(x)
+    x = FC([1024, 10])(x)
+    outputs = Softmax([])(x)
+
+    model = tf.keras.Model(inputs=inputs, outputs=outputs)
+    print(model.summary())
+    model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
+    model.load_weights("Graphs_and_Results/best_weights.h5")
+    datafeeder = Prep()
+
+    data, label = datafeeder.nextBatchTest()
+
+    acc = model.evaluate(data, label, batch_size=100)
+    print(acc)
+
 
 def main():
     print("---the model is starting-----")
-    query = input("What mode do you want? Train (t) or Confusion Matrix (m) or Visualize (v)?\n")
+    query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
-    elif query == "m":
-        raise Exception("Under Construction")
+    if query == "m":
+        Conf_mat()
+
 
 if __name__ == '__main__':
     main()
+
 
