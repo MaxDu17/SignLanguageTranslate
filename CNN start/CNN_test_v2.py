@@ -109,7 +109,7 @@ def Big_Train():
 
     model = tf.keras.Model(inputs= inputs, outputs = outputs)
     print(model.summary())
-    model.compile(optimizer = optimizer, loss = loss_function)
+    model.compile(optimizer = optimizer, loss = loss_function, metrics = ['loss', 'accuracy'])
 
     data, label = datafeeder.nextBatchTrain_all()
     tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
@@ -122,9 +122,19 @@ def Big_Train():
 def Conf_mat():
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    model = tf.keras.Sequential([CustomLayer()])
-    model.compile(optimizer=optimizer, loss=loss_function)
-    model.build([1])
+    inputs = tf.keras.Input(shape=[32, 32, 3])
+
+    x = Convolve([4, 4, 3, 32])(inputs)
+    x = Convolve([4, 4, 32, 64])(x)
+    x = Convolve([4, 4, 64, 128])(x)
+    x = Flatten([-1, 4 * 4 * 128])(x)
+    x = FC([4 * 4 * 128, 1024])(x)
+    x = FC([1024, 10])(x)
+    outputs = Softmax([])(x)
+
+    model = tf.keras.Model(inputs=inputs, outputs=outputs)
+    print(model.summary())
+    model.compile(optimizer=optimizer, loss=loss_function, metrics = ['loss', 'accuracy'])
     model.load_weights("Graphs_and_Results/best_weights.h5")
     datafeeder = Prep()
 
