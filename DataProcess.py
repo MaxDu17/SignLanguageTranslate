@@ -34,7 +34,7 @@ class Prep():
     #postconditions: outputs the 2nd batch as an extracted file
     def unzip_train(self, shuffle_):
         try:
-            big_list = self.unpickle("SignLanguageData")
+            big_list = self.unpickle("./SignLanguageData")
         except:
             try:
                 big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
@@ -98,8 +98,3 @@ class Prep():
         self.shuffle_status = True
         image, dom, non = self.unzip_train(self.shuffle_status)
         return image, dom
-
-
-k = Prep()
-images, dom = k.nextBatchTrain_dom_all()
-
