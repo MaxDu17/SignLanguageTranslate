@@ -84,7 +84,6 @@ class CustomLayer(tf.keras.layers.Layer): #this uses a keras layer structure but
 
     @tf.function
     def call(self, input, training = None):
-        print(tf.shape(input))
         conv_1 = tf.nn.relu(tf.nn.conv2d(input, self.w_conv_1, strides = [1,1,1,1], padding = 'SAME', name = "conv_1"))
         conv_1 = conv_1 + self.b_conv_1
         pooled_1 = tf.nn.max_pool(conv_1, ksize = [1,2,2,1], strides = [1,2,2,1], padding = 'SAME', name = "pool_1")
@@ -138,8 +137,8 @@ def Conf_mat():
 
 
     data, label = datafeeder.nextBatchTrain(100)
-    accuracy = model.evaluate(data, label)
-    print(accuracy)
+    output = model.predict(data)
+    print(output)
 
 def main():
     print("---the model is starting-----")

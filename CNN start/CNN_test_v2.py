@@ -6,12 +6,13 @@ import os
 hold_prob = 0.6
 
 class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but with a custom layer
-    def __init__(self, *args, **kwargs):
+    def __init__(self, shape, *args, **kwargs):
         super(Convolve, self).__init__(*args, **kwargs)
+        self.shape = shape
 
     def build(self, input_shape):
         self.w_conv_1 = self.add_weight(
-            shape=input_shape,
+            shape=self.shape,
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
@@ -19,7 +20,7 @@ class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but wi
             name="Convolve")
 
         self.b_conv_1 = self.add_weight(
-            shape=input_shape[3],
+            shape=self.shape[3],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
@@ -35,11 +36,12 @@ class Convolve(tf.keras.layers.Layer): #this uses a keras layer structure but wi
         
         
 class Flatten(tf.keras.layers.Layer):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, shape, *args, **kwargs):
         super(Flatten, self).__init__(*args, **kwargs)
+        self.shape = shape
 
     def build(self, input_shape):
-        self.size = input_shape
+        self.size = self.shape
         pass
 
     @tf.function
@@ -60,19 +62,20 @@ class Softmax(tf.keras.layers.Layer):  # this uses a keras layer structure but w
         return prediction
 
 class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
-    def __init__(self, *args, **kwargs):
+    def __init__(self, shape, *args, **kwargs):
         super(FC, self).__init__(*args, **kwargs)
+        self.shape = shape
 
     def build(self, input_shape):
         self.w_fc_1 = self.add_weight(
-            shape=[4, 4, input_shape[1], 2*input_shape[1]],
+            shape=self.shape,
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name="Fully_Connected_Weight")
         self.b_fc_1 = self.add_weight(
-            shape=2*input_shape[1],
+            shape=self.shape[1],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
@@ -83,10 +86,10 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
     def call(self, input, training=None):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
         if training:
-            self.fc_1_d = tf.nn.dropout(fc_1, rate=1 - hold_prob)
+            fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         else:
-            self.fc_1_d = hold_prob * self.fc_1_d
-        return self.fc_1_d
+            fc_1 = hold_prob * fc_1
+        return fc_1
 
 
 def Big_Train():
@@ -96,6 +99,7 @@ def Big_Train():
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
     inputs = tf.keras.Input(shape = [32, 32, 3])
+
     x = Convolve([4, 4, 3, 32])(inputs)
     x = Convolve([4, 4, 32, 64])(x)
     x = Convolve([4, 4, 64, 128])(x)
@@ -103,25 +107,13 @@ def Big_Train():
     x = FC([4 * 4 * 128, 1024])(x)
     x = FC([1024, 10])(x)
     outputs = Softmax([])(x)
-    '''
-    model = tf.keras.Sequential()
-    model.add(Convolve([4, 4, 3, 32]))
-    model.add(Convolve([4, 4, 32, 64]))
-    model.add(Convolve([4, 4, 64, 128]))
-    model.add(Flatten([-1, 4 * 4 * 128]))
-    model.add(FC([4 * 4 * 128, 1024]))
-    model.add(FC([1024, 10]))
-    model.add(Softmax([]))
-    '''
+
     model = tf.keras.Model(inputs= inputs, outputs = outputs)
     print(model.summary())
-    raise Exception
     model.compile(optimizer = optimizer, loss = loss_function)
 
-    for i in range(1):
-        data, label = datafeeder.nextBatchTrain(1)
-        print(np.shape(data))
-        print(np.shape(label))
+    for i in range(501):
+        data, label = datafeeder.nextBatchTrain(100)
         tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
                                                      write_graph=True, write_grads=True, update_freq='epoch')
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
