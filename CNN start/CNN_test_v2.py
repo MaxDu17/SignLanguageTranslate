@@ -65,14 +65,14 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
 
     def build(self, input_shape):
         self.w_fc_1 = self.add_weight(
-            shape=input_shape,
+            shape=[4, 4, input_shape[1], 2*input_shape[1]],
             dtype=tf.float32,
             initializer=tf.keras.initializers.TruncatedNormal(),
             regularizer=tf.keras.regularizers.l2(0.02),
             trainable=True,
             name="Fully_Connected_Weight")
         self.b_fc_1 = self.add_weight(
-            shape=input_shape[1],
+            shape=2*input_shape[1],
             dtype=tf.float32,
             initializer=tf.keras.initializers.zeros(),
             regularizer=tf.keras.regularizers.l2(0.02),
@@ -95,23 +95,37 @@ def Big_Train():
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits = True)
+    inputs = tf.keras.Input(shape = [32, 32, 3])
+    x = Convolve([4, 4, 3, 32])(inputs)
+    x = Convolve([4, 4, 32, 64])(x)
+    x = Convolve([4, 4, 64, 128])(x)
+    x = Flatten([-1, 4 * 4 * 128])(x)
+    x = FC([4 * 4 * 128, 1024])(x)
+    x = FC([1024, 10])(x)
+    outputs = Softmax([])(x)
+    '''
     model = tf.keras.Sequential()
     model.add(Convolve([4, 4, 3, 32]))
     model.add(Convolve([4, 4, 32, 64]))
     model.add(Convolve([4, 4, 64, 128]))
     model.add(Flatten([-1, 4 * 4 * 128]))
     model.add(FC([4 * 4 * 128, 1024]))
-    model.add(FC(FC([1024, 10])))
+    model.add(FC([1024, 10]))
     model.add(Softmax([]))
-
+    '''
+    model = tf.keras.Model(inputs= inputs, outputs = outputs)
+    print(model.summary())
+    raise Exception
     model.compile(optimizer = optimizer, loss = loss_function)
 
     for i in range(1):
-        data, label = datafeeder.nextBatchTrain_all()
+        data, label = datafeeder.nextBatchTrain(1)
+        print(np.shape(data))
+        print(np.shape(label))
         tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
                                                      write_graph=True, write_grads=True, update_freq='epoch')
         cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
-        model.fit(data, label, batch_size = 100,  epochs = 1, callbacks = [tensorboard, cp])
+        model.fit(data, label,  epochs = 1, callbacks = [tensorboard, cp])
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
 
