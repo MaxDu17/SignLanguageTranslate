@@ -9,6 +9,7 @@ class DataStructure: #this is for the pickle's use
         self.dom = dom
         self.non = non
         self.data = data
+        _, _, self.size = util.get_dictionaries() #just extracting the sizes for later
 
     def get_dom(self):
         return self.dom
@@ -63,9 +64,8 @@ class Prep():
         one_hot_dict, _, size = util.get_dictionaries()
         carrier = np.zeros([size])
         for k in selection:
-            if (k == 0):
-                raise Exception(
-                    "Something isn't right--we have a reference to gesture 0 in the data, which shouldn't exist")
+            mapping = one_hot_dict[k] #so that none of the nodes are sparse
+            carrier[mapping] = 1
             '''
             if(k == 999 and len(selection) == 1): #we are going to ignore these cases for now
                 carrier[0] = 1

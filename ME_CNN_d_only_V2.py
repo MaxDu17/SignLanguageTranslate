@@ -8,6 +8,7 @@ util = Utility()
 from DataProcess import DataStructure
 
 hold_prob = 1
+_, _, output_size = util.get_dictionaries()
 
 
 class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
@@ -106,9 +107,11 @@ def Big_Train():
     x = Convolve([4, 4, 3, 32])(inputs)
     x = Convolve([4, 4, 32, 64])(x)
     x = Convolve([4, 4, 64, 128])(x)
-    x = Flatten([-1, 4 * 4 * 128])(x)
-    x = FC([4 * 4 * 128, 1024])(x)
-    x = FC([1024, 10])(x)
+    x = Convolve([4, 4, 128, 256])(x)
+    x = Flatten([-1, 6*6*256])(x)
+    x = FC([4 * 4 * 128, 2240])(x)
+    x = FC([2240, 560])(x)
+    x = FC([560, output_size])(x)
     outputs = Softmax([])(x)
 
     model = tf.keras.Model(inputs=inputs, outputs=outputs)
