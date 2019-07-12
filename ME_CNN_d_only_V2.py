@@ -16,7 +16,7 @@ class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but 
         super(Convolve, self).__init__(*args, **kwargs)
         self.shape = shape
 
-    def build(self, input_shape):
+    def build(self, input_shape): #input shape is NOT the parameter you feed into convolve's constructor
         self.w_conv_1 = self.add_weight(
             shape=self.shape,
             dtype=tf.float32,
