@@ -87,7 +87,15 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
-
+def accuracy(pred, labels):
+    assert len(pred) == len(labels), "lengths of predictoin and labels are not the same"
+    counter = 0
+    for i in len(pred):
+        k = np.argmax(pred[i])
+        l = np.argmax(labels[i])
+        if k == l:
+            counter += 1
+    return counter/len(pred)
 def Big_Train():
 
     datafeeder = Prep()
@@ -119,7 +127,7 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
-            print(pred_loss)
+            print(accuracy(predictions, label))
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         print("Finished epoch", epoch)
