@@ -147,7 +147,7 @@ def Conf_mat():
 
     assert len(label) == len(predictions)
 
-    conf = np.zeros(shape = [len(data[0]), len(predictions[0])])
+    conf = np.zeros(shape = [len(label[0]), len(predictions[0])])
     for i in range(len(predictions)):
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
