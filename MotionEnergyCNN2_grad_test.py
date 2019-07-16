@@ -142,7 +142,9 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
-                    tf.summary.histogram(name = "Variables", data = model.weights, step = 1)
+                    for var in model.trainable_variables:
+                        name = str(var.name)
+                        tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
 
             if epoch % 500 == 0:
                 model.save_weights("Graphs_and_Results/best_weights.h5")
