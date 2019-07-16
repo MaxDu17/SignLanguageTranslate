@@ -23,7 +23,7 @@ class DataStructure: #this is for the pickle's use
 class Prep():
     def __init__(self):
         self.trainCount =0
-        self.shuffle_status = True
+        self.shuffle_status = False
 
     def unpickle(self, file):
         with open(file, 'rb') as fo:
