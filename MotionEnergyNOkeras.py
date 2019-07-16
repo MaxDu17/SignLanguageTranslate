@@ -24,7 +24,7 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         self.b_conv_1 = tf.zeros(self.shape[3], name=self.name + "_bias")
         self.current_list.append(self.b_conv_1)
 
-    @tf.function
+
     def call(self, input):
         conv_1 = tf.nn.relu(tf.nn.conv2d(input, self.w_conv_1, strides=[1, 1, 1, 1], padding='SAME', name="conv_1"))
         conv_1 = conv_1 + self.b_conv_1
@@ -37,14 +37,14 @@ class Flatten():
         self.shape = shape
         self.name = name
 
-    @tf.function
+
     def call(self, input):
         flattened = tf.reshape(input, self.shape, name=self.name + "_flatten")
         return flattened
 
 
 class Softmax():  # this uses a keras layer structure but with a custom layer
-    @tf.function
+
     def call(self, input):
         prediction = tf.nn.softmax(input)
         return prediction
@@ -62,7 +62,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
         self.b_fc_1 = tf.zeros(self.shape[1], name=self.name + "_bias")
         self.current_list.append(self.b_fc_1)
 
-    @tf.function
+
     def call(self, input):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
         #fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob) removing this for diagnostic purposes
