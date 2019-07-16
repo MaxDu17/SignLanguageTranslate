@@ -131,13 +131,16 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
-            print("***********************")
-            print("Finished epoch", epoch)
-            print(accuracy(predictions, label))
-            print(np.asarray(pred_loss))
-            print("***********************")
-
             if epoch % 20 == 0 and epoch > 1:
+                print("***********************")
+                print("Finished epoch", epoch)
+                print(accuracy(predictions, label))
+                print(np.asarray(pred_loss))
+                print("***********************")
+
+                print(predictions[0])
+                print(label[0])
+                
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
@@ -150,7 +153,8 @@ def Big_Train():
                 model.save_weights("Graphs_and_Results/best_weights.h5")
 
         gradients = tape.gradient(pred_loss, model.trainable_variables)
-        print(gradients[1])
+        #print(gradients[1])
+
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
