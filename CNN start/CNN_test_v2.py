@@ -109,10 +109,15 @@ def Big_Train():
     model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
 
     data, label = datafeeder.nextBatchTrain_all()
-    tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results', histogram_freq=1,
-                                                 write_graph=True, write_grads=True, update_freq='batch')
-    cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/current.ckpt", verbose = 1, save_weights_only = True, period = 1)
-    model.fit(data, label, batch_size = 100, epochs = 5, callbacks = [tensorboard, cp])
+    for epoch in range(5):
+
+        with tf.GradientTape() as tape:
+            predictions = model(inputs, training=True)
+            pred_loss = loss_function(label, predictions)
+            print(pred_loss)
+        gradients = tape.gradient(pred_loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+        print("Finished epoch", epoch)
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
 
