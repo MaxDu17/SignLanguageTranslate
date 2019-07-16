@@ -89,6 +89,7 @@ class Prep():
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+        print(self.trainCount)
 
         if self.trainCount >= modulus:
             self.shuffle_status = True
