@@ -111,6 +111,7 @@ def Big_Train():
     
     model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
     '''
+    model.build()
     print(model.summary())
     data, label = datafeeder.nextBatchTrain_all()
     for epoch in range(5):
