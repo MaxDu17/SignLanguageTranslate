@@ -97,6 +97,7 @@ class Prep():
 
     def load_train_to_RAM(self):
         self.image, self.dom = self.unzip_train()
+        self.image = np.float32(self.image)
 
     def nextBatchTrain_dom(self, batchNum):
         modulus = len(self.image)
@@ -108,4 +109,5 @@ class Prep():
 
     def nextBatchTest_dom(self):
         image, dom = self.unzip_test()
+        image = np.float32(image)
         return image, dom

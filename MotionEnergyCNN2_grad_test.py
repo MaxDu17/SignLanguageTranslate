@@ -9,7 +9,7 @@ from DataProcess import DataStructure
 
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
-
+TEST_AMOUNT = 200
 
 class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
     def __init__(self, shape, *args, **kwargs):
@@ -111,22 +111,23 @@ def Big_Train():
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
-    datafeeder = Prep()
+    datafeeder = Prep(TEST_AMOUNT)
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]),Convolve([4, 4, 64, 128]),
                                  Flatten([-1, 12 * 12 * 128]),FC([12*12*128, 560]),FC([560, output_size]),
-                                 Softmax([])])
+                                 Softmax([])]) #this declares the layers
 
-    model.build(input_shape=[None, 96, 96, 1])
-    print(model.summary())
+    model.build(input_shape=[None, 96, 96, 1]) #this builds the network
+    print(model.summary()) #this is more for user reference
     print("loading dataset")
-    datafeeder.load_train_to_RAM()
+    datafeeder.load_train_to_RAM() #loads the training data to RAM
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
     print("starting training")
-    for epoch in range(5000):
+
+    for epoch in range(5001):
         data, label = datafeeder.nextBatchTrain_dom(150)
-        data = np.float32(data)
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
@@ -136,11 +137,22 @@ def Big_Train():
                 print(accuracy(predictions, label))
                 print(np.asarray(pred_loss))
                 print("***********************")
+
+            if epoch % 200 == 0:
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "Loss", data = pred_loss)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label))
+                    tf.summary.histogram(name = "Variables", data = model.weights)
+
+            if epoch % 500 == 0:
+                model.save_weights("Graphs_and_Results/best_weights.h5")
+                
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
-def conf_mat():
+
+def Test():
     model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]), Convolve([4, 4, 64, 128]),
                                  Flatten([-1, 12 * 12 * 128]), FC([12 * 12 * 128, 560]), FC([560, output_size]),
                                  Softmax([])])
@@ -148,15 +160,15 @@ def conf_mat():
     model.build(input_shape=[None, 96, 96, 1])
     print(model.summary())
     model.load_weights("Graphs_and_Results/best_weights.h5")
-    datafeeder = Prep()
+    datafeeder = Prep(TEST_AMOUNT)
 
-    data, label = datafeeder.nextBatchTest()
-    data = np.float32(data)
+    data, label = datafeeder.nextBatchTest_dom()
     predictions = model(data, training=True)
 
     assert len(label) == len(predictions)
 
     conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
+
     for i in range(len(predictions)):
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
@@ -169,11 +181,17 @@ def conf_mat():
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
     print(conf)
+
+
 def main():
     print("---the model is starting-----")
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
+        print("###########NOW TESTING##############")
+        Test()
+    if query == "m":
+        Test()
 
 
 if __name__ == '__main__':
