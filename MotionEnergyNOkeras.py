@@ -10,7 +10,6 @@ from DataProcess import DataStructure
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
 big_list = list()
-
 class Convolve():  # this uses a keras layer structure but with a custom layer
     def __init__(self, current_list, shape, name):
         self.current_list = current_list
