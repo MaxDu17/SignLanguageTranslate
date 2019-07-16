@@ -122,7 +122,9 @@ def Big_Train():
                 print(accuracy(predictions, label))
                 print(np.asarray(pred_loss))
                 print("***********************")
+                print(gradients)
         gradients = tape.gradient(pred_loss, model.trainable_variables)
+
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         #print("Finished epoch", epoch)
     model.save_weights("Graphs_and_Results/best_weights.h5")
