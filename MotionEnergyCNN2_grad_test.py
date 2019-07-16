@@ -127,7 +127,10 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
+            print("***********************")
             print(accuracy(predictions, label))
+            print(pred_loss)
+            print("***********************")
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         # print("Finished epoch", epoch)
