@@ -132,8 +132,7 @@ def Big_Train():
 
     inputs, labels = datafeeder.nextBatchTrain_dom(1)
     for epoch in range(501):
-        train_step(model, loss_function, optimizer, inputs, labels)
-
+    
         with tf.GradientTape() as tape:
             predictions = model(inputs, training=True)
             pred_loss = loss_function(labels, predictions)
