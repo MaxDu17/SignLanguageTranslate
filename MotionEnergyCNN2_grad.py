@@ -131,10 +131,9 @@ def Big_Train():
     print(model.summary())
     model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
 
-    labeled_ds = datafeeder.nextBatchTrain_dom(10)
+    inputs, labels = datafeeder.nextBatchTrain_dom(10)
     for epoch in range(501):
-        for inputs, labels in labeled_ds:
-            train_step(model, loss_function, optimizer, inputs, labels)
+        train_step(model, loss_function, optimizer, inputs, labels)
         print("Finished epoch", epoch)
     model.save_weights("Graphs_and_Results/Version1/best_weights.h5")
 
