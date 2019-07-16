@@ -140,13 +140,13 @@ def Big_Train():
 
             if epoch % 200 == 0:
                 with summary_writer.as_default():
-                    tf.summary.scalar(name = "Loss", data = pred_loss)
-                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label))
-                    tf.summary.histogram(name = "Variables", data = model.weights)
+                    tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
+                    tf.summary.histogram(name = "Variables", data = model.weights, step = 1)
 
             if epoch % 500 == 0:
                 model.save_weights("Graphs_and_Results/best_weights.h5")
-                
+
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
