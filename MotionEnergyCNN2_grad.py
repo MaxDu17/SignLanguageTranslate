@@ -115,6 +115,10 @@ def Big_Train():
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+    model = tf.keras.Sequential([Convolve([8, 8, 1, 32]), Convolve([8, 8, 32, 64]),Convolve([8, 8, 64, 128]),
+                                 Flatten([-1, 12 * 12 * 128]),FC([12*12*128, 2240]), FC([2240, 560]),FC([560, output_size]),
+                                 Softmax([])])
+    '''
     inputs = tf.keras.Input(shape=[96, 96, 1])
 
     x = Convolve([8, 8, 1, 32])(inputs)
@@ -125,10 +129,11 @@ def Big_Train():
     x = FC([2240, 560])(x)
     x = FC([560, output_size])(x)
     outputs = Softmax([])(x)
-
+    
     model = tf.keras.Model(inputs=inputs, outputs=outputs)
-    print(model.summary())
     model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
+    '''
+    print(model.summary())
 
     inputs, labels = datafeeder.nextBatchTrain_dom(1)
     for epoch in range(501):

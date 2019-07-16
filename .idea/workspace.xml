@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyCNN2_grad.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyCNN2_grad.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +41,8 @@
       <file leaf-file-name="MotionEnergyCNN2_grad.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2_grad.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="133" column="4" lean-forward="true" selection-start-line="133" selection-start-column="4" selection-end-line="141" selection-end-column="38" />
+            <state relative-caret-position="493">
+              <caret line="138" column="28" lean-forward="true" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -49,8 +50,8 @@
       <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="111" column="24" selection-start-line="111" selection-start-column="24" selection-end-line="111" selection-end-column="24" />
+            <state relative-caret-position="510">
+              <caret line="117" column="36" selection-start-line="117" selection-start-column="36" selection-end-line="117" selection-end-column="36" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -222,7 +223,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.MotionEnergyNOkeras">
+  <component name="RunManager" selected="Python.MotionEnergyCNN2_grad">
     <configuration name="DataProcess" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CNN start" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -277,6 +278,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="MotionEnergyCNN2_grad" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CNN start" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MotionEnergyCNN2_grad.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="MotionEnergyNOkeras" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CNN start" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -295,38 +314,20 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="Utility" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="CNN start" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Utility.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <list>
       <item itemvalue="Python.Frequency Analysis" />
-      <item itemvalue="Python.Utility" />
       <item itemvalue="Python.DataProcess" />
       <item itemvalue="Python.ME_CNN_d_only_V2" />
       <item itemvalue="Python.MotionEnergyNOkeras" />
+      <item itemvalue="Python.MotionEnergyCNN2_grad" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.MotionEnergyCNN2_grad" />
         <item itemvalue="Python.MotionEnergyNOkeras" />
         <item itemvalue="Python.ME_CNN_d_only_V2" />
         <item itemvalue="Python.DataProcess" />
         <item itemvalue="Python.Frequency Analysis" />
-        <item itemvalue="Python.Utility" />
       </list>
     </recent_temporary>
   </component>
@@ -347,12 +348,12 @@
     <frame x="3192" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08746049" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08746049" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" weight="1.0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26252723" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -658,15 +659,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2_grad.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="133" column="4" lean-forward="true" selection-start-line="133" selection-start-column="4" selection-end-line="141" selection-end-column="38" />
+        <state relative-caret-position="493">
+          <caret line="138" column="28" lean-forward="true" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="111" column="24" selection-start-line="111" selection-start-column="24" selection-end-line="111" selection-end-column="24" />
+        <state relative-caret-position="510">
+          <caret line="117" column="36" selection-start-line="117" selection-start-column="36" selection-end-line="117" selection-end-column="36" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
