@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MotionEnergyCNN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyCNN2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MotionEnergyNOkeras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,14 +14,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionEnergyCNN2.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
+      <file leaf-file-name="MotionEnergyCNN.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="557">
-              <caret line="124" column="51" selection-start-line="124" selection-start-column="51" selection-end-line="124" selection-end-column="51" />
+            <state relative-caret-position="170">
+              <caret line="10" column="84" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="84" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MotionEnergyNOkeras.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MotionEnergyNOkeras.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1853">
+              <caret line="117" column="23" lean-forward="true" selection-start-line="117" selection-start-column="23" selection-end-line="117" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -136,14 +146,15 @@
         <option value="$PROJECT_DIR$/ME_CNN_d_only_V2.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3192" />
-    <option name="y" value="-8" />
-    <option name="width" value="176" />
-    <option name="height" value="39" />
+    <option name="x" value="627" />
+    <option name="y" value="417" />
+    <option name="width" value="325" />
+    <option name="height" value="88" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -174,8 +185,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\CNN start" />
       <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019" />
+      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\CNN start" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -190,25 +201,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ME_CNN_d_only_V2">
-    <configuration name="CNN_test_v2" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="CNN start" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CNN start" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CNN start/CNN_test_v2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python.MotionEnergyNOkeras">
     <configuration name="DataProcess" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CNN start" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -263,6 +256,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="MotionEnergyNOkeras" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CNN start" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="Utility" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CNN start" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -283,18 +294,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.Frequency Analysis" />
-      <item itemvalue="Python.CNN_test_v2" />
       <item itemvalue="Python.Utility" />
       <item itemvalue="Python.DataProcess" />
       <item itemvalue="Python.ME_CNN_d_only_V2" />
+      <item itemvalue="Python.MotionEnergyNOkeras" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.MotionEnergyNOkeras" />
         <item itemvalue="Python.ME_CNN_d_only_V2" />
         <item itemvalue="Python.DataProcess" />
         <item itemvalue="Python.Frequency Analysis" />
         <item itemvalue="Python.Utility" />
-        <item itemvalue="Python.CNN_test_v2" />
       </list>
     </recent_temporary>
   </component>
@@ -312,15 +323,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3192" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-6" y="-6" width="1293" height="693" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14857745" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.054848965" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28540304" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.05724508" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -362,13 +372,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TransferLearning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Utility.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
@@ -486,16 +489,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="100" column="29" selection-start-line="100" selection-start-column="29" selection-end-line="100" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -642,6 +635,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
@@ -652,13 +655,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="124" column="51" selection-start-line="124" selection-start-column="51" selection-end-line="124" selection-end-column="51" />
+        <state relative-caret-position="170">
+          <caret line="10" column="84" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="84" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyNOkeras.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1853">
+          <caret line="117" column="23" lean-forward="true" selection-start-line="117" selection-start-column="23" selection-end-line="117" selection-end-column="23" />
         </state>
       </provider>
     </entry>
