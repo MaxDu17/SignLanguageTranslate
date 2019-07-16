@@ -118,11 +118,13 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(1)
         output = model.call(data)
         print(big_list[1])
-        input()
+
         with tf.GradientTape() as tape:
             tape.watch(big_list[1])
             loss = loss_function(output, label)
-        gradients = tape.gradient(loss, big_list)
+            print(loss)
+            input()
+        gradients = tape.gradient(loss, big_list[1])
         print(gradients)
         raise Exception
 
