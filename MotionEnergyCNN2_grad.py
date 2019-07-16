@@ -100,11 +100,9 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
 def train_step(model, loss_fn, optimizer, inputs, labels):
   with tf.GradientTape() as tape:
     predictions = model(inputs, training=True)
-    regularization_loss = tf.math.add_n(model.losses)
     pred_loss = loss_fn(labels, predictions)
-    total_loss = pred_loss + regularization_loss
 
-  gradients = tape.gradient(total_loss, model.trainable_variables)
+  gradients = tape.gradient(pred_loss, model.trainable_variables)
   print(gradients)
   raise Exception
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
