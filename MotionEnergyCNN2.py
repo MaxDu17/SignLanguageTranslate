@@ -113,7 +113,7 @@ def Big_Train():
     print("*****************Training*****************")
     datafeeder = Prep(TEST_AMOUNT)
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.005)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]),Convolve([4, 4, 64, 128]),
                                  Flatten([-1, 12 * 12 * 128]),FC([12*12*128, 560]),FC([560, output_size]),
@@ -131,12 +131,11 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
-            if epoch % 5 == 0:
-                print("***********************")
-                print("Finished epoch", epoch)
-                print(accuracy(predictions, label))
-                print(np.asarray(pred_loss))
-                print("***********************")
+            print("***********************")
+            print("Finished epoch", epoch)
+            print(accuracy(predictions, label))
+            print(np.asarray(pred_loss))
+            print("***********************")
 
             if epoch % 200 == 0 and epoch > 1:
                 with summary_writer.as_default():
