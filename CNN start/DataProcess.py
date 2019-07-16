@@ -69,7 +69,6 @@ class Prep():
         batch_ = self.batch[self.trainCount: self.trainCount+batchNum]
         O_H_ = self.O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
-        print(self.trainCount)
         self.trainCount = self.trainCount % modulus
         batch_ = np.float32(batch_)
         return batch_, O_H_
