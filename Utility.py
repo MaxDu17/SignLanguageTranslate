@@ -2,6 +2,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
+from collections import Counter
+
 class Utility(): #this class will help with software stuff
 
     #preconditions: file_object must be a csv file
@@ -21,7 +23,13 @@ class Utility(): #this class will help with software stuff
             for j in range(len(matrix[0])):
                 matrix[i][j] = int(matrix[i][j])
         return matrix
-    
+
+    def frq_analysis(self, key):
+        list_key = list()
+        for k in key:
+            list_key.append(np.argmax(k))
+        print(Counter(list_key))
+
     def display_image(self, matrix): #this prints out a 3d image
         images_plot = matrix.astype('uint8')
         plt.imshow(images_plot)
