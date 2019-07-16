@@ -121,7 +121,7 @@ def Big_Train():
 
     model.build(input_shape=[None, 96, 96, 1])
     print(model.summary())
-    data, label = datafeeder.nextBatchTrain_dom(100)
+    data, label = datafeeder.nextBatchTrain_dom(10)
     data = np.float32(data)
     for epoch in range(1000):
         with tf.GradientTape() as tape:
@@ -130,7 +130,7 @@ def Big_Train():
             print("***********************")
             print("Finished epoch", epoch)
             print(accuracy(predictions, label))
-            print(pred_loss)
+            print(np.asarray(pred_loss))
             print("***********************")
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
