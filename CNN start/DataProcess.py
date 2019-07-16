@@ -61,16 +61,18 @@ class Prep():
         for k, l in zip(carrier, labels):
             k[l] = 1
         return carrier
+    def load_train_to_RAM(self):
+        self.batch, self.O_H = self.unzip_training()
 
     def nextBatchTrain(self, batchNum):
-        batch, O_H = self.unzip_training()
         modulus = 50000
-        batch = batch[self.trainCount: self.trainCount+batchNum]
-        O_H = O_H[self.trainCount: self.trainCount+batchNum]
+        batch_ = self.batch[self.trainCount: self.trainCount+batchNum]
+        O_H_ = self.O_H[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+        print(self.trainCount)
         self.trainCount = self.trainCount % modulus
-        batch = np.float32(batch)
-        return batch, O_H
+        batch_ = np.float32(batch_)
+        return batch_, O_H_
 
     def nextBatchTrain_all(self):
         batch, O_H = self.unzip_training()
