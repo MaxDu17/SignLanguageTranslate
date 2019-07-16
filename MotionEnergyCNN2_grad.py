@@ -137,7 +137,7 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(inputs, training=True)
             pred_loss = loss_function(labels, predictions)
-            print(pred_loss.numpy())
+            print(pred_loss)
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         print(gradients)
         raise Exception
