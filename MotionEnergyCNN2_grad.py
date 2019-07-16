@@ -143,7 +143,7 @@ def Big_Train():
     '''
     model.build(input_shape=[None, 96, 96, 1])
     print(model.summary())
-    data, label = datafeeder.nextBatchTrain(2)
+    data, label = datafeeder.nextBatchTrain(10)
     data = np.float32(data)
     for epoch in range(100):
         with tf.GradientTape() as tape:
