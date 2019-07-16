@@ -105,7 +105,15 @@ def train_step(model, loss_fn, optimizer, inputs, labels):
   gradients = tape.gradient(pred_loss, model.trainable_variables)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
 
-
+def accuracy(pred, labels):
+    assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
+    counter = 0
+    for i in range(len(pred)):
+        k = np.argmax(pred[i])
+        l = np.argmax(labels[i])
+        if k == l:
+            counter += 1
+    return counter/len(pred)
 
 def Big_Train():
     print("Is there a GPU available: "),
@@ -133,19 +141,19 @@ def Big_Train():
     model = tf.keras.Model(inputs=inputs, outputs=outputs)
     model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
     '''
+    model.build(input_shape=[None, 96, 96, 1])
     print(model.summary())
-
-    inputs, labels = datafeeder.nextBatchTrain_dom(1)
-    for epoch in range(501):
-
+    data, label = datafeeder.nextBatchTrain(5)
+    data = np.float32(data)
+    for epoch in range(500):
         with tf.GradientTape() as tape:
-            predictions = model(inputs, training=True)
-            pred_loss = loss_function(labels, predictions)
-            print(pred_loss)
+            predictions = model(data, training=True)
+            pred_loss = loss_function(label, predictions)
+            print(accuracy(predictions, label))
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        print("Finished epoch", epoch)
-    model.save_weights("Graphs_and_Results/Version1/best_weights.h5")
+        #print("Finished epoch", epoch)
+    model.save_weights("Graphs_and_Results/best_weights.h5")
 
 
 def Conf_mat():
