@@ -113,7 +113,7 @@ def Big_Train():
     print("*****************Training*****************")
     datafeeder = Prep(TEST_AMOUNT)
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.0015)
+    optimizer = tf.keras.optimizers.SGD(learning_rate=0.0015)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]),Convolve([4, 4, 64, 128]),
                                  Flatten([-1, 12 * 12 * 128]),FC([12*12*128, 560]),FC([560, output_size]),
