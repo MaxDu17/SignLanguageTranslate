@@ -150,7 +150,7 @@ def Big_Train():
                 model.save_weights("Graphs_and_Results/best_weights.h5")
 
         gradients = tape.gradient(pred_loss, model.trainable_variables)
-        print(gradients[0])
+        print(gradients[1])
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
 

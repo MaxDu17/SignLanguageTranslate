@@ -122,7 +122,7 @@ def Big_Train():
                 print(accuracy(predictions, label))
                 print(np.asarray(pred_loss))
                 print("***********************")
-                print(gradients)
+                print(gradients[1])
         gradients = tape.gradient(pred_loss, model.trainable_variables)
 
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
