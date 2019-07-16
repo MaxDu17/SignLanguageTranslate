@@ -143,6 +143,7 @@ def Conf_mat():
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
+    data = np.float32(data)
     predictions = model(data, training=True)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
