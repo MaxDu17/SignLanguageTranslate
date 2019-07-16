@@ -23,7 +23,7 @@ class DataStructure: #this is for the pickle's use
 class Prep():
     def __init__(self):
         self.trainCount =0
-        self.shuffle_status = False
+        self.shuffle_status = True
 
     def unpickle(self, file):
         with open(file, 'rb') as fo:
@@ -40,10 +40,11 @@ class Prep():
                 big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
             except:
                 raise Exception("You big dummy--you forgot to plug in the data drive!")
-        '''
+
         if shuffle_:
             random.shuffle(big_list) #this is so we don't get repeats
-        '''
+            print("######SHUFFLING DATASET#######")
+
         label_list_dom = list()
         img_list = list()
         for k in big_list:
@@ -74,10 +75,10 @@ class Prep():
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
-        '''
+
         if self.trainCount >= modulus:
             self.shuffle_status = True
-        '''
+
         self.trainCount = self.trainCount % modulus
         return image, dom
 
@@ -88,10 +89,12 @@ class Prep():
         image = image[self.trainCount: self.trainCount+batchNum]
         dom = dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+
         if self.trainCount >= modulus:
             self.shuffle_status = True
+
         self.trainCount = self.trainCount % modulus
-        image = np.float32(image)
+
         return image, dom
 
     def nextBatchTrain_dom_all(self):
