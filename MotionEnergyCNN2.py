@@ -140,7 +140,7 @@ def Big_Train():
 
                 print(predictions[0])
                 print(label[0])
-                
+                input("----------------")
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
