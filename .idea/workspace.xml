@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyCNN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyCNN2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,20 +13,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MotionEnergyCNN2.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MotionEnergyCNN2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="129" column="50" selection-start-line="129" selection-start-column="50" selection-end-line="129" selection-end-column="50" />
+            <state relative-caret-position="255">
+              <caret line="118" column="88" selection-start-line="118" selection-start-column="88" selection-end-line="118" selection-end-column="88" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
+            <state relative-caret-position="544">
+              <caret line="138" column="46" selection-start-line="138" selection-start-column="46" selection-end-line="139" selection-end-column="23" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -136,8 +136,8 @@
         <option value="$PROJECT_DIR$/CNN start/DataProcess.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN2_grad_test.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
         <option value="$PROJECT_DIR$/CNN start/CNN_test_v2.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
       </list>
     </option>
   </component>
@@ -636,20 +636,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="129" column="50" selection-start-line="129" selection-start-column="50" selection-end-line="129" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
+        <state relative-caret-position="544">
+          <caret line="138" column="46" selection-start-line="138" selection-start-column="46" selection-end-line="139" selection-end-column="23" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyCNN2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="118" column="88" selection-start-line="118" selection-start-column="88" selection-end-line="118" selection-end-column="88" />
         </state>
       </provider>
     </entry>
