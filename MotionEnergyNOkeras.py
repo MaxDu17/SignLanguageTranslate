@@ -18,10 +18,13 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         self.name = name
 
     def build(self): #input shape is NOT the parameter you feed into convolve's constructor
-        self.w_conv_1 = tf.random.truncated_normal(self.shape, stddev =  0.1, name = self.name + "_weight")
+        self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1,
+                                                                               name = self.name + "_weight"),
+                                    trainable = True)
         self.current_list.append(self.w_conv_1)
 
-        self.b_conv_1 = tf.zeros(self.shape[3], name=self.name + "_bias")
+        self.b_conv_1 = tf.Variable(initial_value = tf.zeros(self.shape[3], name=self.name + "_bias"),
+                                    trainable = True)
         self.current_list.append(self.b_conv_1)
 
 
@@ -57,9 +60,12 @@ class FC():  # this uses a keras layer structure but with a custom layer
         self.name = name
 
     def build(self):
-        self.w_fc_1 = tf.random.truncated_normal(self.shape, stddev=0.1, name=self.name + "_weight")
+        self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1,
+                                                                             name=self.name + "_weight"),
+                                  trainable = True)
         self.current_list.append(self.w_fc_1)
-        self.b_fc_1 = tf.zeros(self.shape[1], name=self.name + "_bias")
+        self.b_fc_1 = tf.Variable(initial_value = tf.zeros(self.shape[1], name=self.name + "_bias"),
+                                  trainable = True)
         self.current_list.append(self.b_fc_1)
 
 
@@ -111,7 +117,7 @@ def Big_Train():
     for i in range(501):
         data, label = datafeeder.nextBatchTrain_dom(1)
         output = model.call(data)
-        print(output)
+        print(big_list[1])
         input()
         with tf.GradientTape() as tape:
             tape.watch(big_list[1])
