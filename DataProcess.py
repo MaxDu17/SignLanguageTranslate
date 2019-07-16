@@ -82,12 +82,14 @@ class Prep():
         self.trainCount = self.trainCount % modulus
         return image, dom
 
+    def load_train_to_RAM(self):
+        self.image, self.dom = self.unzip_train(self.shuffle_status)
     def nextBatchTrain_dom(self, batchNum):
-        image, dom = self.unzip_train(self.shuffle_status)
+
         self.shuffle_status = False
-        modulus = len(image)
-        image = image[self.trainCount: self.trainCount+batchNum]
-        dom = dom[self.trainCount: self.trainCount+batchNum]
+        modulus = len(self.image)
+        image_ = self.image[self.trainCount: self.trainCount+batchNum]
+        dom_ = self.dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
         print(self.trainCount)
 
@@ -96,7 +98,7 @@ class Prep():
 
         self.trainCount = self.trainCount % modulus
 
-        return image, dom
+        return image_, dom_
 
     def nextBatchTrain_dom_all(self):
         self.shuffle_status = True
