@@ -126,7 +126,7 @@ def Big_Train():
     summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
     print("starting training")
 
-    for epoch in range(5001):
+    for epoch in range(501):
         data, label = datafeeder.nextBatchTrain_dom(150)
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
@@ -137,7 +137,7 @@ def Big_Train():
             print(np.asarray(pred_loss))
             print("***********************")
 
-            if epoch % 200 == 0 and epoch > 1:
+            if epoch % 20 == 0 and epoch > 1:
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
@@ -145,7 +145,7 @@ def Big_Train():
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
 
-            if epoch % 500 == 0 and epoch > 1:
+            if epoch % 100 == 0 and epoch > 1:
                 model.save_weights("Graphs_and_Results/best_weights.h5")
 
         gradients = tape.gradient(pred_loss, model.trainable_variables)
