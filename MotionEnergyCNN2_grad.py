@@ -101,14 +101,16 @@ def train_step(model, loss_fn, optimizer, inputs, labels):
   with tf.GradientTape() as tape:
     predictions = model(inputs, training=True)
     pred_loss = loss_fn(labels, predictions)
-    print(pred_loss.values)
+    print(pred_loss.numpy())
   gradients = tape.gradient(pred_loss, model.trainable_variables)
-  print(gradients)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
 
 
 
 def Big_Train():
+    print("Is there a GPU available: "),
+    print(tf.test.is_gpu_available())
+
     datafeeder = Prep()
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
