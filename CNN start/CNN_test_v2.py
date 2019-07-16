@@ -116,7 +116,7 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
-            if epoch%20 ==0:
+            if epoch%20 ==0 and epoch > 1:
                 print("***********************")
                 print("Finished epoch", epoch)
                 print(accuracy(predictions, label))

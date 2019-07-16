@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN start/CNN_test_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MotionEnergyCNN2.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyCNN2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +25,8 @@
       <file leaf-file-name="CNN_test_v2.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="124" column="32" selection-start-line="124" selection-start-column="32" selection-end-line="124" selection-end-column="32" />
+            <state relative-caret-position="204">
+              <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -646,8 +645,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CNN start/CNN_test_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="124" column="32" selection-start-line="124" selection-start-column="32" selection-end-line="124" selection-end-column="32" />
+        <state relative-caret-position="204">
+          <caret line="118" column="41" selection-start-line="118" selection-start-column="41" selection-end-line="118" selection-end-column="41" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
