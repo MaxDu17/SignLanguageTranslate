@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyNOkeras.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyNOkeras.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +28,8 @@
       <file leaf-file-name="MotionEnergyNOkeras.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyNOkeras.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+            <state relative-caret-position="374">
+              <caret line="114" column="15" selection-start-line="114" selection-start-column="15" selection-end-line="114" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -144,8 +144,8 @@
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/ME_CNN_d_only_V2.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
       </list>
     </option>
   </component>
@@ -667,8 +667,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyNOkeras.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="18" lean-forward="true" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        <state relative-caret-position="374">
+          <caret line="114" column="15" selection-start-line="114" selection-start-column="15" selection-end-line="114" selection-end-column="15" />
         </state>
       </provider>
     </entry>

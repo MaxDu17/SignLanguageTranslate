@@ -111,7 +111,9 @@ def Big_Train():
     for i in range(501):
         data, label = datafeeder.nextBatchTrain_dom(1)
         output = model.call(data)
-        with tf.GradientTape as tape:
+        print(output)
+        input()
+        with tf.GradientTape() as tape:
             loss = loss_function(output, label)
         gradients = tape.gradient(loss, big_list)
         print(gradients)
