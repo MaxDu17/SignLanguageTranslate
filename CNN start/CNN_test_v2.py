@@ -152,9 +152,14 @@ def Conf_mat():
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
         conf[k][l] += 1
+    test = open("Graphs_and_Results/confusion.csv", "w")
+    logger = csv.writer(test, lineterminator="\n")
+
+    for iterate in conf:
+        logger.writerow(iterate)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
-    print("This is the confusion matrix: {}".format(conf))
+    print(conf)
 
 
 
