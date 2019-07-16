@@ -101,7 +101,7 @@ def train_step(model, loss_fn, optimizer, inputs, labels):
   with tf.GradientTape() as tape:
     predictions = model(inputs, training=True)
     pred_loss = loss_fn(labels, predictions)
-    print(pred_loss)
+    print(pred_loss.values)
   gradients = tape.gradient(pred_loss, model.trainable_variables)
   print(gradients)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
@@ -128,7 +128,7 @@ def Big_Train():
     print(model.summary())
     model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
 
-    inputs, labels = datafeeder.nextBatchTrain_dom(10)
+    inputs, labels = datafeeder.nextBatchTrain_dom(1)
     for epoch in range(501):
         train_step(model, loss_function, optimizer, inputs, labels)
         print("Finished epoch", epoch)
