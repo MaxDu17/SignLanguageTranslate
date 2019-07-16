@@ -121,7 +121,9 @@ def Big_Train():
     '''
     model.build(input_shape = [None, 32, 32, 3])
     print(model.summary())
-
+    print("loading dataset")
+    datafeeder.load_train_to_RAM()
+    print("starting training")
     for epoch in range(1000):
         data, label = datafeeder.nextBatchTrain(50)
         data = np.float32(data)
