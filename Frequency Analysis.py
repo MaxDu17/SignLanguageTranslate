@@ -17,7 +17,7 @@ for i in range(len(dom)):
     non_aug.extend(dom[i])
 
 print(Counter(big_list))
-print(Counter(non_aug))
+#print(Counter(non_aug))
 #this no longer is frequency analysis
 k = list(Counter(big_list).keys())
 k = [int(j) for j in k]
@@ -30,7 +30,7 @@ for element in k:
     one_hot_dict[element] = i
     i = i + 1
 
-print(one_hot_dict)
+
 
 look_up_dict= dict() #so this is the inverse mapping
 
@@ -38,3 +38,4 @@ i = 0
 for element in k:
     look_up_dict[i] = element
     i = i + 1
+print(look_up_dict)
