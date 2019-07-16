@@ -101,10 +101,9 @@ def train_step(model, loss_fn, optimizer, inputs, labels):
   with tf.GradientTape() as tape:
     predictions = model(inputs, training=True)
     pred_loss = loss_fn(labels, predictions)
-
+    print(pred_loss)
   gradients = tape.gradient(pred_loss, model.trainable_variables)
   print(gradients)
-  raise Exception
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
 
 
