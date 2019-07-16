@@ -110,8 +110,8 @@ def Big_Train():
     print("loading dataset")
     datafeeder.load_train_to_RAM()
     print("starting training")
-    for epoch in range(1000):
-        data, label = datafeeder.nextBatchTrain(50)
+    for epoch in range(5000):
+        data, label = datafeeder.nextBatchTrain(150)
         data = np.float32(data)
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
