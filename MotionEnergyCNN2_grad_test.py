@@ -105,7 +105,7 @@ def accuracy(pred, labels):
         l = np.argmax(labels[i])
         if k == l:
             counter += 1
-    return counter / len(pred)
+    return float(counter)/len(pred)
 
 def Big_Train():
     print("Is there a GPU available: "),
@@ -121,7 +121,7 @@ def Big_Train():
 
     model.build(input_shape=[None, 96, 96, 1])
     print(model.summary())
-    data, label = datafeeder.nextBatchTrain(100)
+    data, label = datafeeder.nextBatchTrain(1000)
     data = np.float32(data)
     for epoch in range(100):
         with tf.GradientTape() as tape:
@@ -134,38 +134,11 @@ def Big_Train():
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
 
-def Conf_mat():
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    inputs = tf.keras.Input(shape=[32, 32, 3])
-
-    x = Convolve([4, 4, 3, 32])(inputs)
-    x = Convolve([4, 4, 32, 64])(x)
-    x = Convolve([4, 4, 64, 128])(x)
-    x = Flatten([-1, 4 * 4 * 128])(x)
-    x = FC([4 * 4 * 128, 1024])(x)
-    x = FC([1024, 10])(x)
-    outputs = Softmax([])(x)
-
-    model = tf.keras.Model(inputs=inputs, outputs=outputs)
-    print(model.summary())
-    model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
-    model.load_weights("Graphs_and_Results/Version1/best_weights.h5")
-    datafeeder = Prep()
-
-    data, label = datafeeder.nextBatchTest()
-
-    acc = model.evaluate(data, label, batch_size=100)
-    print(acc)
-
-
 def main():
     print("---the model is starting-----")
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
-    if query == "m":
-        Conf_mat()
 
 
 if __name__ == '__main__':
