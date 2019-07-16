@@ -144,6 +144,7 @@ def Big_Train():
                     for var in model.trainable_variables:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
+                    tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
                 model.save_weights("Graphs_and_Results/best_weights.h5")
