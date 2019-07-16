@@ -138,14 +138,23 @@ def Conf_mat():
 
     model.build(input_shape=[None, 32, 32, 3])
     print(model.summary())
-    model.compile(optimizer=optimizer, loss=loss_function, metrics = ['accuracy'])
     model.load_weights("Graphs_and_Results/best_weights.h5")
     datafeeder = Prep()
 
     data, label = datafeeder.nextBatchTest()
     data = np.float32(data)
     predictions = model(data, training=True)
+
+    assert len(label) == len(predictions)
+
+    conf = np.zeros(shape = [len(data), len(predictions)])
+    for i in range(len(predictions)):
+        k = np.argmax(predictions[i])
+        l = np.argmax(label[i])
+        conf[k][l] += 1
+
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    print("This is the confusion matrix: {}".format(conf))
 
 
 
