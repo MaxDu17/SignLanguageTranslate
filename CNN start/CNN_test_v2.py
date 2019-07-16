@@ -129,10 +129,6 @@ def Big_Train():
 
 
 def Conf_mat():
-    datafeeder = Prep()
-
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([Convolve([4, 4, 3, 32]), Convolve([4, 4, 32, 64]), Convolve([4, 4, 64, 128]),
                                  Flatten([-1, 4 * 4 * 128]), FC([4 * 4 * 128, 1024]), FC([1024, 10]), Softmax([])])
 

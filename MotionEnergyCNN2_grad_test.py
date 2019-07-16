@@ -124,22 +124,51 @@ def Big_Train():
     print("loading dataset")
     datafeeder.load_train_to_RAM()
     print("starting training")
-    for epoch in range(1000):
-        data, label = datafeeder.nextBatchTrain_dom(50)
+    for epoch in range(5000):
+        data, label = datafeeder.nextBatchTrain_dom(150)
         data = np.float32(data)
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
-            print("***********************")
-            print("Finished epoch", epoch)
-            print(accuracy(predictions, label))
-            print(np.asarray(pred_loss))
-            print("***********************")
+            if epoch % 20 == 0:
+                print("***********************")
+                print("Finished epoch", epoch)
+                print(accuracy(predictions, label))
+                print(np.asarray(pred_loss))
+                print("***********************")
         gradients = tape.gradient(pred_loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
+def conf_mat():
+    model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]), Convolve([4, 4, 64, 128]),
+                                 Flatten([-1, 12 * 12 * 128]), FC([12 * 12 * 128, 560]), FC([560, output_size]),
+                                 Softmax([])])
 
+    model.build(input_shape=[None, 96, 96, 1])
+    print(model.summary())
+    model.load_weights("Graphs_and_Results/best_weights.h5")
+    datafeeder = Prep()
+
+    data, label = datafeeder.nextBatchTest()
+    data = np.float32(data)
+    predictions = model(data, training=True)
+
+    assert len(label) == len(predictions)
+
+    conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
+    for i in range(len(predictions)):
+        k = np.argmax(predictions[i])
+        l = np.argmax(label[i])
+        conf[k][l] += 1
+    test = open("Graphs_and_Results/confusion.csv", "w")
+    logger = csv.writer(test, lineterminator="\n")
+
+    for iterate in conf:
+        logger.writerow(iterate)
+
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    print(conf)
 def main():
     print("---the model is starting-----")
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")

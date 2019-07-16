@@ -21,9 +21,9 @@ class DataStructure: #this is for the pickle's use
         return self.data
 
 class Prep():
-    def __init__(self):
+    def __init__(self, test_number):
         self.trainCount =0
-        self.shuffle_status = False
+        self.test_number = test_number
 
     def unpickle(self, file):
         with open(file, 'rb') as fo:
@@ -32,7 +32,7 @@ class Prep():
 
     #preconditions: none
     #postconditions: outputs the 2nd batch as an extracted file
-    def unzip_train(self, shuffle_):
+    def unzip_train(self):
         try:
             big_list = self.unpickle("./SignLanguageData")
         except:
@@ -40,10 +40,10 @@ class Prep():
                 big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
             except:
                 raise Exception("You big dummy--you forgot to plug in the data drive!")
-
-        if shuffle_:
-            random.shuffle(big_list) #this is so we don't get repeats
-            print("######SHUFFLING DATASET#######")
+        test_spot = len(big_list) - self.test_number
+        big_list = big_list[0:test_spot]
+        random.shuffle(big_list) #this is so we don't get repeats
+        print("######SHUFFLING DATASET#######")
 
         label_list_dom = list()
         img_list = list()
@@ -57,6 +57,33 @@ class Prep():
         img_list = img_list.reshape(len(big_list), 96, 96, 1) #ignore the pycharm warning here
         return img_list, label_list_dom
 
+    # preconditions: none
+    # postconditions: outputs the 2nd batch as an extracted file
+
+    def unzip_test(self):
+        try:
+            big_list = self.unpickle("./SignLanguageData")
+        except:
+            try:
+                big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
+            except:
+                raise Exception("You big dummy--you forgot to plug in the data drive!")
+        test_spot = len(big_list) - self.test_number
+        big_list = big_list[test_spot:] #this is the difference
+        random.shuffle(big_list)  # this is so we don't get repeats
+        print("######SHUFFLING DATASET#######")
+
+        label_list_dom = list()
+        img_list = list()
+        for k in big_list:
+            label_list_dom.append(self.Hot_Vec(k.get_dom()))
+            img_list.append(k.get_data() / 255)  # remember to normalize
+        img_list = np.asarray(img_list)
+        label_list_dom = np.asarray(label_list_dom)
+
+        img_list = img_list.reshape(len(big_list), 96, 96, 1)  # ignore the pycharm warning here
+        return img_list, label_list_dom
+
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
     def Hot_Vec(self, selection): #we have removed a case for the 999 null status, we will add them later
@@ -68,39 +95,17 @@ class Prep():
 
         return carrier
 
-    def nextBatchTrain(self, batchNum): #not functional at the moment
-        image, dom = self.unzip_train(self.shuffle_status)
-        self.shuffle_status = False
-        modulus = len(image)
-        image = image[self.trainCount: self.trainCount+batchNum]
-        dom = dom[self.trainCount: self.trainCount+batchNum]
-        self.trainCount += batchNum
-
-        if self.trainCount >= modulus:
-            self.shuffle_status = True
-
-        self.trainCount = self.trainCount % modulus
-        return image, dom
-
     def load_train_to_RAM(self):
-        self.image, self.dom = self.unzip_train(self.shuffle_status)
-    def nextBatchTrain_dom(self, batchNum):
+        self.image, self.dom = self.unzip_train()
 
-        self.shuffle_status = False
+    def nextBatchTrain_dom(self, batchNum):
         modulus = len(self.image)
         image_ = self.image[self.trainCount: self.trainCount+batchNum]
         dom_ = self.dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
-        print(self.trainCount)
-
-        if self.trainCount >= modulus:
-            self.shuffle_status = True
-
         self.trainCount = self.trainCount % modulus
-
         return image_, dom_
 
-    def nextBatchTrain_dom_all(self):
-        self.shuffle_status = True
-        image, dom = self.unzip_train(self.shuffle_status)
+    def nextBatchTest_dom(self):
+        image, dom = self.unzip_test()
         return image, dom
