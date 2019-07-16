@@ -88,9 +88,9 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 def accuracy(pred, labels):
-    assert len(pred) == len(labels), "lengths of predictoin and labels are not the same"
+    assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
     counter = 0
-    for i in len(pred):
+    for i in range(len(pred)):
         k = np.argmax(pred[i])
         l = np.argmax(labels[i])
         if k == l:
