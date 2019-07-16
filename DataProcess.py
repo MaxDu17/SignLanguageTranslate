@@ -89,6 +89,7 @@ class Prep():
         if self.trainCount >= modulus:
             self.shuffle_status = True
         self.trainCount = self.trainCount % modulus
+        image = np.float32(image)
         return image, dom
 
     def nextBatchTrain_dom_all(self):
