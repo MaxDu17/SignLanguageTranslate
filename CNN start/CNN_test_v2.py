@@ -121,9 +121,9 @@ def Big_Train():
     '''
     model.build(input_shape = [None, 32, 32, 3])
     print(model.summary())
-    data, label = datafeeder.nextBatchTrain(100)
+    data, label = datafeeder.nextBatchTrain(50000)
     data = np.float32(data)
-    for epoch in range(50):
+    for epoch in range(5):
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
