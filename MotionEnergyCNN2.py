@@ -114,7 +114,7 @@ def Big_Train():
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    model = tf.keras.Sequential([Convolve([4, 4, 1, 8]), Convolve([4, 4, 8, 16]),Convolve([4, 4, 16, 32]),
+    model = tf.keras.Sequential([Convolve([5, 5, 1, 8]), Convolve([5, 5, 8, 16]),Convolve([5, 5, 16, 32]),
                                  Flatten([-1, 13 * 13 * 32]),FC([13*13*32, 576]),FC([576, output_size]),
                                  Softmax([])]) #this declares the layers
 
