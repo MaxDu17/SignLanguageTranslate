@@ -18,70 +18,81 @@ def crop(matrix):
     return new_mat
 
 
-#VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
-basepath = "../LINKED/Storage/Data/experimental/overlap/"
-savepath = "../LINKED/Storage/Data/experimental/augmented_overlap/"
-k = open("../LINKED/Storage/Data/experimental/dom_labels.csv", 'r')
-labels = list(csv.reader(k))
 
-#this just find the frequency distribution of the csv
-big_list = list()
-for k in labels:
-    big_list.extend(k)
-counted = Counter(big_list)
-print(counted)
-input("Press enter to continue")
+def doitall(basepath, savepath):
+    k = open("../LINKED/Storage/Data/experimental/dom_labels.csv", 'r')
+    labels = list(csv.reader(k))
 
-#we shrink, crop, and augment the dataset
-#this is for dom, only
+    #this just find the frequency distribution of the csv
+    big_list = list()
+    for k in labels:
+        big_list.extend(k)
+    counted = Counter(big_list)
+    print(counted)
+    input("Press enter to continue")
 
-documentation_ = open("../LINKED/Storage/Data/experimental/augmentations.csv", "w")
-documentation = csv.writer(documentation_, lineterminator = "\n")
-for i in range(len(labels)):
-    img_path = basepath + str(i) + ".jpg"
-    matrix = tool.load_image_to_mat(img_path)
-    matrix = np.asarray(matrix)
-    matrix = crop(matrix)#this zooms in
-    matrix = tool.resize_image(matrix, 100, 100, "L")
+    #we shrink, crop, and augment the dataset
+    #this is for dom, only
 
-    #this section simply takes the known augmentation factor and takes an average (because there are more than one
-    #per row sometimes
-    aug_num = int(round((30/counted[str(labels[i][0])])))
+    documentation_ = open("../LINKED/Storage/Data/experimental/augmentations.csv", "w")
+    documentation = csv.writer(documentation_, lineterminator = "\n")
+    random.seed(104634568) #so all augmentations will be the same
+    for i in range(len(labels)):
+        img_path = basepath + str(i) + ".jpg"
+        matrix = tool.load_image_to_mat(img_path)
+        matrix = np.asarray(matrix)
+        matrix = crop(matrix)#this zooms in
+        matrix = tool.resize_image(matrix, 100, 100, "L")
 
-    ################
-    #here is some programming debauchery. Also, I got rid of flipping and made translation better
-    print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))
-    documentation.writerow([aug_num])
-    if aug_num == 1:
-        tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
+        #this section simply takes the known augmentation factor and takes an average (because there are more than one
+        #per row sometimes
+        aug_num = int(round((30/counted[str(labels[i][0])])))
 
-    if aug_num == 2:
-        tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-        matrix_LR = tool.flip_lr(matrix)
-        tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
+        ################
+        #here is some programming debauchery. Also, I got rid of flipping and made translation better
+        print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))
+        documentation.writerow([aug_num])
+        if aug_num == 1:
+            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
 
-    if aug_num == 3:
-        tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-        matrix_LR = tool.flip_lr(matrix)
-        tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
-        matrix_UD = tool.flip_ud(matrix)
-        tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
+        if aug_num == 2:
+            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
+            matrix_LR = tool.flip_lr(matrix)
+            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
 
-    else:
-        left = aug_num - 3
-        tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-        matrix_LR = tool.flip_lr(matrix)
-        tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
-        matrix_UD = tool.flip_ud(matrix)
-        tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
+        if aug_num == 3:
+            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
+            matrix_LR = tool.flip_lr(matrix)
+            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
+            matrix_UD = tool.flip_ud(matrix)
+            tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
 
-
-        for j in range(left):
-
-            matrix_ = tool.trans_hor(matrix, random.randint(-5, 5), "L")
-            matrix_ = tool.trans_vert(matrix_, random.randint(-5, 5), "L")
-            matrix_ = tool.add_noise_L(matrix_)
-            tool.save_image(matrix=matrix_, path=savepath +  str(i) + "_" + str(j+3) + ".jpg", type="L")
+        else:
+            left = aug_num - 3
+            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
+            matrix_LR = tool.flip_lr(matrix)
+            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
+            matrix_UD = tool.flip_ud(matrix)
+            tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
 
 
+            for j in range(left):
 
+                matrix_ = tool.trans_hor(matrix, random.randint(-5, 5), "L")
+                matrix_ = tool.trans_vert(matrix_, random.randint(-5, 5), "L")
+                matrix_ = tool.add_noise_L(matrix_)
+                tool.save_image(matrix=matrix_, path=savepath +  str(i) + "_" + str(j+3) + ".jpg", type="L")
+
+
+def main():
+    # VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
+    base = "../LINKED/Storage/Data/experimental/"
+    sub = ["overlap/", "edge_history/", "history/", "middle/", "motion/"]
+    for type in sub:
+        print("*************DOING FOLDER {}******************".format(type))
+        basepath = base + type
+        savepath = base + "augmented_" + type
+        doitall(basepath, savepath)
+
+if __name__ == '__main__':
+    main()
