@@ -105,7 +105,7 @@ class Utility(): #this class will help with software stuff
         noise = np.random.randint(10, size=shape, dtype='uint8')
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
-                if (matrix[i][j]!= 245):
+                if (matrix[i][j] < 245):
                     carrier[i][j] += noise[i][j]
         return matrix
 

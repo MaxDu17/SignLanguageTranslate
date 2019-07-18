@@ -20,7 +20,7 @@ dom_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/dom_labels.csv")
 non_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/non_labels.csv")))
 
 big_list = list()
-basepath = "../LINKED/Storage/Data/DATASET_augmented/"
+basepath = "../LINKED/Storage/Data/experimental/augmented_motion/"
 for i in range(len(dom_reader)):
     print(i)
     dom = [int(k) for k in dom_reader[i]]
@@ -34,5 +34,5 @@ for i in range(len(dom_reader)):
         except:
             break
 
-dbfile = open("../LINKED/Storage/Data/SignLanguageData", "ab")
+dbfile = open("../LINKED/Storage/Data/experimental/SignLanguageData_motion", "ab")
 pickle.dump(big_list, dbfile)

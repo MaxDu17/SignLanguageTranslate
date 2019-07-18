@@ -4,7 +4,7 @@ import numpy as np
 
 big_list = list()
 non_aug = list()
-k = open("DATASET_Motion/dom_labels.csv", "r")
+k = open("experimental/dom_labels.csv", "r")
 dom = list(csv.reader(k))
 
 w = open("augmentations.csv", "r")
