@@ -175,7 +175,7 @@ def Test():
     predictions = model(data, training=True)
     print(len(label))
     print(len(predictions))
-
+    raise Exception
     assert len(label) == len(predictions)
 
     conf = np.zeros(shape=[len(label[0]), len(predictions[0])])

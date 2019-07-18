@@ -155,4 +155,6 @@ class Prep():
     def nextBatchTest_dom(self):
         image_list, dom = self.unzip_test()
         image_list = np.float32(image_list)
+        image_list = np.transpose(image_list, [1, 0, 2, 3,
+                                           4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
         return image_list, dom
