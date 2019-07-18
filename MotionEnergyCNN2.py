@@ -96,7 +96,6 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 
-
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
     counter = 0
@@ -111,7 +110,7 @@ def Big_Train():
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
-    datafeeder = Prep(TEST_AMOUNT)
+    datafeeder = Prep(TEST_AMOUNT, ["Middle", "Overlap"])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
@@ -128,6 +127,8 @@ def Big_Train():
 
     for epoch in range(501):
         data, label = datafeeder.nextBatchTrain_dom(150)
+        print(np.shape(data))
+        raise Exception
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)

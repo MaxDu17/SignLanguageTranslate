@@ -16,17 +16,27 @@ class DataStructure:
         return self.dom
     def get_non(self):
         return self.non
-    def get_data(self):
-        return self.data
+    def get_overlap(self):
+        return self.overlap
+    def get_ehistory(self):
+        return self.edge_history
+    def get_history(self):
+        return self.history
+    def get_middle(self):
+        return self.middle
+    def get_motion(self):
+        return self.motion
 
 tool = Utility()
-dom_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/dom_labels.csv")))
-non_reader = list(csv.reader(open("../LINKED/Storage/Data/FINAL/non_labels.csv")))
+dom_reader = list(csv.reader(open("../LINKED/Storage/Data/experimental/dom_labels.csv")))
+non_reader = list(csv.reader(open("../LINKED/Storage/Data/experimental/non_labels.csv")))
 
 big_list = list()
 basepath = "../LINKED/Storage/Data/experimental/"
 path_list = ["augmented_overlap/", "augmented_edge_history/", "augmented_history/", "augmented_middle/",
              "augmented_motion/"]
+print(len(dom_reader))
+input("Press enter to start dumping to pickle")
 for i in range(len(dom_reader)):
     print(i)
     dom = [int(k) for k in dom_reader[i]]
@@ -48,6 +58,7 @@ for i in range(len(dom_reader)):
             data_object = DataStructure(dom, non, matrix_over, matrix_ehist, matrix_hist, matrix_middle, matrix_motion)
             big_list.append(data_object)
         except FileNotFoundError:
+            print("\tProcessed {} files".format(j))
             break
 
 dbfile = open("../LINKED/Storage/Data/experimental/SignLanguageData", "ab")
