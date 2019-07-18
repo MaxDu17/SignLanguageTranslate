@@ -41,7 +41,7 @@ for i in range(len(labels)):
     img_path = basepath + str(i) + ".jpg"
     matrix = tool.load_image_to_mat(img_path)
     matrix = np.asarray(matrix)
-    matrix = crop(matrix)
+    matrix = crop(matrix)#this zooms in
     matrix = tool.resize_image(matrix, 100, 100, "L")
 
     #this section simply takes the known augmentation factor and takes an average (because there are more than one
@@ -78,8 +78,8 @@ for i in range(len(labels)):
 
         for j in range(left):
 
-            matrix_ = tool.trans_hor(matrix, random.randint(-20, 20), "L")
-            matrix_ = tool.trans_vert(matrix_, random.randint(-20, 20), "L")
+            matrix_ = tool.trans_hor(matrix, random.randint(-5, 5), "L")
+            matrix_ = tool.trans_vert(matrix_, random.randint(-5, 5), "L")
             matrix_ = tool.add_noise_L(matrix_)
             tool.save_image(matrix=matrix_, path=savepath +  str(i) + "_" + str(j+3) + ".jpg", type="L")
 
