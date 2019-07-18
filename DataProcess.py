@@ -87,26 +87,43 @@ class Prep():
 
     def unzip_test(self):
         try:
-            big_list = self.unpickle("./SignLanguageData")
+            big_list = self.unpickle("../LINKED/Storage/Data/experimental/SignLanguageData")
         except:
-            try:
-                big_list = self.unpickle("../LINKED/Storage/Data/SignLanguageData")
-            except:
-                raise Exception("You big dummy--you forgot to plug in the data drive!")
+            raise Exception("You big dummy--you forgot to plug in the data drive!")
         test_spot = len(big_list) - self.test_number
-        big_list = big_list[test_spot:] #this is the difference
-        random.shuffle(big_list)  # this is so we don't get repeats
+        big_list = big_list[test_spot:]
+        random.shuffle(big_list) #this is so we don't get repeats
         print("######SHUFFLING DATASET#######")
 
         label_list_dom = list()
         img_list = list()
         for k in big_list:
             label_list_dom.append(self.Hot_Vec(k.get_dom()))
-            img_list.append(k.get_data() / 255)  # remember to normalize
-        img_list = np.asarray(img_list)
-        label_list_dom = np.asarray(label_list_dom)
+            carrier_list = list()
+            for element in self.requests_list:
+                if element == "Motion":
+                    carrier = np.asarray(k.get_motion()/255).reshape(100, 100, 1)
+                    carrier_list.append(carrier)
+                elif element == "History":
+                    carrier = np.asarray(k.get_history() / 255).reshape(100, 100, 1) #just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Middle":
+                    carrier = np.asarray(k.get_middle() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Overlap":
+                    carrier = np.asarray(k.get_overlap() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Edge_History":
+                    carrier = np.asarray(k.get_ehistory() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                else:
+                    raise Exception("Data Request not valid. Your options are: {}".format(["History", "Middle", "Overlap", "Motion", "Edge_History"]))
+            img_list.append(carrier_list) #now, it's [TRAINLENGTH X # images X 96 X 96 X 1]
 
-        img_list = img_list.reshape(len(big_list), 96, 96, 1)  # ignore the pycharm warning here
+        img_list = np.asarray(img_list)
+
+        label_list_dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
+
         return img_list, label_list_dom
 
     #preconditions: labels must be in range 0-9
