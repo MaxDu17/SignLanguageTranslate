@@ -110,15 +110,15 @@ def Big_Train():
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
-    datafeeder = Prep(TEST_AMOUNT, ["Middle", "Overlap"])
+    datafeeder = Prep(TEST_AMOUNT, ["Middle"])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
     model = tf.keras.Sequential([Convolve([4, 4, 1, 8]), Convolve([4, 4, 8, 16]),Convolve([4, 4, 16, 32]),
-                                 Flatten([-1, 12 * 12 * 32]),FC([12*12*32, 576]),FC([576, output_size]),
+                                 Flatten([-1, 13 * 13 * 32]),FC([13*13*32, 576]),FC([576, output_size]),
                                  Softmax([])]) #this declares the layers
 
-    model.build(input_shape=[None, 96, 96, 1]) #this builds the network
+    model.build(input_shape=[None, 100, 100, 1]) #this builds the network
     print(model.summary()) #this is more for user reference
     print("loading dataset")
     datafeeder.load_train_to_RAM() #loads the training data to RAM
@@ -127,8 +127,7 @@ def Big_Train():
 
     for epoch in range(501):
         data, label = datafeeder.nextBatchTrain_dom(150)
-        print(np.shape(data))
-        raise Exception
+        data = data[0] #thsi is because we now have multiple images in the pickle
         with tf.GradientTape() as tape:
             predictions = model(data, training=True)
             pred_loss = loss_function(label, predictions)
@@ -141,7 +140,6 @@ def Big_Train():
 
                 print(predictions[0])
                 print(label[0])
-                util.frq_analysis(label)
                 input("----------------")
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)

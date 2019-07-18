@@ -121,6 +121,7 @@ class Prep():
         return carrier
 
     def load_train_to_RAM(self):
+        print("Loading training data to RAM")
         self.image_list, self.dom = self.unzip_train()
         self.image_list = np.float32(self.image_list)
 
