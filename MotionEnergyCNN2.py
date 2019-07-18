@@ -112,10 +112,10 @@ def Big_Train():
     print("*****************Training*****************")
     datafeeder = Prep(TEST_AMOUNT, ["Middle"])
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.0005)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    model = tf.keras.Sequential([Convolve([5, 5, 1, 8]), Convolve([5, 5, 8, 16]),Convolve([5, 5, 16, 32]),
-                                 Flatten([-1, 13 * 13 * 32]),FC([13*13*32, 576]),FC([576, output_size]),
+    model = tf.keras.Sequential([Convolve([3, 3, 1, 4]), Convolve([3, 3, 4, 8]),Convolve([3, 3, 8, 16]),
+                                 Flatten([-1, 13 * 13 * 16]),FC([13*13*16, 412]),FC([412, output_size]),
                                  Softmax([])]) #this declares the layers
 
     model.build(input_shape=[None, 100, 100, 1]) #this builds the network
