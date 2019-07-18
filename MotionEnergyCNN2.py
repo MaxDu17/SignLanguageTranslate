@@ -9,7 +9,7 @@ from DataProcess import DataStructure
 
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
-TEST_AMOUNT = 200
+TEST_AMOUNT = 100
 
 class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
     def __init__(self, shape, *args, **kwargs):
@@ -125,7 +125,7 @@ def Big_Train():
     summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
     print("starting training")
 
-    for epoch in range(501):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0] #thsi is because we now have multiple images in the pickle
         with tf.GradientTape() as tape:
@@ -161,16 +161,17 @@ def Big_Train():
 
 
 def Test():
-    model = tf.keras.Sequential([Convolve([4, 4, 1, 32]), Convolve([4, 4, 32, 64]), Convolve([4, 4, 64, 128]),
-                                 Flatten([-1, 12 * 12 * 128]), FC([12 * 12 * 128, 560]), FC([560, output_size]),
-                                 Softmax([])])
+    model = tf.keras.Sequential([Convolve([3, 3, 1, 4]), Convolve([3, 3, 4, 8]),
+                                 Flatten([-1, 25 * 25 * 8]), FC([25 * 25 * 8, output_size]),
+                                 Softmax([])])  # this declares the layers
 
-    model.build(input_shape=[None, 96, 96, 1])
+    model.build(input_shape=[None, 100, 100, 1])  # this builds the network
     print(model.summary())
     model.load_weights("Graphs_and_Results/best_weights.h5")
     datafeeder = Prep(TEST_AMOUNT)
 
     data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # thsi is because we now have multiple images in the pickle
     predictions = model(data, training=True)
 
     assert len(label) == len(predictions)
