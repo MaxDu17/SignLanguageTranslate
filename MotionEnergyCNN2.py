@@ -173,6 +173,8 @@ def Test():
     data, label = datafeeder.nextBatchTest_dom()
     data = data[0]  # thsi is because we now have multiple images in the pickle
     predictions = model(data, training=True)
+    print(len(label))
+    print(len(predictions))
 
     assert len(label) == len(predictions)
 
