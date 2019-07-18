@@ -125,7 +125,7 @@ def Big_Train():
     summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
     print("starting training")
 
-    for epoch in range(1001):
+    for epoch in range(501):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0] #thsi is because we now have multiple images in the pickle
         with tf.GradientTape() as tape:
@@ -158,6 +158,7 @@ def Big_Train():
 
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
+    Test_live(model)
 
 def Test_live(model):
     datafeeder = Prep(TEST_AMOUNT, ["History"])
@@ -193,7 +194,6 @@ def main():
     if query == "t":
         Big_Train()
         print("###########NOW TESTING##############")
-        Test_live()
     if query == "m":
         Test()
 
