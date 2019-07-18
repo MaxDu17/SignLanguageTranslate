@@ -110,7 +110,7 @@ def Big_Train():
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
-    datafeeder = Prep(TEST_AMOUNT, ["Middle"])
+    datafeeder = Prep(TEST_AMOUNT, ["History"])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.0005)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
@@ -168,7 +168,7 @@ def Test():
     model.build(input_shape=[None, 100, 100, 1])  # this builds the network
     print(model.summary())
     model.load_weights("Graphs_and_Results/best_weights.h5")
-    datafeeder = Prep(TEST_AMOUNT)
+    datafeeder = Prep(TEST_AMOUNT,["History"])
 
     data, label = datafeeder.nextBatchTest_dom()
     data = data[0]  # thsi is because we now have multiple images in the pickle
