@@ -159,6 +159,15 @@ def Big_Train():
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
     model.save_weights("Graphs_and_Results/best_weights.h5")
 
+def Test_live(model):
+    datafeeder = Prep(TEST_AMOUNT, ["History"])
+
+    data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # this is because we now have multiple images in the pickle
+    predictions = model(data, training=False)
+
+    assert len(label) == len(predictions)
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test():
     model = tf.keras.Sequential([Convolve([3, 3, 1, 4]), Convolve([3, 3, 4, 8]),
@@ -175,23 +184,7 @@ def Test():
     predictions = model(data, training=False)
 
     assert len(label) == len(predictions)
-    print(np.shape(label))
-    print(np.shape(predictions))
-    raise Exception("HI")
-    conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
-
-    for i in range(len(predictions)):
-        k = np.argmax(predictions[i])
-        l = np.argmax(label[i])
-        conf[k][l] += 1
-    test = open("Graphs_and_Results/confusion.csv", "w")
-    logger = csv.writer(test, lineterminator="\n")
-
-    for iterate in conf:
-        logger.writerow(iterate)
-
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
-    print(conf)
 
 
 def main():
@@ -200,7 +193,7 @@ def main():
     if query == "t":
         Big_Train()
         print("###########NOW TESTING##############")
-        Test()
+        Test_live()
     if query == "m":
         Test()
 
