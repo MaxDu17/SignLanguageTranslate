@@ -47,7 +47,7 @@ for i in range(len(dom_reader)):
 
             data_object = DataStructure(dom, non, matrix_over, matrix_ehist, matrix_hist, matrix_middle, matrix_motion)
             big_list.append(data_object)
-        except:
+        except FileNotFoundError:
             break
 
 dbfile = open("../LINKED/Storage/Data/experimental/SignLanguageData", "ab")
