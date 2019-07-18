@@ -19,8 +19,8 @@ def crop(matrix):
 
 
 #VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
-basepath = "../LINKED/Storage/Data/experimental/history/"
-savepath = "../LINKED/Storage/Data/experimental/augmented_history/"
+basepath = "../LINKED/Storage/Data/experimental/motion/"
+savepath = "../LINKED/Storage/Data/experimental/augmented_motion/"
 k = open("../LINKED/Storage/Data/experimental/dom_labels.csv", 'r')
 labels = list(csv.reader(k))
 
