@@ -28,8 +28,6 @@ def doitall(basepath, savepath):
     for k in labels:
         big_list.extend(k)
     counted = Counter(big_list)
-    print(counted)
-    input("Press enter to continue")
 
     #we shrink, crop, and augment the dataset
     #this is for dom, only
