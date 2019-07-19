@@ -4,29 +4,46 @@ import numpy as np
 import csv
 import os
 from Utility import Utility
+import pickle
 util = Utility()
 from DataProcess import DataStructure
 
 
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
-TEST_AMOUNT = 100
+TEST_AMOUNT = 200
 
 big_list = list()
+
+def unpickle(file):
+    with open(file, 'rb') as fo:
+        objects = pickle.load(fo, encoding='bytes')
+    return objects
+
 class Convolve():  # this uses a keras layer structure but with a custom layer
     def __init__(self, current_list, shape, name):
         self.current_list = current_list
         self.shape = shape
         self.name = name
 
-    def build(self): #input shape is NOT the parameter you feed into convolve's constructor
-        self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1,),
-                                    name = self.name + "_weight", trainable = True)
-        self.current_list.append(self.w_conv_1)
+    def build(self, from_file = False, values = None): #input shape is NOT the parameter you feed into convolve's constructor
+        if from_file == False:
+            self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1),
+                                        name = self.name + "_weight", trainable = True)
+            self.current_list.append(self.w_conv_1)
 
-        self.b_conv_1 = tf.Variable(initial_value = tf.zeros(self.shape[3]),
-                                    name=self.name + "_bias", trainable = True)
-        self.current_list.append(self.b_conv_1)
+            self.b_conv_1 = tf.Variable(initial_value = tf.zeros(self.shape[3]),
+                                        name=self.name + "_bias", trainable = True)
+            self.current_list.append(self.b_conv_1)
+        else:
+            assert np.shape(values) == self.shape, "Shape mis-match in class Convolve"
+            self.w_conv_1 = tf.Variable(initial_value=values,
+                                        name=self.name + "_weight", trainable=True)
+            self.current_list.append(self.w_conv_1)
+
+            self.b_conv_1 = tf.Variable(initial_value=tf.zeros(self.shape[3]),
+                                        name=self.name + "_bias", trainable=True)
+            self.current_list.append(self.b_conv_1)
 
 
     def call(self, input):
@@ -82,6 +99,13 @@ class Model():
         self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
         self.fc_1 = FC(big_list, [25*25*8, output_size], "Layer_1_FC")
         self.softmax = Softmax()
+    def build_model_from_pickle(self, file_dir):
+        big_list = unpickle("Graphs_and_Results/SAVED_WEIGHTS")
+        self.cnn_1.build()
+        self.cnn_2.build()
+        self.fc_1.build()
+
+
     def build_model(self):
         self.cnn_1.build()
         self.cnn_2.build()
@@ -106,6 +130,10 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def Big_Train():
+    print("Is there a GPU available: "),
+    print(tf.test.is_gpu_available())
+    print("*****************Training*****************")
+
     datafeeder = Prep(150, ["Motion"])
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
@@ -141,8 +169,8 @@ def Big_Train():
                     tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
-                pass
-                #tf.saved_model.save(model.call, "Graphs_and_Results/")
+                dbfile = open("Graphs_and_Results/SAVED_WEIGHTS", "ab")
+                pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
 
@@ -184,7 +212,6 @@ def main():
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
-        print("###########NOW TESTING##############")
     if query == "m":
         Test()
 
