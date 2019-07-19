@@ -13,8 +13,7 @@ class DataStructure:
         self.middle = middle
         self.motion = motion
         self.overlap = overlap
-        self.image_list = None
-        self.test_list = None
+
     def get_dom(self):
         return self.dom
     def get_non(self):
@@ -36,6 +35,8 @@ class Prep(): #we use a lot of global variables to make thins more universal
         self.test_number = test_number
         self.valid_number = valid_number
         self.requests_list = requests_list
+        self.image_list = None
+        self.test_list = None
 
     def unpickle(self, file): #low-level extractor
         with open(file, 'rb') as fo:
