@@ -123,8 +123,9 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
-            predictions = model.call(data, training=True)
-            pred_loss = loss_function(label, predictions)
+            predictions = model.call(data) #this is the big call
+
+            pred_loss = loss_function(label, predictions) #this is the loss function
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
                 print("Finished epoch", epoch)
