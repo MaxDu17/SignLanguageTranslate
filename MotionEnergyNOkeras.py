@@ -36,6 +36,7 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
                                         name=self.name + "_bias", trainable = True)
             self.current_list.append(self.b_conv_1)
         else:
+            print("Loading filters from saved weights")
             assert np.shape(weights[0]) == self.shape, "Shape mis-match in class Convolve"
 
             self.w_conv_1 = tf.Variable(initial_value=weights[0],
@@ -87,6 +88,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
                                       name=self.name + "_bias", trainable = True)
             self.current_list.append(self.b_fc_1)
         else:
+            print("Loading neurons from saved weights")
             assert np.shape(weights[0]) == self.shape, "shape mis-match in FC"
             self.w_fc_1 = tf.Variable(initial_value=weights[0],
                                       name=self.name + "_weight", trainable=True)
@@ -113,9 +115,9 @@ class Model():
     def build_model_from_pickle(self, file_dir):
         big_list = unpickle("Graphs_and_Results/SAVED_WEIGHTS")
         #weights and biases are arranged alternating and in order of build
-        self.cnn_1.build(big_list[0:2])
-        self.cnn_2.build(big_list[2:4])
-        self.fc_1.build(big_list[4:6])
+        self.cnn_1.build(from_file = True, weights = big_list[0:2])
+        self.cnn_2.build(from_file = True, weights = big_list[2:4])
+        self.fc_1.build(from_file = True, weights = big_list[4:6])
 
     def build_model(self):
         self.cnn_1.build()
