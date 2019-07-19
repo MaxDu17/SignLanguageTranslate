@@ -202,7 +202,8 @@ def Validation(model, datafeeder):
     data, label = datafeeder.GetValid_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions = model.call(data)
-
+    print(predictions)
+    input()
     assert len(label) == len(predictions)
     print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
