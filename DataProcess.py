@@ -93,8 +93,9 @@ class Prep():
             raise Exception("You big dummy--you forgot to plug in the data drive!")
         test_spot = len(big_list) - self.test_number
         big_list = big_list[test_spot:]
+        print("Shuffling Dataset")
         random.shuffle(big_list) #this is so we don't get repeats
-        print("######SHUFFLING DATASET#######")
+
 
         label_list_dom = list()
         img_list = list()
