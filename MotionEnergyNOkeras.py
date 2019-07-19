@@ -141,7 +141,7 @@ def Big_Train():
                     tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
-                tf.saved_model.save(model.call, "Graphs_and_Results/")
+                #tf.saved_model.save(model.call, "Graphs_and_Results/")
 
         gradients = tape.gradient(pred_loss, big_list)
 
