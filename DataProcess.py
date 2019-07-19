@@ -51,13 +51,11 @@ class Prep(): #we use a lot of global variables to make thins more universal
         except:
             raise Exception("You big dummy--you forgot to plug in the data drive!")
         #|||||||TRAIN||||||||VALID|||||TEST||||
-        test_spot = len(self.big_list) - self.test_number
-        valid_spot = test_spot - self.valid_number
 
         assert len(self.big_list) > 0, "the data file appears to be empty"
-        self.test_list = self.big_list[test_spot:] #allocates test set
-        self.valid_list = self.big_list[valid_spot:test_spot]#allocates validation set
-        self.train_list = self.big_list[0:test_spot]  # allocates training set
+        self.test_list = self.big_list[0:self.test_number] #allocates test set
+        self.valid_list = self.big_list[self.test_number:self.valid_number]#allocates validation set
+        self.train_list = self.big_list[self.valid_number:]  # allocates training set
 
 
     #preconditions: needs a list of DataStructure objects

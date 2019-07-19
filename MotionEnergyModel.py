@@ -162,7 +162,7 @@ def Big_Train():
     model = Model()
     model.build_model()
 
-    for epoch in range(501):
+    for epoch in range(401):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
@@ -221,7 +221,7 @@ def Test():
     model = Model()
     model.build_model_from_pickle("Graphs_and_Results/SAVED_WEIGHTS")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["History"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # thsi is because we now have multiple images in the pickle
@@ -233,7 +233,7 @@ def Test():
 
 def main():
     print("---the model is starting-----")
-    query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
+    query = input("What mode do you want? Train (t) or Test from model (m)?\n")
     if query == "t":
         Big_Train()
     if query == "m":
