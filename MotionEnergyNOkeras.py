@@ -94,7 +94,7 @@ class Model():
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
         return output
-    
+
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
     counter = 0
@@ -131,16 +131,16 @@ def Big_Train():
                 print(accuracy(predictions, label))
                 print(np.asarray(pred_loss))
                 print("***********************")
-                with summary_writer.as_default():
+                with summary_writer.as_default(): #this is not working rn but I will fix it
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
-                    for var in model.trainable_variables:
+                    for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
                     tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
-                model.save_weights("Graphs_and_Results/best_weights.h5")
+                tf.saved_model.save(model, "Graphs_and_Results/")
 
         gradients = tape.gradient(pred_loss, big_list)
 
@@ -165,7 +165,8 @@ def Test():
 
     model = Model()
     model.build_model()
-    model.load_weights("Graphs_and_Results/best_weights.h5")
+    raise Exception("This section is not ready yet")
+    loaded = tf.saved_model.load("Graphs_and_Results/")
     datafeeder = Prep(TEST_AMOUNT,["History"])
 
     data, label = datafeeder.nextBatchTest_dom()
