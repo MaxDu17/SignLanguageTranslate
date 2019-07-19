@@ -12,7 +12,7 @@ from DataProcess import DataStructure
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 200
-VALID_AMOUNT = 50
+VALID_AMOUNT = 200
 
 big_list = list()
 
