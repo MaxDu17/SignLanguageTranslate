@@ -51,7 +51,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
         #|||||||TRAIN||||||||VALID|||||TEST||||
         test_spot = len(self.big_list) - self.test_number
         valid_spot = test_spot - self.valid_number
-        
+
         assert len(self.big_list) > 0, "the data file appears to be empty"
         self.test_list = self.big_list[test_spot:] #allocates test set
         self.valid_list = self.big_list[valid_spot:test_spot]#allocates validation set
@@ -172,7 +172,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
         return carrier
 
     def load_train_to_RAM(self):
-        print("Loading/Reloading training data to RAM")
+        print("Loading training data to RAM")
         self.unzip_pickle() #extracts pickle files to self.test_list, self.valid_list and self.train_list (training list)
         self.next_train_list() #makes image and dom lists
 
@@ -188,6 +188,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
         self.trainCount += batchNum
 
         if self.trainCount > modulus:
+            print("Looping around again")
             self.next_train_list() #this refreshes the lists self.image_list, self.dom by shuffling them
 
         self.trainCount = self.trainCount % modulus
@@ -200,11 +201,13 @@ class Prep(): #we use a lot of global variables to make thins more universal
 
         image_list = np.transpose(self.test_img_list, [1, 0, 2, 3,
                                            4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
-        return image_list, self.test_dom
+        test_dom = self.test_dom
+        return image_list, test_dom
 
     def GetValid_dom(self):
         self.next_valid_list()
 
         image_list = np.transpose(self.valid_img_list, [1, 0, 2, 3,
                                            4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
-        return image_list, self.valid_dom
+        valid_dom = self.valid_dom
+        return image_list, valid_dom
