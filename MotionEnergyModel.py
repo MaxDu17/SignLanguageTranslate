@@ -172,8 +172,8 @@ def Big_Train():
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
                 print("Finished epoch", epoch)
-                print(accuracy(predictions, label))
-                print(np.asarray(pred_loss))
+                print("Accuracy: {}".format(accuracy(predictions, label)))
+                print("Loss: {}".format(np.asarray(pred_loss)))
                 print("***********************")
                 with summary_writer.as_default(): #this is not working rn but I will fix it
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
@@ -184,7 +184,7 @@ def Big_Train():
                     tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
-                print("************SAVING MODEL**************")
+                print("##############SAVING MODE##############")
                 dbfile = open("Graphs_and_Results/SAVED_WEIGHTS", "ab")
                 pickle.dump(big_list, dbfile)
 
@@ -193,10 +193,18 @@ def Big_Train():
         optimizer.apply_gradients(zip(gradients, big_list))
     Test_live(model)
 
+def Validation(model, datafeeder):
+    print("##############VALIDATION##############")
 
-def Test_live(model):
-    print("****************TESTING********************")
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["History"])
+    data, label = datafeeder.GetValid_dom()
+    data = data[0]  # this is because we now have multiple images in the pickle
+    predictions = model.call(data)
+
+    assert len(label) == len(predictions)
+    print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
+
+def Test_live(model, datafeeder):
+    print("##############TESTING##############")
 
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
