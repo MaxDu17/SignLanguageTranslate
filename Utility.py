@@ -49,7 +49,7 @@ class Utility(): #this class will help with software stuff
         return np.asarray(pic)
 
     def get_dictionaries(self):
-        k = open("DATASET_Motion/dom_labels.csv", "r")#this contains the labels in order
+        k = open("../LINKED/Storage/Data/BIG/dom_labels.csv", "r")#this contains the labels in order
         dom = list(csv.reader(k))
         dom = [int(k[0]) for k in dom]
 

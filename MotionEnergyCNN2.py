@@ -119,6 +119,8 @@ def Big_Train():
                                  Softmax([])]) #this declares the layers
 
     model.build(input_shape=[None, 100, 100, 1]) #this builds the network
+    print(model.trainable_variables)
+    raise Exception
     print(model.summary()) #this is more for user reference
     print("loading dataset")
     datafeeder.load_train_to_RAM() #loads the training data to RAM

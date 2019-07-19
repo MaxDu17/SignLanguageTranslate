@@ -17,13 +17,12 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         self.name = name
 
     def build(self): #input shape is NOT the parameter you feed into convolve's constructor
-        self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1,
-                                                                               name = self.name + "_weight"),
-                                    trainable = True)
+        self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1,),
+                                    name = self.name + "_weight", trainable = True)
         self.current_list.append(self.w_conv_1)
 
-        self.b_conv_1 = tf.Variable(initial_value = tf.zeros(self.shape[3], name=self.name + "_bias"),
-                                    trainable = True)
+        self.b_conv_1 = tf.Variable(initial_value = tf.zeros(self.shape[3]),
+                                    name=self.name + "_bias", trainable = True)
         self.current_list.append(self.b_conv_1)
 
 
@@ -59,12 +58,11 @@ class FC():  # this uses a keras layer structure but with a custom layer
         self.name = name
 
     def build(self):
-        self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1,
-                                                                             name=self.name + "_weight"),
-                                  trainable = True)
+        self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1),
+                                  name=self.name + "_weight", trainable = True)
         self.current_list.append(self.w_fc_1)
-        self.b_fc_1 = tf.Variable(initial_value = tf.zeros(self.shape[1], name=self.name + "_bias"),
-                                  trainable = True)
+        self.b_fc_1 = tf.Variable(initial_value = tf.zeros(self.shape[1]),
+                                  name=self.name + "_bias", trainable = True)
         self.current_list.append(self.b_fc_1)
 
 
@@ -105,14 +103,13 @@ class Model():
         return output
 
 def Big_Train():
-    datafeeder = Prep()
+    datafeeder = Prep(150, ["Motion"])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     model = Model()
     model.build_model()
-
     for i in range(501):
         data, label = datafeeder.nextBatchTrain_dom(1)
         output = model.call(data)

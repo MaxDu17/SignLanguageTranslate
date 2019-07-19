@@ -13,6 +13,7 @@ class DataStructure:
         self.middle = middle
         self.motion = motion
         self.overlap = overlap
+        self.image_list = None
     def get_dom(self):
         return self.dom
     def get_non(self):
@@ -43,7 +44,7 @@ class Prep():
     #postconditions: outputs the 2nd batch as an extracted file
     def unzip_train(self):
         try:
-            big_list = self.unpickle("../LINKED/Storage/Data/experimental/SignLanguageData")
+            big_list = self.unpickle("../LINKED/Storage/Data/BIG/SignLanguageData")
         except:
             raise Exception("You big dummy--you forgot to plug in the data drive!")
         test_spot = len(big_list) - self.test_number
@@ -138,7 +139,7 @@ class Prep():
         return carrier
 
     def load_train_to_RAM(self):
-        print("Loading training data to RAM")
+        print("Loading/Reloading training data to RAM")
         self.image_list, self.dom = self.unzip_train()
         self.image_list = np.float32(self.image_list)
 
@@ -147,6 +148,10 @@ class Prep():
         image_ = self.image_list[self.trainCount: self.trainCount+batchNum]
         dom_ = self.dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum
+
+        if self.trainCount > modulus:
+            self.load_train_to_RAM() #this reshuffles the deck
+
         self.trainCount = self.trainCount % modulus
         image_list = np.transpose(image_, [1, 0, 2, 3,
                                            4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
