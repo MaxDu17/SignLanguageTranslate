@@ -28,11 +28,11 @@ class DataStructure:
         return self.motion
 
 tool = Utility()
-dom_reader = list(csv.reader(open("../LINKED/Storage/Data/experimental/dom_labels.csv")))
-non_reader = list(csv.reader(open("../LINKED/Storage/Data/experimental/non_labels.csv")))
+dom_reader = list(csv.reader(open("../LINKED/Storage/Data/BIG/dom_labels.csv")))
+non_reader = list(csv.reader(open("../LINKED/Storage/Data/BIG/non_labels.csv")))
 
 big_list = list()
-basepath = "../LINKED/Storage/Data/experimental/"
+basepath = "../LINKED/Storage/Data/BIG/"
 path_list = ["augmented_overlap/", "augmented_edge_history/", "augmented_history/", "augmented_middle/",
              "augmented_motion/"]
 print(len(dom_reader))
@@ -61,5 +61,5 @@ for i in range(len(dom_reader)):
             print("\tProcessed {} files".format(j))
             break
 
-dbfile = open("../LINKED/Storage/Data/experimental/SignLanguageData", "ab")
+dbfile = open("../LINKED/Storage/Data/BIG/SignLanguageData", "ab")
 pickle.dump(big_list, dbfile)
