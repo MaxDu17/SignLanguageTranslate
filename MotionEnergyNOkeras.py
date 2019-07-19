@@ -37,6 +37,7 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
             self.current_list.append(self.b_conv_1)
         else:
             assert np.shape(values) == self.shape, "Shape mis-match in class Convolve"
+
             self.w_conv_1 = tf.Variable(initial_value=values,
                                         name=self.name + "_weight", trainable=True)
             self.current_list.append(self.w_conv_1)
@@ -77,7 +78,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
         self.shape = shape
         self.name = name
 
-    def build(self):
+    def build(self, from_file = False, values = None): #I am working on this right now
         self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1),
                                   name=self.name + "_weight", trainable = True)
         self.current_list.append(self.w_fc_1)
