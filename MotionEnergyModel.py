@@ -185,6 +185,7 @@ def Big_Train():
 
             if epoch % 50 == 0 and epoch > 1:
                 Validation(model, datafeeder)
+                Test_live(model, datafeeder)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("##############SAVING MODE##############")
@@ -202,8 +203,6 @@ def Validation(model, datafeeder):
     data, label = datafeeder.GetValid_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions = model.call(data)
-    print(predictions)
-    input()
     assert len(label) == len(predictions)
     print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
