@@ -127,6 +127,7 @@ class Model():
         self.fc_1.build()
     @tf.function
     def call(self, input):
+        tf.summary.trace_on()
         x = self.cnn_1.call(input)
         x = self.cnn_2.call(x)
         x = self.flat.call(x)
@@ -178,6 +179,7 @@ def Big_Train():
                 with summary_writer.as_default(): #this is not working rn but I will fix it
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
+                    tf.summary.trace_export()
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
