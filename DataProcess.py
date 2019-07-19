@@ -144,7 +144,11 @@ class Prep():
         self.image_list = np.float32(self.image_list)
 
     def nextBatchTrain_dom(self, batchNum):
-        modulus = len(self.image_list)
+        try:
+            modulus = len(self.image_list)
+        except AttributeError:
+            print("You haven't executed \"load_train_to_RAM\"")
+            quit()
         image_ = self.image_list[self.trainCount: self.trainCount+batchNum]
         dom_ = self.dom[self.trainCount: self.trainCount+batchNum]
         self.trainCount += batchNum

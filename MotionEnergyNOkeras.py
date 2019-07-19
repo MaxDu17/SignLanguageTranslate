@@ -73,38 +73,28 @@ class FC():  # this uses a keras layer structure but with a custom layer
 
 class Model():
     def __init__(self):
-        self.cnn_1 = Convolve(big_list, [8, 8, 1, 32], "Layer_1_CNN")
-        self.cnn_2 = Convolve(big_list, [8, 8, 32, 64], "Layer_2_CNN")
-        self.cnn_3 = Convolve(big_list, [8, 8, 64, 128], "Layer_3_CNN")
+        self.cnn_1 = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
+        self.cnn_2 = Convolve(big_list, [3, 3, 4, 8], "Layer_2_CNN")
 
-        self.flat = Flatten([-1, 12*12*128], "Fully_Connected")
-        self.fc_1 = FC(big_list, [12 * 12 * 128, 2240], "Layer_1_FC")
-        self.fc_2 = FC(big_list, [2240, 560], "Layer_1_FC")
-        self.fc_3 = FC(big_list, [560, output_size], "Layer_1_FC")
+        self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
+        self.fc_1 = FC(big_list, [25*25*8, output_size], "Layer_1_FC")
         self.softmax = Softmax()
     def build_model(self):
         self.cnn_1.build()
         self.cnn_2.build()
-        self.cnn_3.build()
         self.fc_1.build()
-        self.fc_2.build()
-        self.fc_3.build()
-
     @tf.function
     def call(self, input):
         x = self.cnn_1.call(input)
         x = self.cnn_2.call(x)
-        x = self.cnn_3.call(x)
         x = self.flat.call(x)
         x = self.fc_1.call(x)
-        x = self.fc_2.call(x)
-        x = self.fc_3.call(x)
         output = self.softmax.call(x)
         return output
 
 def Big_Train():
     datafeeder = Prep(150, ["Motion"])
-
+    datafeeder.load_train_to_RAM()
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
@@ -112,6 +102,7 @@ def Big_Train():
     model.build_model()
     for i in range(501):
         data, label = datafeeder.nextBatchTrain_dom(1)
+        data = data[0]
         output = model.call(data)
         print(big_list[1])
 
