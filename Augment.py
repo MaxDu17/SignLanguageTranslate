@@ -7,6 +7,7 @@ from collections import Counter
 tool = Utility()
 
 def crop(matrix):
+    '''
     left_start = 130
     left_end = 330
     up_start = 75
@@ -16,11 +17,15 @@ def crop(matrix):
         new_mat.append(matrix[i][left_start:left_end])
     new_mat = np.asarray(new_mat)
     return new_mat
+        '''
+    return matrix #this is degenerate because the image is pre-cropped. Before, this function was needed
+
+
 
 
 
 def doitall(basepath, savepath):
-    k = open("../LINKED/Storage/Data/experimental/dom_labels.csv", 'r')
+    k = open("../LINKED/Storage/Data/BIG/dom_labels.csv", 'r')
     labels = list(csv.reader(k))
 
     #this just find the frequency distribution of the csv
@@ -32,7 +37,7 @@ def doitall(basepath, savepath):
     #we shrink, crop, and augment the dataset
     #this is for dom, only
 
-    documentation_ = open("../LINKED/Storage/Data/experimental/augmentations.csv", "w")
+    documentation_ = open("../LINKED/Storage/Data/BIG/augmentations.csv", "w")
     documentation = csv.writer(documentation_, lineterminator = "\n")
     random.seed(104634568) #so all augmentations will be the same
     for i in range(len(labels)):
@@ -84,7 +89,7 @@ def doitall(basepath, savepath):
 
 def main():
     # VERY IMPORTANT NOTE--THIS IS ONLY FOR DOMINANT HAND
-    base = "../LINKED/Storage/Data/experimental/"
+    base = "../LINKED/Storage/Data/BIG/"
     sub = ["overlap/", "edge_history/", "history/", "middle/", "motion/"]
     for type in sub:
         print("*************DOING FOLDER {}******************".format(type))
