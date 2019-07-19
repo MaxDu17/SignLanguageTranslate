@@ -9,14 +9,14 @@ from DataProcess import DataStructure
 
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
-
+TEST_AMOUNT = 100
 
 class Convolve(tf.keras.layers.Layer):  # this uses a keras layer structure but with a custom layer
     def __init__(self, shape, *args, **kwargs):
         super(Convolve, self).__init__(*args, **kwargs)
         self.shape = shape
 
-    def build(self, input_shape): #input shape is NOT the parameter you feed into convolve's constructor
+    def build(self, input_shape):
         self.w_conv_1 = self.add_weight(
             shape=self.shape,
             dtype=tf.float32,
@@ -96,59 +96,96 @@ class FC(tf.keras.layers.Layer):  # this uses a keras layer structure but with a
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 
+def accuracy(pred, labels):
+    assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
+    counter = 0
+    for i in range(len(pred)):
+        k = np.argmax(pred[i])
+        l = np.argmax(labels[i])
+        if k == l:
+            counter += 1
+    return float(counter)/len(pred)
 
 def Big_Train():
-    datafeeder = Prep()
+    print("Is there a GPU available: "),
+    print(tf.test.is_gpu_available())
+    print("*****************Training*****************")
+    datafeeder = Prep(TEST_AMOUNT, ["History"])
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.0005)
     loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    inputs = tf.keras.Input(shape=[96, 96, 1])
+    model = tf.keras.Sequential([Convolve([3, 3, 1, 4]), Convolve([3, 3, 4, 8]),
+                                 Flatten([-1,25 * 25 * 8]),FC([25*25*8, output_size]),
+                                 Softmax([])]) #this declares the layers
 
-    x = Convolve([8, 8, 1, 32])(inputs)
-    x = Convolve([8, 8, 32, 64])(x)
-    x = Convolve([8, 8, 64, 128])(x)
-    x = Flatten([-1, 12*12*128])(x)
-    x = FC([12*12*128, 2240])(x)
-    x = FC([2240, 560])(x)
-    x = FC([560, output_size])(x)
-    outputs = Softmax([])(x)
+    model.build(input_shape=[None, 100, 100, 1]) #this builds the network
+    print(model.summary()) #this is more for user reference
+    print("loading dataset")
+    datafeeder.load_train_to_RAM() #loads the training data to RAM
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
+    print("starting training")
 
-    model = tf.keras.Model(inputs=inputs, outputs=outputs)
+    for epoch in range(501):
+        data, label = datafeeder.nextBatchTrain_dom(150)
+        data = data[0] #thsi is because we now have multiple images in the pickle
+        with tf.GradientTape() as tape:
+            predictions = model(data, training=True)
+            pred_loss = loss_function(label, predictions)
+            if epoch % 20 == 0 and epoch > 1:
+                print("***********************")
+                print("Finished epoch", epoch)
+                print(accuracy(predictions, label))
+                print(np.asarray(pred_loss))
+                print("***********************")
+                '''
+                print(predictions[0])
+                print(label[0])
+                input("----------------")
+                '''
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
+                    for var in model.trainable_variables:
+                        name = str(var.name)
+                        tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
+                    tf.summary.flush()
+
+            if epoch % 100 == 0 and epoch > 1:
+                model.save_weights("Graphs_and_Results/best_weights.h5")
+
+        gradients = tape.gradient(pred_loss, model.trainable_variables)
+        #print(gradients[1])
+
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    model.save_weights("Graphs_and_Results/best_weights.h5")
+    Test_live(model)
+
+def Test_live(model):
+    datafeeder = Prep(TEST_AMOUNT, ["History"])
+
+    data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # this is because we now have multiple images in the pickle
+    predictions = model(data, training=False)
+
+    assert len(label) == len(predictions)
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+
+def Test():
+    model = tf.keras.Sequential([Convolve([3, 3, 1, 4]), Convolve([3, 3, 4, 8]),
+                                 Flatten([-1, 25 * 25 * 8]), FC([25 * 25 * 8, output_size]),
+                                 Softmax([])])  # this declares the layers
+
+    model.build(input_shape=[None, 100, 100, 1])  # this builds the network
     print(model.summary())
-    model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
+    model.load_weights("Graphs_and_Results/best_weights.h5")
+    datafeeder = Prep(TEST_AMOUNT,["History"])
 
-    data, label = datafeeder.nextBatchTrain_dom(10)
-    tensorboard = tf.keras.callbacks.TensorBoard(log_dir='Graphs_and_Results/Version1', histogram_freq=1,
-                                                 write_graph=True, write_grads=True, update_freq='batch')
-    cp = tf.keras.callbacks.ModelCheckpoint("Graphs_and_Results/Version1/current.ckpt", verbose=1, save_weights_only=True,
-                                            period=1)
-    model.fit(data, label, batch_size=1, epochs=100, callbacks=[tensorboard, cp])
-    model.save_weights("Graphs_and_Results/Version1/best_weights.h5")
+    data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # thsi is because we now have multiple images in the pickle
+    predictions = model(data, training=False)
 
-
-def Conf_mat():
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-    loss_function = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
-    inputs = tf.keras.Input(shape=[32, 32, 3])
-
-    x = Convolve([4, 4, 3, 32])(inputs)
-    x = Convolve([4, 4, 32, 64])(x)
-    x = Convolve([4, 4, 64, 128])(x)
-    x = Flatten([-1, 4 * 4 * 128])(x)
-    x = FC([4 * 4 * 128, 1024])(x)
-    x = FC([1024, 10])(x)
-    outputs = Softmax([])(x)
-
-    model = tf.keras.Model(inputs=inputs, outputs=outputs)
-    print(model.summary())
-    model.compile(optimizer=optimizer, loss=loss_function, metrics=['accuracy'])
-    model.load_weights("Graphs_and_Results/Version1/best_weights.h5")
-    datafeeder = Prep()
-
-    data, label = datafeeder.nextBatchTest()
-
-    acc = model.evaluate(data, label, batch_size=100)
-    print(acc)
+    assert len(label) == len(predictions)
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
 def main():
@@ -156,8 +193,9 @@ def main():
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
+        print("###########NOW TESTING##############")
     if query == "m":
-        Conf_mat()
+        Test()
 
 
 if __name__ == '__main__':
