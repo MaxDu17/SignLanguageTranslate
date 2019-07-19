@@ -7,8 +7,11 @@ from Utility import Utility
 util = Utility()
 from DataProcess import DataStructure
 
+
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
+TEST_AMOUNT = 100
+
 big_list = list()
 class Convolve():  # this uses a keras layer structure but with a custom layer
     def __init__(self, current_list, shape, name):
@@ -91,32 +94,86 @@ class Model():
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
         return output
+    
+def accuracy(pred, labels):
+    assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
+    counter = 0
+    for i in range(len(pred)):
+        k = np.argmax(pred[i])
+        l = np.argmax(labels[i])
+        if k == l:
+            counter += 1
+    return float(counter)/len(pred)
 
 def Big_Train():
     datafeeder = Prep(150, ["Motion"])
-    datafeeder.load_train_to_RAM()
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+    loss_function = tf.keras.losses.CategoricalCrossentropy()
+
+    print("loading dataset")
+    datafeeder.load_train_to_RAM()  # loads the training data to RAM
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
+    print("starting training")
+
+    print("Making model")
+    model = Model()
+    model.build_model()
+
+    for epoch in range(501):
+        data, label = datafeeder.nextBatchTrain_dom(150)
+        data = data[0]
+        with tf.GradientTape() as tape:
+            predictions = model.call(data, training=True)
+            pred_loss = loss_function(label, predictions)
+            if epoch % 20 == 0 and epoch > 1:
+                print("***********************")
+                print("Finished epoch", epoch)
+                print(accuracy(predictions, label))
+                print(np.asarray(pred_loss))
+                print("***********************")
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
+                    for var in model.trainable_variables:
+                        name = str(var.name)
+                        tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
+                    tf.summary.flush()
+
+            if epoch % 100 == 0 and epoch > 1:
+                model.save_weights("Graphs_and_Results/best_weights.h5")
+
+        gradients = tape.gradient(pred_loss, big_list)
+
+        optimizer.apply_gradients(zip(gradients, big_list))
+
+
+def Test_live(model):
+    datafeeder = Prep(TEST_AMOUNT, ["History"])
+
+    data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # this is because we now have multiple images in the pickle
+    predictions = model(data, training=False)
+
+    assert len(label) == len(predictions)
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+
+def Test():
+    datafeeder = Prep(150, ["Motion"])
+    datafeeder.load_train_to_RAM()
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     model = Model()
     model.build_model()
-    for i in range(501):
-        data, label = datafeeder.nextBatchTrain_dom(1)
-        data = data[0]
-        output = model.call(data)
-        print(big_list[1])
+    model.load_weights("Graphs_and_Results/best_weights.h5")
+    datafeeder = Prep(TEST_AMOUNT,["History"])
 
-        with tf.GradientTape() as tape:
-            tape.watch(big_list[1])
-            loss = loss_function(output, label)
-            print(loss)
-            input()
-        gradients = tape.gradient(loss, big_list[1])
-        print(gradients)
-        raise Exception
+    data, label = datafeeder.nextBatchTest_dom()
+    data = data[0]  # thsi is because we now have multiple images in the pickle
+    predictions = model(data, training=False)
 
-def Conf_mat():
-    pass
+    assert len(label) == len(predictions)
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
 def main():
@@ -124,11 +181,13 @@ def main():
     query = input("What mode do you want? Train (t) or Confusion Matrix (m)?\n")
     if query == "t":
         Big_Train()
+        print("###########NOW TESTING##############")
     if query == "m":
-        Conf_mat()
+        Test()
 
 
 if __name__ == '__main__':
     main()
+
 
 
