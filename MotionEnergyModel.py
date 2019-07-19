@@ -182,6 +182,7 @@ def Big_Train():
                     tf.summary.flush()
 
             if epoch % 100 == 0 and epoch > 1:
+                print("************SAVING MODEL**************")
                 dbfile = open("Graphs_and_Results/SAVED_WEIGHTS", "ab")
                 pickle.dump(big_list, dbfile)
 

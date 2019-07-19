@@ -29,32 +29,43 @@ class DataStructure:
     def get_motion(self):
         return self.motion
 
-class Prep():
-    def __init__(self, test_number, requests_list):
+class Prep(): #we use a lot of global variables to make thins more universal
+    def __init__(self, test_number, valid_number, requests_list):
         self.trainCount =0
         self.test_number = test_number
+        self.valid_number = valid_number
         self.requests_list = requests_list
 
-    def unpickle(self, file):
+    def unpickle(self, file): #low-level extractor
         with open(file, 'rb') as fo:
             objects = pickle.load(fo, encoding = 'bytes')
         return objects
 
-    #preconditions: none
-    #postconditions: outputs the 2nd batch as an extracted file
-    def unzip_train(self):
+    #extracts and makes test/train sets
+    def unzip_pickle(self): #THIS IS THE EXTRACTION PROGRAM. ONLY CALL ME ONCE!!!
+        assert self.test_list == None, "you can't call unzip_train more than once"
         try:
-            big_list = self.unpickle("../LINKED/Storage/Data/BIG/SignLanguageData")
+            self.big_list = self.unpickle("../LINKED/Storage/Data/BIG/SignLanguageData")
         except:
             raise Exception("You big dummy--you forgot to plug in the data drive!")
-        test_spot = len(big_list) - self.test_number
-        big_list = big_list[0:test_spot]
-        random.shuffle(big_list) #this is so we don't get repeats
-        print("######SHUFFLING DATASET#######")
+        #|||||||TRAIN||||||||VALID|||||TEST||||
+        test_spot = len(self.big_list) - self.test_number
+        valid_spot = test_spot - self.valid_number
 
+        assert len(self.big_list) > 0, "the data file appears to be empty"
+        self.test_list = self.big_list[test_spot:] #allocates test set
+        self.valid_list = self.big_list[valid_spot:test_spot]#allocates validation set
+        self.train_list = self.big_list[0:test_spot]  # allocates training set
+
+
+    #preconditions: needs a list of DataStructure objects
+    #postconditions: extracts, parses, and normalizes image data
+    def next_train_list(self): #call me every time you need a fresh set
+        print("Retrieving Training Dataset")
+        random.shuffle(self.train_list)
         label_list_dom = list()
         img_list = list()
-        for k in big_list:
+        for k in self.train_list:
             label_list_dom.append(self.Hot_Vec(k.get_dom()))
             carrier_list = list()
             for element in self.requests_list:
@@ -77,29 +88,19 @@ class Prep():
                     raise Exception("Data Request not valid. Your options are: {}".format(["History", "Middle", "Overlap", "Motion", "Edge_History"]))
             img_list.append(carrier_list) #now, it's [TRAINLENGTH X # images X 96 X 96 X 1]
 
-        img_list = np.asarray(img_list)
+        self.image_list = np.float32(np.asarray(img_list))
+        self.dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
 
-        label_list_dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
-
-        return img_list, label_list_dom
 
     # preconditions: none
-    # postconditions: outputs the 2nd batch as an extracted file
-
-    def unzip_test(self):
-        try:
-            big_list = self.unpickle("../LINKED/Storage/Data/experimental/SignLanguageData")
-        except:
-            raise Exception("You big dummy--you forgot to plug in the data drive!")
-        test_spot = len(big_list) - self.test_number
-        big_list = big_list[test_spot:]
-        print("Shuffling Dataset")
-        random.shuffle(big_list) #this is so we don't get repeats
-
+    # postconditions: shuffles the test batch, normalizes and extracts
+    def next_test_list(self):
+        print("Retrieving Test Dataset")
+        random.shuffle(self.test_list) #this is so we don't get repeats
 
         label_list_dom = list()
         img_list = list()
-        for k in big_list:
+        for k in self.test_list:
             label_list_dom.append(self.Hot_Vec(k.get_dom()))
             carrier_list = list()
             for element in self.requests_list:
@@ -122,11 +123,42 @@ class Prep():
                     raise Exception("Data Request not valid. Your options are: {}".format(["History", "Middle", "Overlap", "Motion", "Edge_History"]))
             img_list.append(carrier_list) #now, it's [TRAINLENGTH X # images X 96 X 96 X 1]
 
-        img_list = np.asarray(img_list)
+        self.test_img_list = np.float32(np.asarray(img_list))
+        self.test_dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
 
-        label_list_dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
 
-        return img_list, label_list_dom
+    def next_valid_list(self):
+        print("Retrieving Validation Dataset")
+        random.shuffle(self.valid_list) #this is so we don't get repeats
+
+        label_list_dom = list()
+        img_list = list()
+        for k in self.valid_list:
+            label_list_dom.append(self.Hot_Vec(k.get_dom()))
+            carrier_list = list()
+            for element in self.requests_list:
+                if element == "Motion":
+                    carrier = np.asarray(k.get_motion()/255).reshape(100, 100, 1)
+                    carrier_list.append(carrier)
+                elif element == "History":
+                    carrier = np.asarray(k.get_history() / 255).reshape(100, 100, 1) #just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Middle":
+                    carrier = np.asarray(k.get_middle() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Overlap":
+                    carrier = np.asarray(k.get_overlap() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                elif element == "Edge_History":
+                    carrier = np.asarray(k.get_ehistory() / 255).reshape(100, 100, 1)  # just to work with the CNN
+                    carrier_list.append(carrier)
+                else:
+                    raise Exception("Data Request not valid. Your options are: {}".format(["History", "Middle", "Overlap", "Motion", "Edge_History"]))
+            img_list.append(carrier_list) #now, it's [TRAINLENGTH X # images X 96 X 96 X 1]
+
+        self.valid_img_list = np.float32(np.asarray(img_list))
+        self.valid_dom = np.asarray(label_list_dom) #[TRAINLENGTH X LABELLENGTH X 1]
+
 
     #preconditions: labels must be in range 0-9
     #postconditions: outputs a 2d array with of 1-hot encodings, with the 1st index being for image
@@ -140,9 +172,10 @@ class Prep():
         return carrier
 
     def load_train_to_RAM(self):
-        print("Loading/Reloading training data to RAM")
-        self.image_list, self.dom = self.unzip_train()
-        self.image_list = np.float32(self.image_list)
+        print("Loading training data to RAM")
+        self.unzip_pickle() #extracts pickle files to self.test_list, self.valid_list and self.train_list (training list)
+        self.next_train_list() #makes image and dom lists
+
 
     def nextBatchTrain_dom(self, batchNum):
         try:
@@ -155,16 +188,26 @@ class Prep():
         self.trainCount += batchNum
 
         if self.trainCount > modulus:
-            self.load_train_to_RAM() #this reshuffles the deck
+            print("Looping around again")
+            self.next_train_list() #this refreshes the lists self.image_list, self.dom by shuffling them
 
         self.trainCount = self.trainCount % modulus
         image_list = np.transpose(image_, [1, 0, 2, 3,
                                            4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
         return image_list, dom_
 
-    def nextBatchTest_dom(self):
-        image_list, dom = self.unzip_test()
-        image_list = np.float32(image_list)
-        image_list = np.transpose(image_list, [1, 0, 2, 3,
+    def GetTest_dom(self):
+        self.next_test_list()
+
+        image_list = np.transpose(self.test_img_list, [1, 0, 2, 3,
                                            4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
-        return image_list, dom
+        test_dom = self.test_dom
+        return image_list, test_dom
+
+    def GetValid_dom(self):
+        self.next_valid_list()
+
+        image_list = np.transpose(self.valid_img_list, [1, 0, 2, 3,
+                                           4])  # now, it's [# images X TRAINLENGTH X 96 X 96 X 1] This is easier to extract
+        valid_dom = self.valid_dom
+        return image_list, valid_dom
