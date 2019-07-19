@@ -26,8 +26,8 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         self.shape = shape
         self.name = name
 
-    def build(self, from_file = False, values = None): #input shape is NOT the parameter you feed into convolve's constructor
-        if from_file == False:
+    def build(self, from_file = False, weights = None): #input shape is NOT the parameter you feed into convolve's constructor
+        if not(from_file):
             self.w_conv_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev =  0.1),
                                         name = self.name + "_weight", trainable = True)
             self.current_list.append(self.w_conv_1)
@@ -36,13 +36,13 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
                                         name=self.name + "_bias", trainable = True)
             self.current_list.append(self.b_conv_1)
         else:
-            assert np.shape(values) == self.shape, "Shape mis-match in class Convolve"
+            assert np.shape(weights[0]) == self.shape, "Shape mis-match in class Convolve"
 
-            self.w_conv_1 = tf.Variable(initial_value=values,
+            self.w_conv_1 = tf.Variable(initial_value=weights[0],
                                         name=self.name + "_weight", trainable=True)
             self.current_list.append(self.w_conv_1)
 
-            self.b_conv_1 = tf.Variable(initial_value=tf.zeros(self.shape[3]),
+            self.b_conv_1 = tf.Variable(initial_value=weights[1],
                                         name=self.name + "_bias", trainable=True)
             self.current_list.append(self.b_conv_1)
 
@@ -78,13 +78,22 @@ class FC():  # this uses a keras layer structure but with a custom layer
         self.shape = shape
         self.name = name
 
-    def build(self, from_file = False, values = None): #I am working on this right now
-        self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1),
-                                  name=self.name + "_weight", trainable = True)
-        self.current_list.append(self.w_fc_1)
-        self.b_fc_1 = tf.Variable(initial_value = tf.zeros(self.shape[1]),
-                                  name=self.name + "_bias", trainable = True)
-        self.current_list.append(self.b_fc_1)
+    def build(self, from_file = False, weights = None): #I am working on this right now
+        if not(from_file):
+            self.w_fc_1 = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1),
+                                      name=self.name + "_weight", trainable = True)
+            self.current_list.append(self.w_fc_1)
+            self.b_fc_1 = tf.Variable(initial_value = tf.zeros(self.shape[1]),
+                                      name=self.name + "_bias", trainable = True)
+            self.current_list.append(self.b_fc_1)
+        else:
+            assert np.shape(weights[0]) == self.shape, "shape mis-match in FC"
+            self.w_fc_1 = tf.Variable(initial_value=weights[0],
+                                      name=self.name + "_weight", trainable=True)
+            self.current_list.append(self.w_fc_1)
+            self.b_fc_1 = tf.Variable(initial_value=weights[1],
+                                      name=self.name + "_bias", trainable=True)
+            self.current_list.append(self.b_fc_1)
 
 
     def call(self, input):
@@ -100,12 +109,13 @@ class Model():
         self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
         self.fc_1 = FC(big_list, [25*25*8, output_size], "Layer_1_FC")
         self.softmax = Softmax()
+
     def build_model_from_pickle(self, file_dir):
         big_list = unpickle("Graphs_and_Results/SAVED_WEIGHTS")
-        self.cnn_1.build()
-        self.cnn_2.build()
-        self.fc_1.build()
-
+        #weights and biases are arranged alternating and in order of build
+        self.cnn_1.build(big_list[0:2])
+        self.cnn_2.build(big_list[2:4])
+        self.fc_1.build(big_list[4:6])
 
     def build_model(self):
         self.cnn_1.build()
@@ -176,14 +186,16 @@ def Big_Train():
         gradients = tape.gradient(pred_loss, big_list)
 
         optimizer.apply_gradients(zip(gradients, big_list))
+    Test_live(model)
 
 
 def Test_live(model):
+    print("****************TESTING********************")
     datafeeder = Prep(TEST_AMOUNT, ["History"])
 
     data, label = datafeeder.nextBatchTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions = model(data, training=False)
+    predictions = model.call(data)
 
     assert len(label) == len(predictions)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
@@ -191,20 +203,17 @@ def Test_live(model):
 def Test():
     datafeeder = Prep(150, ["Motion"])
     datafeeder.load_train_to_RAM()
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
-    loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     model = Model()
-    model.build_model()
-    raise Exception("This section is not ready yet")
-    loaded = tf.saved_model.load("Graphs_and_Results/")
+    model.build_model_from_pickle("Graphs_and_Results/SAVED_WEIGHTS")
+
     datafeeder = Prep(TEST_AMOUNT,["History"])
 
     data, label = datafeeder.nextBatchTest_dom()
     data = data[0]  # thsi is because we now have multiple images in the pickle
-    predictions = model(data, training=False)
+    predictions = model.call(data)
 
-    assert len(label) == len(predictions)
+    assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
