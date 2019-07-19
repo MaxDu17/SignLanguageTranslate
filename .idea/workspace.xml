@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2740">
-              <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
+            <state relative-caret-position="272">
+              <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -26,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+            <state relative-caret-position="-680">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -103,8 +102,8 @@
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
         <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
-        <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
+        <option value="$PROJECT_DIR$/DataProcess.py" />
       </list>
     </option>
   </component>
@@ -576,22 +575,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2740">
-          <caret line="178" lean-forward="true" selection-start-line="178" selection-end-line="178" />
+        <state relative-caret-position="-680">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
+    <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="272">
+          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

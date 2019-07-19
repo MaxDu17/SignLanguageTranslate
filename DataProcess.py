@@ -14,6 +14,7 @@ class DataStructure:
         self.motion = motion
         self.overlap = overlap
         self.image_list = None
+        self.test_list = None
     def get_dom(self):
         return self.dom
     def get_non(self):
