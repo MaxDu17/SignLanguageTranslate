@@ -33,7 +33,7 @@ def doitall(basepath, savepath):
     for k in labels:
         big_list.extend(k)
     counted = Counter(big_list)
-
+    print(counted)
     #we shrink, crop, and augment the dataset
     #this is for dom, only
 
@@ -49,7 +49,7 @@ def doitall(basepath, savepath):
 
         #this section simply takes the known augmentation factor and takes an average (because there are more than one
         #per row sometimes
-        aug_num = int(round((30/counted[str(labels[i][0])])))
+        aug_num = int(round((200/counted[str(labels[i][0])])))
 
         ################
         #here is some programming debauchery. Also, I got rid of flipping and made translation better
