@@ -12,12 +12,14 @@ from DataProcess import DataStructure
 hold_prob = 1
 _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 200
+VALID_AMOUNT = 50
 
 big_list = list()
 
 def unpickle(file):
     with open(file, 'rb') as fo:
         objects = pickle.load(fo, encoding='bytes')
+    assert len(objects) > 0, "there are no weights saved"
     return objects
 
 class Convolve():  # this uses a keras layer structure but with a custom layer
@@ -147,7 +149,7 @@ def Big_Train():
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
 
-    datafeeder = Prep(150, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
@@ -194,9 +196,9 @@ def Big_Train():
 
 def Test_live(model):
     print("****************TESTING********************")
-    datafeeder = Prep(TEST_AMOUNT, ["History"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["History"])
 
-    data, label = datafeeder.nextBatchTest_dom()
+    data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions = model.call(data)
 
@@ -204,15 +206,13 @@ def Test_live(model):
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test():
-    datafeeder = Prep(150, ["Motion"])
-    datafeeder.load_train_to_RAM()
-
+    print("Making model")
     model = Model()
     model.build_model_from_pickle("Graphs_and_Results/SAVED_WEIGHTS")
 
-    datafeeder = Prep(TEST_AMOUNT,["History"])
-
-    data, label = datafeeder.nextBatchTest_dom()
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["History"])
+    datafeeder.load_train_to_RAM()
+    data, label = datafeeder.GetTest_dom()
     data = data[0]  # thsi is because we now have multiple images in the pickle
     predictions = model.call(data)
 
