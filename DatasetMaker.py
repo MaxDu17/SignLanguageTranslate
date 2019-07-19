@@ -2,7 +2,7 @@ import pickle
 import csv
 from Utility import Utility
 #this turns the images and labels into one pickle file as DataStructure objects
-
+import random
 class DataStructure:
     def __init__(self, dom, non, overlap, ehistory, history, middle, motion):
         self.dom = dom
@@ -61,5 +61,6 @@ for i in range(len(dom_reader)):
             print("\tProcessed {} files".format(j))
             break
 
+random.shuffle(big_list)
 dbfile = open("../LINKED/Storage/Data/BIG/SignLanguageData", "ab")
 pickle.dump(big_list, dbfile)
