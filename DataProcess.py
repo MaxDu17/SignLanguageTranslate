@@ -98,6 +98,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
     # postconditions: shuffles the test batch, normalizes and extracts
     def next_test_list(self):
         print("Retrieving Test Dataset")
+        assert len(self.test_list) > 0, "You haven't executed \"load_train_to_RAM\""
         random.shuffle(self.test_list) #this is so we don't get repeats
 
         label_list_dom = list()
@@ -131,6 +132,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
 
     def next_valid_list(self):
         print("Retrieving Validation Dataset")
+        assert len(self.valid_list) > 0, "You haven't executed \"load_train_to_RAM\""
         random.shuffle(self.valid_list) #this is so we don't get repeats
 
         label_list_dom = list()
