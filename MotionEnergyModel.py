@@ -176,12 +176,15 @@ def Big_Train():
                 print("Loss: {}".format(np.asarray(pred_loss)))
                 print("***********************")
                 with summary_writer.as_default(): #this is not working rn but I will fix it
-                    tf.summary.scalar(name = "Loss", data = pred_loss, step = 1)
-                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = 1)
+                    tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
                     for var in big_list:
                         name = str(var.name)
-                        tf.summary.histogram(name = "Variable_" + name, data = var, step = 1)
+                        tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
                     tf.summary.flush()
+
+            if epoch % 50 == 0 and epoch > 1:
+                Validation(model, datafeeder)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("##############SAVING MODE##############")
@@ -191,7 +194,7 @@ def Big_Train():
         gradients = tape.gradient(pred_loss, big_list)
 
         optimizer.apply_gradients(zip(gradients, big_list))
-    Test_live(model)
+    Test_live(model, datafeeder)
 
 def Validation(model, datafeeder):
     print("##############VALIDATION##############")

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +29,8 @@
       <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1377">
-              <caret line="222" column="37" lean-forward="true" selection-start-line="222" selection-start-column="37" selection-end-line="222" selection-end-column="37" />
+            <state relative-caret-position="646">
+              <caret line="206" column="89" lean-forward="true" selection-start-line="206" selection-start-column="89" selection-end-line="206" selection-end-column="89" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -103,8 +103,8 @@
         <option value="$PROJECT_DIR$/Utility.py" />
         <option value="$PROJECT_DIR$/MotionEnergyCNN2.py" />
         <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
       </list>
     </option>
   </component>
@@ -589,8 +589,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="222" column="37" lean-forward="true" selection-start-line="222" selection-start-column="37" selection-end-line="222" selection-end-column="37" />
+        <state relative-caret-position="646">
+          <caret line="206" column="89" lean-forward="true" selection-start-line="206" selection-start-column="89" selection-end-line="206" selection-end-column="89" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
