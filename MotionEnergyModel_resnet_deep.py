@@ -23,7 +23,7 @@ big_list = list()
 class Model():
     def __init__(self):
         self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
-        self.resNetChunk = ResNetChunk(deep = 6, shape = [3, 3, 4, 4], current_list = big_list)
+        self.resNetChunk = ResNetChunk(deep = 6, weight_shape = [3, 3, 4, 4], current_list = big_list)
         self.pool_1 = Pool()
         self.cnn_8 = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN")
         self.pool_2 = Pool()

@@ -113,15 +113,15 @@ class FC():
 
 
 class ResNetChunk(): #this is a "super" model class, and it builds a resnet chunk
-    def __init__(self, deep, shape, current_list):
+    def __init__(self, deep, weight_shape, current_list):
         assert deep % 2 == 0, "depth must be an even number"
         self.depth = deep
-        self.shape = shape
+        self.shape = weight_shape
         self.current_list = current_list
         self.layer_list = list() #this contains propagation list
 
     def build_model_from_pickle(self, exclusive_list):
-        assert len(exclusive_list) == depth * 2, "there seems to be a dimension problem with the pickle list"
+        assert len(exclusive_list) == self.depth * 2, "there seems to be a dimension problem with the pickle list"
         for i in range(self.depth): #this is the init pass
             layer_obj = Convolve(self.current_list, shape=self.shape, name = "Resnet_partition_" + str(i))
             layer_obj.build(from_file = True, weights = exclusive_list[2*i:2*i+2])
@@ -134,7 +134,6 @@ class ResNetChunk(): #this is a "super" model class, and it builds a resnet chun
             self.layer_list.append(layer_obj)
 
     def call(self, input): #disregard l2 norm for now, but add later
-        assert np.shape(input) == self.shape, "you should be feeding in the same shape to the block"
         current_input = input
         for i in range(0, self.depth, 2):
             residual = current_input
