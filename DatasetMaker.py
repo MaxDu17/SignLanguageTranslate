@@ -62,5 +62,5 @@ for i in range(len(dom_reader)):
             break
 
 random.shuffle(big_list)
-dbfile = open("../LINKED/Storage/Data/BIG/SignLanguageData", "ab")
+dbfile = open("../LINKED/Storage/Data/BIG/SignLanguageData.pkl", "ab") #extension is important
 pickle.dump(big_list, dbfile)

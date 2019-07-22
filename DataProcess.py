@@ -47,7 +47,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
     def unzip_pickle(self): #THIS IS THE EXTRACTION PROGRAM. ONLY CALL ME ONCE!!!
         assert self.test_list == None, "you can't call unzip_train more than once"
         try:
-            self.big_list = self.unpickle("../LINKED/Storage/Data/BIG/SignLanguageData")
+            self.big_list = self.unpickle("../LINKED/Storage/Data/BIG/SignLanguageData.pkl")
         except:
             raise Exception("You big dummy--you forgot to plug in the data drive!")
         #|||||||TRAIN||||||||VALID|||||TEST||||
