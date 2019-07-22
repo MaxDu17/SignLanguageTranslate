@@ -187,11 +187,10 @@ def Big_Train():
 
             if epoch % 50 == 0 and epoch > 1:
                 Validation(model, datafeeder)
-                Test_live(model, datafeeder)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("##############SAVING MODE##############")
-                dbfile = open("Graphs_and_Results/SAVED_WEIGHTS", "ab")
+                dbfile = open("Graphs_and_Results/SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)

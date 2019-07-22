@@ -56,7 +56,6 @@ class Prep(): #we use a lot of global variables to make thins more universal
         self.test_list = self.big_list[0:self.test_number] #allocates test set
         self.valid_list = self.big_list[self.test_number:self.test_number + self.valid_number]#allocates validation set
         self.train_list = self.big_list[self.test_number + self.valid_number:]  # allocates training set
-        self.valid_list, self.test_list = self.test_list, self.valid_list #this is kind of stupid
 
 
     #preconditions: needs a list of DataStructure objects
