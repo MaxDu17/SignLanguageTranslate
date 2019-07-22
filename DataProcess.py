@@ -61,7 +61,7 @@ class Prep(): #we use a lot of global variables to make thins more universal
     #preconditions: needs a list of DataStructure objects
     #postconditions: extracts, parses, and normalizes image data
     def next_train_list(self): #call me every time you need a fresh set
-        print("Retrieving Training Dataset")
+        print("Forming the Training Dataset")
         random.shuffle(self.train_list)
         label_list_dom = list()
         img_list = list()
