@@ -218,7 +218,7 @@ def Validation(model, datafeeder):
 
     data, label = datafeeder.GetValid_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions = model.call(data)
+    predictions, l1loss = model.call(data)
     assert len(label) == len(predictions)
     print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
@@ -227,7 +227,7 @@ def Test_live(model, datafeeder):
 
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions = model.call(data)
+    predictions, l1loss = model.call(data)
 
     assert len(label) == len(predictions)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
@@ -241,7 +241,7 @@ def Test():
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions = model.call(data)
+    predictions, l1loss = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
