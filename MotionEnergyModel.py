@@ -155,7 +155,7 @@ class Model():
 
         x = self.cnn_3.call(x)
         l2 += self.cnn_3.l2loss()
-        x = self.pool_2.call(X)
+        x = self.pool_2.call(x)
 
         x = self.flat.call(x)
         x = self.fc_1.call(x)
