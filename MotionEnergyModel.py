@@ -222,8 +222,11 @@ def Big_Train():
                 Validation(model, datafeeder)
 
             if epoch % 100 == 0 and epoch > 1:
-                print("##############SAVING MODE##############")
-                os.remove("Graphs_and_Results/SAVED_WEIGHTS.pkl")
+                print("\n##############SAVING MODE##############\n")
+                try:
+                    os.remove("Graphs_and_Results/SAVED_WEIGHTS.pkl")
+                except:
+                    print("the saved weights were not removed, because they were not there!")
                 dbfile = open("Graphs_and_Results/SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
@@ -233,7 +236,7 @@ def Big_Train():
     Test_live(model, datafeeder)
 
 def Validation(model, datafeeder):
-    print("##############VALIDATION##############")
+    print("\n##############VALIDATION##############\n")
 
     data, label = datafeeder.GetValid_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
@@ -242,7 +245,7 @@ def Validation(model, datafeeder):
     print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test_live(model, datafeeder):
-    print("##############TESTING##############")
+    print("\n##############TESTING##############\n")
 
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
@@ -267,7 +270,7 @@ def Test():
 
 
 def main():
-    print("---the model is starting-----")
+    print("Starting the program!")
     query = input("What mode do you want? Train (t) or Test from model (m)?\n")
     if query == "t":
         Big_Train()
