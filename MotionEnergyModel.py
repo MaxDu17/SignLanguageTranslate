@@ -179,7 +179,7 @@ def Big_Train():
                 with summary_writer.as_default(): #this is not working rn but I will fix it
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    tf.summary.trace_export()
+                    tf.summary.trace_export(name = "Graph")
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
@@ -226,7 +226,7 @@ def Test():
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
-    data = data[0]  # thsi is because we now have multiple images in the pickle
+    data = data[0]  # this is because we now have multiple images in the pickle
     predictions = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
