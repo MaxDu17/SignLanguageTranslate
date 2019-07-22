@@ -193,7 +193,7 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    tf.summary.scalar(name = "Learning_Rate", data = decayed_learning_rate)
+                    tf.summary.scalar(name = "Learning_Rate", data = decayed_learning_rate, step = epoch)
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)

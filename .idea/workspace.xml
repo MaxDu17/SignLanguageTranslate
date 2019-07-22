@@ -28,8 +28,8 @@
       <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="159" column="78" selection-start-line="159" selection-start-column="78" selection-end-line="159" selection-end-column="78" />
+            <state relative-caret-position="663">
+              <caret line="195" column="104" selection-start-line="195" selection-start-column="104" selection-end-line="195" selection-end-column="104" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -68,6 +68,7 @@
       <find>self.big_list</find>
       <find>pickle.du</find>
       <find>Retr</find>
+      <find>learning_rate</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
@@ -345,7 +346,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../WindPower/Models/lstm_v7_c_class_FORE.py" />
     <entry file="file://$PROJECT_DIR$/../../WindPower/Models/lstm_v7_c_CSV_FED.py" />
     <entry file="file://$PROJECT_DIR$/../../WindPower/Testing_Programs/run_frozen_LSTM_v4.py" />
     <entry file="file://$PROJECT_DIR$/Freeze.py" />
@@ -558,10 +558,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Miniconda3/Lib/site-packages/tensorflow/python/keras/optimizer_v2/optimizer_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3366">
+          <caret line="509" column="38" selection-start-line="509" selection-start-column="25" selection-end-line="509" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="159" column="78" selection-start-line="159" selection-start-column="78" selection-end-line="159" selection-end-column="78" />
+        <state relative-caret-position="663">
+          <caret line="195" column="104" selection-start-line="195" selection-start-column="104" selection-end-line="195" selection-end-column="104" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
