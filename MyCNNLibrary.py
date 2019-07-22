@@ -87,7 +87,7 @@ class FC():
         self.shape = shape
         self.name = name
 
-    def build(self, from_file = False, weights = None): #I am working on this right now
+    def build(self, from_file = False, weights = None):
         if not(from_file):
             self.w_fc = tf.Variable(initial_value = tf.random.truncated_normal(self.shape, stddev=0.1),
                                       name=self.name + "_weight", trainable = True)
@@ -110,6 +110,38 @@ class FC():
         fc = tf.matmul(input, self.w_fc) + self.b_fc
         return fc
 
+
+
+class ResNetChunk(): #this is a "super" model class, and it builds a resnet chunk
+    def __init__(self, deep, shape, current_list):
+        assert deep % 2 == 0, "depth must be an even number"
+        self.depth = deep
+        self.shape = shape
+        self.current_list = current_list
+        self.layer_list = list() #this contains propagation list
+
+    def build_model_from_pickle(self, exclusive_list):
+        assert len(exclusive_list) == depth * 2, "there seems to be a dimension problem with the pickle list"
+        for i in range(self.depth): #this is the init pass
+            layer_obj = Convolve(self.current_list, shape=self.shape, name = "Resnet_partition_" + str(i))
+            layer_obj.build(from_file = True, weights = exclusive_list[2*i:2*i+2])
+            self.layer_list.append(layer_obj)
+
+    def build(self):
+        for i in range(self.depth): #this is the init pass
+            layer_obj = Convolve(self.current_list, shape=self.shape, name = "Resnet_partition_" + str(i))
+            layer_obj.build()
+            self.layer_list.append(layer_obj)
+
+    def call(self, input): #disregard l2 norm for now, but add later
+        assert np.shape(input) == self.shape, "you should be feeding in the same shape to the block"
+        current_input = input
+        for i in range(0, self.depth, 2):
+            residual = current_input
+            output_1 = self.layer_list[i].call(input)
+            output_2 = self.layer_list[i+1].call(output_1)
+            current_input = output_2 + residual #this propagates the network
+        return current_input
 
 
 

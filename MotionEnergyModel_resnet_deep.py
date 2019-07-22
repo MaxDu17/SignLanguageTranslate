@@ -22,12 +22,10 @@ big_list = list()
 
 class Model():
     def __init__(self):
-        self.cnn_1 = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
-        self.cnn_2 = Convolve(big_list, [3, 3, 4, 4], "Layer_2_CNN")
-        self.cnn_3 = Convolve(big_list, [3, 3, 4, 4], "Layer_2_CNN")
+        self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
+        self.resNetChunk = ResNetChunk(deep = 6, shape = [3, 3, 4, 4], current_list = big_list)
         self.pool_1 = Pool()
-
-        self.cnn_4 = Convolve(big_list, [3, 3, 4, 8], "Layer_2_CNN")
+        self.cnn_8 = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN")
         self.pool_2 = Pool()
 
         self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
@@ -37,41 +35,35 @@ class Model():
     def build_model_from_pickle(self, file_dir):
         big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
-        self.cnn_1.build(from_file = True, weights = big_list[0:2])
-        self.cnn_2.build(from_file = True, weights = big_list[2:4])
-        self.cnn_3.build(from_file=True, weights=big_list[4:6])
-        self.cnn_4.build(from_file=True, weights=big_list[6:8])
-        self.fc_1.build(from_file = True, weights = big_list[6:8])
+        self.cnn_init.build(from_file = True, weights = big_list[0:2])
+        self.resNetChunk.build_model_from_pickle(exclusive_list = big_list[2:6*2+2]) #there are 12 w and b
+
+        self.cnn_8.build(from_file=True, weights=big_list[14:16])
+        self.fc_1.build(from_file = True, weights = big_list[16:18])
 
     def build_model(self):
-        self.cnn_1.build()
-        self.cnn_2.build()
-        self.cnn_3.build()
-        self.cnn_4.build()
+        self.cnn_init.build()
+        self.resNetChunk.build()
+        self.cnn_8.build()
         self.fc_1.build()
 
     @tf.function
     def call(self, input):
-        residual = x = self.cnn_1.call(input) #layer 1
-        l2 = self.cnn_1.l2loss()
+        x = self.cnn_init.call(input) #layer 1
 
-        x = self.cnn_2.call(x) #layer 2
-        l2 += self.cnn_2.l2loss()
-
-        x = self.cnn_3.call(x) #layer 3
-        l2 += self.cnn_3.l2loss()
-        x = x + residual #this is the resnet structure, without pooling
+        x = self.resNetChunk.call(x) #this should roll it all out
 
         x = self.pool_1.call(x)
 
-        x = self.cnn_4.call(x) #layer 4
-        l2 += self.cnn_4.l2loss()
+        x = self.cnn_8.call(x) #layer 4
+
         x = self.pool_2.call(x)
 
         x = self.flat.call(x)
+
         x = self.fc_1.call(x) #fully connected layer
         output = self.softmax.call(x)
-        return output, l2
+        return output, 0 #we bypass the l2 error for now
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
