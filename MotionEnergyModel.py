@@ -14,6 +14,10 @@ _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 50
 VALID_AMOUNT = 50
 
+DECAY_RATE = 0.75
+LEARNING_RATE_INIT = 0.001
+DECAY_STEPS = 200
+
 big_list = list()
 
 def unpickle(file):
@@ -134,6 +138,7 @@ class Model():
         output = self.softmax.call(x)
         return output
 
+
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
     counter = 0
@@ -150,7 +155,9 @@ def Big_Train():
     print("*****************Training*****************")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+    decayed_learning_rate = LEARNING_RATE_INIT
+
+    optimizer = tf.keras.optimizers.Adam(learning_rate = decayed_learning_rate)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
@@ -163,14 +170,15 @@ def Big_Train():
     model.build_model()
     tf.summary.trace_on(graph=True, profiler=True)
 
-    for epoch in range(601):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
+
+        decayed_learning_rate = LEARNING_RATE_INIT * DECAY_RATE ** (epoch / DECAY_STEPS)
         with tf.GradientTape() as tape:
             predictions = model.call(data) #this is the big call
 
             pred_loss = loss_function(label, predictions) #this is the loss function
-
 
             if epoch == 0:
                 with summary_writer.as_default():
@@ -185,7 +193,7 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-
+                    tf.summary.scalar(name = "Learning_Rate", data = decayed_learning_rate)
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
