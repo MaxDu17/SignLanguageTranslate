@@ -165,7 +165,6 @@ def Big_Train():
 
     for epoch in range(401):
         data, label = datafeeder.nextBatchTrain_dom(150)
-        tf.summary.trace_on(graph=True, profiler=False)
         data = data[0]
         with tf.GradientTape() as tape:
             predictions = model.call(data) #this is the big call
