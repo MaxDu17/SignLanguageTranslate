@@ -11,7 +11,7 @@ from DataProcess import DataStructure
 
 hold_prob = 0.8
 _, _, output_size = util.get_dictionaries()
-TEST_AMOUNT = 50
+TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.001
@@ -109,7 +109,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
 
     def call(self, input):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
-        fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
+        #fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 
 class Model():

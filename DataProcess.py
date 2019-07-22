@@ -130,7 +130,6 @@ class Prep(): #we use a lot of global variables to make thins more universal
 
     def next_valid_list(self):
         print("Retrieving Validation Dataset")
-        print(len(self.valid_list))
         assert len(self.valid_list) > 0, "You haven't executed \"load_train_to_RAM\""
         random.shuffle(self.valid_list) #this is so we don't get repeats
 
