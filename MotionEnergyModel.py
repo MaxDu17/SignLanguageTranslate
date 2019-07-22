@@ -9,7 +9,7 @@ util = Utility()
 from DataProcess import DataStructure
 
 
-hold_prob = 1
+hold_prob = 0.8
 _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 50
 VALID_AMOUNT = 50
@@ -102,7 +102,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
 
     def call(self, input):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
-        #fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob) removing this for diagnostic purposes
+        fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
         return fc_1
 
 class Model():
@@ -163,7 +163,7 @@ def Big_Train():
     model.build_model()
     tf.summary.trace_on(graph=True, profiler=True)
 
-    for epoch in range(401):
+    for epoch in range(601):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
@@ -175,7 +175,7 @@ def Big_Train():
             if epoch == 0:
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
-                    
+
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
                 print("Finished epoch", epoch)
