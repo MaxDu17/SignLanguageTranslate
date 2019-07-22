@@ -14,7 +14,7 @@ _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 50
 VALID_AMOUNT = 50
 
-DECAY_RATE = 0.75
+DECAY_RATE = 0.00001
 LEARNING_RATE_INIT = 0.001
 DECAY_STEPS = 200
 
