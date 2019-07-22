@@ -15,7 +15,7 @@ TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.001
-L1WEIGHT = 0.01
+L2WEIGHT = 0.01
 
 big_list = list()
 
@@ -59,9 +59,9 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         pooled_1 = tf.nn.max_pool(conv_1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool_1")
         return pooled_1
 
-    def l1loss(self):
-        l1 = tf.reduce_sum(tf.square(self.w_conv_1))
-        return l1
+    def l2loss(self):
+        l2 = tf.reduce_sum(tf.abs(self.w_conv_1))
+        return l2
 
 
 class Flatten():
@@ -136,13 +136,13 @@ class Model():
     @tf.function
     def call(self, input):
         x= self.cnn_1.call(input)
-        l1 = self.cnn_1.l1loss()
+        l2 = self.cnn_1.l2loss()
         x = self.cnn_2.call(x)
-        l1 += self.cnn_2.l1loss()
+        l2 += self.cnn_2.l2loss()
         x = self.flat.call(x)
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
-        return output, l1
+        return output, l2
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
@@ -178,10 +178,10 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
-            predictions, l1_loss = model.call(data) #this is the big call
+            predictions, l2_loss = model.call(data) #this is the big call
 
             pred_loss = loss_function(label, predictions) #this is the loss function
-            pred_loss = pred_loss + L1WEIGHT * l1_loss #this implements lasso regularization
+            pred_loss = pred_loss + L2WEIGHT * l2_loss #this implements lasso regularization
             if epoch == 0:
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
@@ -218,7 +218,7 @@ def Validation(model, datafeeder):
 
     data, label = datafeeder.GetValid_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions, l1loss = model.call(data)
+    predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
     print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
@@ -227,7 +227,7 @@ def Test_live(model, datafeeder):
 
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions, l1loss = model.call(data)
+    predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
@@ -241,7 +241,7 @@ def Test():
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
-    predictions, l1loss = model.call(data)
+    predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
