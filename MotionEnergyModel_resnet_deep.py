@@ -102,7 +102,7 @@ def Big_Train():
             predictions, l2_loss = model.call(data) #this is the big call
 
             pred_loss = loss_function(label, predictions) #this is the loss function
-            pred_loss = pred_loss + L2WEIGHT * l2_loss #this implements lasso regularization
+
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet")
