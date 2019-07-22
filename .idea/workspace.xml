@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/MotionEnergyModel_resnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/SAVED_WEIGHTS.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/events.out.tfevents.1563820157.set-Precision-5820-Tower.23185.5.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/events.out.tfevents.1563820158.set-Precision-5820-Tower.profile-empty" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/plugins/profile/2019-07-22_14-29-18/local.trace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_resnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_resnet.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +17,8 @@
       <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-195">
-              <caret line="147" column="41" selection-start-line="147" selection-start-column="41" selection-end-line="147" selection-end-column="41" />
+            <state relative-caret-position="536">
+              <caret line="55" column="82" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -30,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="272" column="32" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
+            <state relative-caret-position="785">
+              <caret line="139" column="66" lean-forward="true" selection-start-line="139" selection-start-column="66" selection-end-line="139" selection-end-column="66" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -42,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel_resnet.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionEnergyModel_resnet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="968">
-              <caret line="198" column="25" lean-forward="true" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+            <state relative-caret-position="748">
+              <caret line="135" column="37" lean-forward="true" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="37" />
               <folding>
                 <element signature="e#376#533#0" />
                 <element signature="e#557#2152#0" />
@@ -93,10 +89,10 @@
       <find>Retr</find>
       <find>learning_rate</find>
       <find>l1</find>
-      <find># this uses a keras layer structure but with a custom layer</find>
+      <find />
       <find>_1</find>
-      <find>print</find>
       <find>graphs</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
@@ -135,9 +131,9 @@
         <option value="$PROJECT_DIR$/MotionEnergyNOkeras.py" />
         <option value="$PROJECT_DIR$/PickleShuffle.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_resnet.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel_resnet.py" />
       </list>
     </option>
   </component>
@@ -586,28 +582,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-195">
-          <caret line="147" column="41" selection-start-line="147" selection-start-column="41" selection-end-line="147" selection-end-column="41" />
+        <state relative-caret-position="536">
+          <caret line="55" column="82" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="272" column="32" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="198" column="25" lean-forward="true" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
+        <state relative-caret-position="748">
+          <caret line="135" column="37" lean-forward="true" selection-start-line="135" selection-start-column="8" selection-end-line="135" selection-end-column="37" />
           <folding>
             <element signature="e#376#533#0" />
             <element signature="e#557#2152#0" />
@@ -617,6 +603,16 @@
             <element signature="e#2715#2805#0" />
             <element signature="e#2823#4152#0" />
             <element signature="e#5683#5958#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="785">
+          <caret line="139" column="66" lean-forward="true" selection-start-line="139" selection-start-column="66" selection-end-line="139" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

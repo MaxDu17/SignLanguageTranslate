@@ -132,7 +132,7 @@ class Model():
         self.softmax = Softmax()
 
     def build_model_from_pickle(self, file_dir):
-        big_list = unpickle("Graphs_and_Results/SAVED_WEIGHTS")
+        big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
         self.cnn_1.build(from_file = True, weights = big_list[0:2])
         self.cnn_2.build(from_file = True, weights = big_list[2:4])
