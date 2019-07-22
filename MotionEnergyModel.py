@@ -170,16 +170,22 @@ def Big_Train():
             predictions = model.call(data) #this is the big call
 
             pred_loss = loss_function(label, predictions) #this is the loss function
+
+
+            if epoch == 0:
+                with summary_writer.as_default():
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
+                    
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
                 print("Finished epoch", epoch)
                 print("Accuracy: {}".format(accuracy(predictions, label)))
                 print("Loss: {}".format(np.asarray(pred_loss)))
                 print("***********************")
-                with summary_writer.as_default(): #this is not working rn but I will fix it
+                with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    tf.summary.trace_export(name = "Graph", step = epoch, profiler_outdir="Graphs_and_Results")
+
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
