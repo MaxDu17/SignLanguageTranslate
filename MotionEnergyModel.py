@@ -14,9 +14,8 @@ _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 50
 VALID_AMOUNT = 50
 
-DECAY_RATE = 0.00001
 LEARNING_RATE_INIT = 0.001
-DECAY_STEPS = 200
+L1WEIGHT = 0.01
 
 big_list = list()
 
@@ -107,7 +106,8 @@ class FC():  # this uses a keras layer structure but with a custom layer
     def call(self, input):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
-        return fc_1
+        l1 = tf.reduce_sum(tf.square(self.w_fc_1))
+        return fc_1, l1
 
 class Model():
     def __init__(self):
@@ -131,13 +131,12 @@ class Model():
         self.fc_1.build()
     @tf.function
     def call(self, input):
-        x = self.cnn_1.call(input)
-        x = self.cnn_2.call(x)
+        x, l1_1 = self.cnn_1.call(input)
+        x, l1_2 = self.cnn_2.call(x)
         x = self.flat.call(x)
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
-        return output
-
+        return output, (l1_1 + l1_2)
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
@@ -155,9 +154,8 @@ def Big_Train():
     print("*****************Training*****************")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
-    decayed_learning_rate = LEARNING_RATE_INIT
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate = decayed_learning_rate)
+    optimizer = tf.keras.optimizers.Adam(learning_rate = LEARNING_RATE_INIT)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
@@ -173,13 +171,11 @@ def Big_Train():
     for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
-
-        decayed_learning_rate = LEARNING_RATE_INIT * DECAY_RATE ** (epoch / DECAY_STEPS)
         with tf.GradientTape() as tape:
-            predictions = model.call(data) #this is the big call
+            predictions, l1_loss = model.call(data) #this is the big call
 
             pred_loss = loss_function(label, predictions) #this is the loss function
-
+            pred_loss = pred_loss + L1WEIGHT * l1_loss #this implements lasso regularization
             if epoch == 0:
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
@@ -193,7 +189,6 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    tf.summary.scalar(name = "Learning_Rate", data = decayed_learning_rate, step = epoch)
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
