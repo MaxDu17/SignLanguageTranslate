@@ -133,7 +133,7 @@ class Model():
         self.softmax = Softmax()
 
     def build_model_from_pickle(self, file_dir):
-        big_list = unpickle("Graphs_and_Results/resnet/SAVED_WEIGHTS")
+        big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
         self.cnn_1.build(from_file = True, weights = big_list[0:2])
         self.cnn_2.build(from_file = True, weights = big_list[2:4])
@@ -228,7 +228,9 @@ def Big_Train():
                     tf.summary.flush()
 
             if epoch % 50 == 0 and epoch > 1:
-                Validation(model, datafeeder)
+                valid_accuracy = Validation(model, datafeeder)
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "Validation_accuracy", data = valid_accuracy, step = epoch)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
@@ -251,7 +253,9 @@ def Validation(model, datafeeder):
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
-    print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
+    valid_accuracy = accuracy(predictions, label)
+    print("This is the validation set accuracy: {}".format(valid_accuracy))
+    return valid_accuracy
 
 def Test_live(model, datafeeder):
     print("\n##############TESTING##############\n")
