@@ -59,6 +59,10 @@ class Convolve():  # this uses a keras layer structure but with a custom layer
         pooled_1 = tf.nn.max_pool(conv_1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool_1")
         return pooled_1
 
+    def l1loss(self):
+        l1 = tf.reduce_sum(tf.square(self.w_conv_1))
+        return l1
+
 
 class Flatten():
     def __init__(self, shape, name):
@@ -106,8 +110,7 @@ class FC():  # this uses a keras layer structure but with a custom layer
     def call(self, input):
         fc_1 = tf.matmul(input, self.w_fc_1) + self.b_fc_1
         fc_1 = tf.nn.dropout(fc_1, rate=1 - hold_prob)
-        l1 = tf.reduce_sum(tf.square(self.w_fc_1))
-        return fc_1, l1
+        return fc_1
 
 class Model():
     def __init__(self):
@@ -129,14 +132,17 @@ class Model():
         self.cnn_1.build()
         self.cnn_2.build()
         self.fc_1.build()
+
     @tf.function
     def call(self, input):
-        x, l1_1 = self.cnn_1.call(input)
-        x, l1_2 = self.cnn_2.call(x)
+        x= self.cnn_1.call(input)
+        l1 = self.cnn_1.l1loss()
+        x = self.cnn_2.call(x)
+        l1 += self.cnn_2.l1loss()
         x = self.flat.call(x)
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
-        return output, (l1_1 + l1_2)
+        return output, l1
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
