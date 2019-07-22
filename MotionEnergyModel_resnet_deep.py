@@ -107,19 +107,18 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet")
 
-            if epoch % 20 == 0 and epoch > 1:
-                print("***********************")
-                print("Finished epoch", epoch)
-                print("Accuracy: {}".format(accuracy(predictions, label)))
-                print("Loss: {}".format(np.asarray(pred_loss)))
-                print("***********************")
-                with summary_writer.as_default():
-                    tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
-                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    for var in big_list:
-                        name = str(var.name)
-                        tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
-                    tf.summary.flush()
+            print("***********************")
+            print("Finished epoch", epoch)
+            print("Accuracy: {}".format(accuracy(predictions, label)))
+            print("Loss: {}".format(np.asarray(pred_loss)))
+            print("***********************")
+            with summary_writer.as_default():
+                tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
+                tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
+                for var in big_list:
+                    name = str(var.name)
+                    tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
+                tf.summary.flush()
 
             if epoch % 50 == 0 and epoch > 1:
                 valid_accuracy = Validation(model, datafeeder)
