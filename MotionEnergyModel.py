@@ -179,7 +179,7 @@ def Big_Train():
                 with summary_writer.as_default(): #this is not working rn but I will fix it
                     tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                    tf.summary.trace_export(name = "Graph", step = epoch, profiler_outdir="Graphs_and_Results")
+                    #tf.summary.trace_export(name = "Graph", step = epoch, profiler_outdir="Graphs_and_Results")
                     for var in big_list:
                         name = str(var.name)
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
