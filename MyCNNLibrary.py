@@ -119,7 +119,7 @@ class FC():
 
 
     def call(self, input):
-        with tf.name_scope("Fully_Connected_Layer")
+        with tf.name_scope("Fully_Connected_Layer"):
             fc = tf.matmul(input, self.w_fc) + self.b_fc
             return fc
 
