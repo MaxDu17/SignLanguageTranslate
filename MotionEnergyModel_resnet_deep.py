@@ -18,7 +18,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.01
 
 big_list = list()
-
+IMAGE = "Motion"
 
 class Model():
     def __init__(self):
@@ -83,14 +83,14 @@ def Big_Train():
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [IMAGE])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = LEARNING_RATE_INIT)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/resnet/Motion/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/resnet/" + IMAGE + "/")
     print("starting training")
 
     print("Making model")
@@ -108,7 +108,7 @@ def Big_Train():
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
-                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/Motion/")
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/" + IMAGE + "/")
 
             print("***********************")
             print("Finished epoch", epoch)
@@ -135,10 +135,11 @@ def Big_Train():
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
                 try: #because for some reason, the pickle files are incremental
-                    os.remove("Graphs_and_Results/resnet/Motion/SAVED_WEIGHTS.pkl")
+                    os.remove("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl")
                 except:
                     print("the saved weights were not removed because they were not there!")
-                dbfile = open("Graphs_and_Results/resnet/SAVED_WEIGHTS.pkl", "ab")
+                dbfile = open("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl", "ab")
+
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
@@ -170,7 +171,7 @@ def Test_live(model, datafeeder):
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
         conf[k][l] += 1
-    test = open("Graphs_and_Results/resnet/Motion/confusion.csv", "w")
+    test = open("Graphs_and_Results/resnet/" + IMAGE + "/confusion.csv", "w")
     logger = csv.writer(test, lineterminator="\n")
 
     for iterate in conf:
@@ -181,9 +182,9 @@ def Test_live(model, datafeeder):
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/resnet/Motion/SAVED_WEIGHTS.pkl")
+    model.build_model_from_pickle("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [IMAGE])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
