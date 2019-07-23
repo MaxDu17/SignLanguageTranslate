@@ -15,7 +15,7 @@ TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.001
-L2WEIGHT = 0.05
+L2WEIGHT = 0.1
 
 big_list = list()
 SELECTION_LIST = ["History", "Motion"]
@@ -118,7 +118,7 @@ def Big_Train():
     model.build_model()
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
-    for epoch in range(501):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
