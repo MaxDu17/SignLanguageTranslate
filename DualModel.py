@@ -22,11 +22,15 @@ big_list = list()
 
 class Model():
     def __init__(self):
-        self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
-        self.resNetChunk = ResNetChunk(deep = 6, weight_shape = [3, 3, 4, 4], current_list = big_list)
-        self.pool_1 = Pool()
-        self.cnn_8 = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN")
-        self.pool_2 = Pool()
+        self.cnn_1_e = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN_energy")
+        self.cnn_2_e = Convolve(big_list, [3, 3, 4, 4], "Layer_2_CNN_energy")
+
+        self.cnn_1_h = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN_history")
+        self.cnn_2_h = Convolve(big_list, [3, 3, 4, 4], "Layer_2_CNN_history")
+
+        self.pool = Pool()
+
+        self.cnn_3 = Convolve(big_list, [3, 3, 4, 8], "Layer_2_CNN")
 
         self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
         self.fc_1 = FC(big_list, [25*25*8, output_size], "Layer_1_FC")
@@ -35,38 +39,33 @@ class Model():
     def build_model_from_pickle(self, file_dir):
         big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
-        self.cnn_init.build(from_file = True, weights = big_list[0:2])
-        self.resNetChunk.build_model_from_pickle(exclusive_list = big_list[2:6*2+2]) #there are 12 w and b
-
-        self.cnn_8.build(from_file=True, weights=big_list[14:16])
-        self.fc_1.build(from_file = True, weights = big_list[16:18])
+        self.cnn_1.build(from_file = True, weights = big_list[0:2])
+        self.cnn_2.build(from_file = True, weights = big_list[2:4])
+        self.cnn_3.build(from_file=True, weights=big_list[4:6])
+        self.fc_1.build(from_file = True, weights = big_list[6:8])
 
     def build_model(self):
-        self.cnn_init.build()
-        self.resNetChunk.build()
-        self.cnn_8.build()
+        self.cnn_1.build()
+        self.cnn_2.build()
+        self.cnn_3.build()
         self.fc_1.build()
 
     @tf.function
     def call(self, input):
-        x = self.cnn_init.call(input) #layer 1
-        l2loss = self.cnn_init.l2loss()
-
-        x = self.resNetChunk.call(x) #this should roll it all out
-        l2loss += self.resNetChunk.l2loss()
-
+        x= self.cnn_1.call(input)
+        l2 = self.cnn_1.l2loss()
+        x = self.cnn_2.call(x)
+        l2 += self.cnn_2.l2loss()
         x = self.pool_1.call(x)
 
-        x = self.cnn_8.call(x) #layer 4
-        l2loss += self.resNetChunk.l2loss()
-
+        x = self.cnn_3.call(x)
+        l2 += self.cnn_3.l2loss()
         x = self.pool_2.call(x)
 
         x = self.flat.call(x)
-
-        x = self.fc_1.call(x) #fully connected layer
+        x = self.fc_1.call(x)
         output = self.softmax.call(x)
-        return output, l2loss #we bypass the l2 error for now
+        return output, l2
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
@@ -83,62 +82,57 @@ def Big_Train():
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion", "History"])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = LEARNING_RATE_INIT)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/resnet/Motion/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
     print("starting training")
 
     print("Making model")
     model = Model()
     model.build_model()
-    tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
+    tf.summary.trace_on(graph=True, profiler=True)
 
-    for epoch in range(501):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
-        data = data[0]
+        data = data
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
 
-            pred_loss_ = loss_function(label, predictions) #this is the loss function
-            pred_loss = pred_loss_ + L2WEIGHT * l2_loss
+            pred_loss = loss_function(label, predictions) #this is the loss function
+            pred_loss = pred_loss + L2WEIGHT * l2_loss #this implements lasso regularization
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
-                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/Motion/")
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
 
-            print("***********************")
-            print("Finished epoch", epoch)
-            print("Accuracy: {}".format(accuracy(predictions, label)))
-            print("Loss: {}".format(np.asarray(pred_loss)))
-            print("L2 Loss: {}".format(np.asarray(l2_loss)))
-            print("***********************")
-
-            if epoch % 20 == 0:
+            if epoch % 20 == 0 and epoch > 1:
+                print("***********************")
+                print("Finished epoch", epoch)
+                print("Accuracy: {}".format(accuracy(predictions, label)))
+                print("Loss: {}".format(np.asarray(pred_loss)))
+                print("***********************")
                 with summary_writer.as_default():
-                    tf.summary.scalar(name = "XEntropyLoss", data = pred_loss_, step = epoch)
-                    tf.summary.scalar(name="L2Loss", data=l2_loss, step=epoch)
+                    tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
                     tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
                     for var in big_list:
                         name = str(var.name)
-                        tf.summary.histogram(name = name, data = var, step = epoch)
+                        tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
                     tf.summary.flush()
 
-            if epoch % 50 == 0:
-                valid_accuracy = Validation(model, datafeeder)
-                with summary_writer.as_default():
-                    tf.summary.scalar(name = "Validation_accuracy", data = valid_accuracy, step = epoch)
+            if epoch % 50 == 0 and epoch > 1:
+                Validation(model, datafeeder)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
-                try: #because for some reason, the pickle files are incremental
-                    os.remove("Graphs_and_Results/resnet/Motion/SAVED_WEIGHTS.pkl")
+                try:
+                    os.remove("Graphs_and_Results/SAVED_WEIGHTS.pkl")
                 except:
-                    print("the saved weights were not removed because they were not there!")
-                dbfile = open("Graphs_and_Results/resnet/SAVED_WEIGHTS.pkl", "ab")
+                    print("the saved weights were not removed, because they were not there!")
+                dbfile = open("Graphs_and_Results/SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
@@ -153,9 +147,7 @@ def Validation(model, datafeeder):
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
-    valid_accuracy = accuracy(predictions, label)
-    print("This is the validation set accuracy: {}".format(valid_accuracy))
-    return valid_accuracy
+    print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test_live(model, datafeeder):
     print("\n##############TESTING##############\n")
@@ -165,23 +157,12 @@ def Test_live(model, datafeeder):
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions)
-    conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
-    for i in range(len(predictions)):
-        k = np.argmax(predictions[i])
-        l = np.argmax(label[i])
-        conf[k][l] += 1
-    test = open("Graphs_and_Results/resnet/Motion/confusion.csv", "w")
-    logger = csv.writer(test, lineterminator="\n")
-
-    for iterate in conf:
-        logger.writerow(iterate)
-
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/resnet/Motion/SAVED_WEIGHTS.pkl")
+    model.build_model_from_pickle("Graphs_and_Results/SAVED_WEIGHTS")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     datafeeder.load_train_to_RAM()
