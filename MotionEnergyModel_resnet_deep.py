@@ -15,11 +15,11 @@ TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.001
-L2WEIGHT = 0.01
+L2WEIGHT = 0.05
 
 big_list = list()
-IMAGE = "Overlap"
-
+IMAGE = "Motion"
+version = 2
 class Model():
     def __init__(self):
         self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
@@ -91,7 +91,7 @@ def Big_Train():
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/resnet/" + IMAGE + "/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/resnet/" + IMAGE + str(version) + "/")
     print("starting training")
 
     print("Making model")
@@ -109,7 +109,7 @@ def Big_Train():
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
-                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/" + IMAGE + "/")
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/" + IMAGE + str(version) + "/")
 
             print("***********************")
             print("Finished epoch", epoch)
@@ -136,10 +136,10 @@ def Big_Train():
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
                 try: #because for some reason, the pickle files are incremental
-                    os.remove("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl")
+                    os.remove("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/SAVED_WEIGHTS.pkl")
                 except:
                     print("the saved weights were not removed because they were not there!")
-                dbfile = open("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl", "ab")
+                dbfile = open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/SAVED_WEIGHTS.pkl", "ab")
 
                 pickle.dump(big_list, dbfile)
 
@@ -172,10 +172,10 @@ def Test_live(model, datafeeder):
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
         conf[k][l] += 1
-    test = open("Graphs_and_Results/resnet/" + IMAGE + "/confusion.csv", "w")
+    test = open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/confusion.csv", "w")
     logger = csv.writer(test, lineterminator="\n")
 
-    test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
+    test_ = open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/results.csv", "w")
     logger_ = csv.writer(test_, lineterminator="\n")
     logger_.writerow([accuracy(predictions, label)])
 
@@ -187,7 +187,7 @@ def Test_live(model, datafeeder):
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/resnet/" + IMAGE + "/SAVED_WEIGHTS.pkl")
+    model.build_model_from_pickle("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/SAVED_WEIGHTS.pkl")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [IMAGE])
     datafeeder.load_train_to_RAM()
@@ -201,10 +201,10 @@ def Test():
         k = np.argmax(predictions[i])
         l = np.argmax(label[i])
         conf[k][l] += 1
-    test = open("Graphs_and_Results/resnet/" + IMAGE + "/confusion.csv", "w")
+    test = open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/confusion.csv", "w")
     logger = csv.writer(test, lineterminator="\n")
 
-    test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
+    test_ = open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/results.csv", "w")
     logger_ = csv.writer(test_, lineterminator="\n")
     logger_.writerow([accuracy(predictions, label)])
 

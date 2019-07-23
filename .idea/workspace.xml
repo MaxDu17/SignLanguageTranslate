@@ -28,8 +28,8 @@
       <file leaf-file-name="MotionEnergyModel_resnet_deep.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+            <state relative-caret-position="224">
+              <caret line="98" column="23" lean-forward="true" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -103,11 +103,13 @@
       <find>resnet/</find>
       <find>Motion</find>
       <find>print</find>
+      <find>&quot; + IMAGE + &quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
       <replace>l2</replace>
       <replace>&quot; + IMAGE + &quot;</replace>
+      <replace>&quot; + IMAGE + str(version) + &quot;</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -658,8 +660,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        <state relative-caret-position="224">
+          <caret line="98" column="23" lean-forward="true" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
         </state>
       </provider>
     </entry>
