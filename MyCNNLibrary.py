@@ -43,18 +43,21 @@ class Convolve():
 
 
     def call(self, input):
-        conv = tf.nn.relu(tf.nn.conv2d(input, self.w_conv, strides=[1, 1, 1, 1], padding='SAME', name="conv"))
-        conv = conv + self.b_conv
-        return conv
+        with tf.name_scope("Convolve"):
+            conv = tf.nn.relu(tf.nn.conv2d(input, self.w_conv, strides=[1, 1, 1, 1], padding='SAME', name="conv"))
+            conv = conv + self.b_conv
+            return conv
 
     def l2loss(self):
-        l2 = tf.reduce_sum(tf.abs(self.w_conv))
-        return l2
+        with tf.name_scope("L2Reg"):
+            l2 = tf.reduce_sum(tf.abs(self.w_conv))
+            return l2
 
 class Pool():
     def call(self, input):
-        pooled = tf.nn.max_pool(input, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool")
-        return pooled
+        with tf.name_scope("Pool"):
+            pooled = tf.nn.max_pool(input, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name="pool")
+            return pooled
 
 
 class Flatten():
@@ -63,8 +66,9 @@ class Flatten():
         self.name = name
 
     def call(self, input):
-        flattened = tf.reshape(input, self.shape, name=self.name + "_flatten")
-        return flattened
+        with tf.name_scope("Flatten"):
+            flattened = tf.reshape(input, self.shape, name=self.name + "_flatten")
+            return flattened
 
 
 class Dropout():
@@ -73,13 +77,21 @@ class Dropout():
         self.hold_prob = hold_prob
 
     def call(self, input):
-        output = tf.nn.dropout(input, rate=1 - self.hold_prob, name = self.name)
-        return output
+        with tf.name_scope("Dropout"):
+            output = tf.nn.dropout(input, rate=1 - self.hold_prob, name = self.name)
+            return output
 
 class Softmax():
     def call(self, input):
-        prediction = tf.nn.softmax(input)
-        return prediction
+        with tf.name_scope("Softmax"):
+            prediction = tf.nn.softmax(input)
+            return prediction
+
+class Combine_add():
+    def call(self, input1, input2):
+        with tf.name_scope("Combine_and_add"):
+            output = input1 + input2
+            return output
 
 class FC():
     def __init__(self, current_list, shape, name):
@@ -107,8 +119,9 @@ class FC():
 
 
     def call(self, input):
-        fc = tf.matmul(input, self.w_fc) + self.b_fc
-        return fc
+        with tf.name_scope("Fully_Connected_Layer")
+            fc = tf.matmul(input, self.w_fc) + self.b_fc
+            return fc
 
 
 
