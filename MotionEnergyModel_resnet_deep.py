@@ -163,7 +163,7 @@ def Test_live(model, datafeeder):
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/resnet/SAVED_WEIGHTS")
+    model.build_model_from_pickle("Graphs_and_Results/resnet/SAVED_WEIGHTS.pkl")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     datafeeder.load_train_to_RAM()
