@@ -142,6 +142,14 @@ class ResNetChunk(): #this is a "super" model class, and it builds a resnet chun
             current_input = output_2 + residual #this propagates the network
         return current_input
 
+    def l2loss(self): #wrapper function
+        l2loss = 0
+        for layer in self.layer_list:
+            l2loss += layer.l2loss()
+
+        return l2loss
+
+
 
 
 

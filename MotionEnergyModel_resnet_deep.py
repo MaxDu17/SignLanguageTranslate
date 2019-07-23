@@ -50,12 +50,15 @@ class Model():
     @tf.function
     def call(self, input):
         x = self.cnn_init.call(input) #layer 1
+        l2loss = self.cnn_init.l2loss()
 
         x = self.resNetChunk.call(x) #this should roll it all out
+        l2loss += self.resNetChunk.l2loss()
 
         x = self.pool_1.call(x)
 
         x = self.cnn_8.call(x) #layer 4
+        l2loss += self.resNetChunk.l2loss()
 
         x = self.pool_2.call(x)
 
@@ -63,7 +66,7 @@ class Model():
 
         x = self.fc_1.call(x) #fully connected layer
         output = self.softmax.call(x)
-        return output, 0 #we bypass the l2 error for now
+        return output, l2loss #we bypass the l2 error for now
 
 def accuracy(pred, labels):
     assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
@@ -101,8 +104,8 @@ def Big_Train():
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
 
-            pred_loss = loss_function(label, predictions) #this is the loss function
-
+            pred_loss_ = loss_function(label, predictions) #this is the loss function
+            pred_loss = pred_loss_ + L2WEIGHT * l2_loss
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet")
@@ -111,26 +114,30 @@ def Big_Train():
             print("Finished epoch", epoch)
             print("Accuracy: {}".format(accuracy(predictions, label)))
             print("Loss: {}".format(np.asarray(pred_loss)))
+            print("L2 Loss: {}".format(np.asarray(l2_loss)))
             print("***********************")
-            with summary_writer.as_default():
-                tf.summary.scalar(name = "Loss", data = pred_loss, step = epoch)
-                tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
-                for var in big_list:
-                    name = str(var.name)
-                    tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
-                tf.summary.flush()
 
-            if epoch % 50 == 0 and epoch > 1:
+            if epoch % 20 == 0:
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "XEntropyLoss", data = pred_loss_, step = epoch)
+                    tf.summary.scalar(name="L2Loss", data=l2_loss, step=epoch)
+                    tf.summary.scalar(name = "Accuracy", data = accuracy(predictions, label), step = epoch)
+                    for var in big_list:
+                        name = str(var.name)
+                        tf.summary.histogram(name = name, data = var, step = epoch)
+                    tf.summary.flush()
+
+            if epoch % 50 == 0:
                 valid_accuracy = Validation(model, datafeeder)
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Validation_accuracy", data = valid_accuracy, step = epoch)
 
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
-                try:
+                try: #because for some reason, the pickle files are incremental
                     os.remove("Graphs_and_Results/resnet/SAVED_WEIGHTS.pkl")
                 except:
-                    print("the saved weights were not removed, because they were not there!")
+                    print("the saved weights were not removed because they were not there!")
                 dbfile = open("Graphs_and_Results/resnet/SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
