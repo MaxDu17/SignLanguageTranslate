@@ -79,8 +79,9 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def Big_Train():
-    print("Is there a GPU available: "),
-    print(tf.test.is_gpu_available())
+    status = tf.test.is_gpu_available()
+    print("Is there a GPU available: {}".format(status))
+
     print("*****************Training*****************")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [IMAGE])
@@ -176,7 +177,7 @@ def Test_live(model, datafeeder):
 
     test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
     logger_ = csv.writer(test_, lineterminator="\n")
-    logger_.writerow(accuracy(predictions, label))
+    logger_.writerow([accuracy(predictions, label)])
 
     for iterate in conf:
         logger.writerow(iterate)
@@ -205,7 +206,7 @@ def Test():
 
     test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
     logger_ = csv.writer(test_, lineterminator="\n")
-    logger_.writerow(accuracy(predictions, label))
+    logger_.writerow([accuracy(predictions, label)])
 
     for iterate in conf:
         logger.writerow(iterate)
