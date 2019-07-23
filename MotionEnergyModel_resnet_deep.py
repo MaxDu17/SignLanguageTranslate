@@ -174,6 +174,10 @@ def Test_live(model, datafeeder):
     test = open("Graphs_and_Results/resnet/" + IMAGE + "/confusion.csv", "w")
     logger = csv.writer(test, lineterminator="\n")
 
+    test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
+    logger_ = csv.writer(test_, lineterminator="\n")
+    logger_.writerow(accuracy(predictions, label))
+
     for iterate in conf:
         logger.writerow(iterate)
 
@@ -191,6 +195,20 @@ def Test():
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
+    conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
+    for i in range(len(predictions)):
+        k = np.argmax(predictions[i])
+        l = np.argmax(label[i])
+        conf[k][l] += 1
+    test = open("Graphs_and_Results/resnet/" + IMAGE + "/confusion.csv", "w")
+    logger = csv.writer(test, lineterminator="\n")
+
+    test_ = open("Graphs_and_Results/resnet/" + IMAGE + "/results.csv", "w")
+    logger_ = csv.writer(test_, lineterminator="\n")
+    logger_.writerow(accuracy(predictions, label))
+
+    for iterate in conf:
+        logger.writerow(iterate)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
