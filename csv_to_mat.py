@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from Utility import Utility
 Util = Utility()
 
-test = open("Graphs_and_Results/confusion.csv", "r")
+test = open("Graphs_and_Results/resnet/Motion/confusion.csv", "r")
 matrix = Util.cast_csv_to_float(test)
 
 fig=plt.figure()
