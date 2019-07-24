@@ -163,6 +163,56 @@ class ResNetChunk(): #this is a "super" model class, and it builds a resnet chun
             l2loss += layer.l2loss()
 
         return l2loss
+    
+    
+    class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have pooling yet
+        def __init__(self, current_list, name, data_depth):
+            self.current_list = current_list
+            self.name = name
+            self.data_depth = data_depth
+
+        def build_model_from_pickle(self, exclusive_list):
+            assert len(exclusive_list) == 3*2, "there seems to be a dimension problem with the pickle list"
+            self.one_one = Convolve(self.current_list, shape = [self.data_depth, self.data_depth, 1, 1], name = self.name +
+                               "_Inception")
+            self.one_one.build(from_file = True, weights = exclusive_list[0:2])
+
+            self.three_three = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 3, 3], name=self.name +
+                                                                                                       "_Inception")
+            self.three_three.build(from_file=True, weights=exclusive_list[2:4])
+
+            self.five_five = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 5, 5], name=self.name +
+                                                                                                           "_Inception")
+            self.five_five.build(from_file=True, weights=exclusive_list[4:6])
+
+
+        def build(self):
+            self.one_one = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 1, 1], name=self.name +
+                                                                                                       "_Inception")
+            self.one_one.build()
+
+            self.three_three = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 3, 3], name=self.name +
+                                                                                                           "_Inception")
+            self.three_three.build()
+
+            self.five_five = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 5, 5], name=self.name +
+                                                                                                         "_Inception")
+            self.five_five.build()
+
+
+        def call(self, input):
+            one_one_out = self.one_one.call(input)
+
+            three_three_out = self.three_three.call(input)
+
+            five_five_out = self.five_five.call(input)
+
+            output = tf.stack(values = [one_one_out, three_three_out, five_five_out], axis = 2)
+
+            print(tf.shape(output))
+            raise Exception #this is for pre-diagnostics
+
+            return output
 
 
 
