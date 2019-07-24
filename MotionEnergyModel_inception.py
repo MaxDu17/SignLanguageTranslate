@@ -29,7 +29,7 @@ class Model():
 
         self.cnn_3 = Convolve(big_list, [3, 3, 12, 12], "Layer_3_CNN")
 
-        self.flat = Flatten([-1, 13*13*12], "Fully_Connected")
+        self.flat = Flatten([-1, 13*13*12], "Flatten")
         self.fc_1 = FC(big_list, [13*13*12, output_size], "Layer_1_FC")
         self.softmax = Softmax()
 
@@ -37,7 +37,7 @@ class Model():
         big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
         self.cnn_init.build(from_file = True, weights = big_list[0:2])
-        self.inception.build_model_from_pickle(exclusive_list = big_list[2:8]) #there are 12 w and b
+        self.inception.build_model_from_pickle(exclusive_list = big_list[2:8]) #there are 6 w and b
 
         self.cnn_3.build(from_file=True, weights=big_list[8:10])
         self.fc_1.build(from_file = True, weights = big_list[10:12])
@@ -96,6 +96,7 @@ def Big_Train():
     print("Making model")
     model = Model()
     model.build_model()
+    print(len(big_list))
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
     for epoch in range(1001):
