@@ -23,30 +23,29 @@ version = 2
 class Model():
     def __init__(self):
         self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")
-        self.pool_1 = Pool()
+        self.pool = Pool()
 
         self.inception = Inceptionv1Chunk_naive(big_list, "Layer_2", 4)
-        raise Exception
-        self.cnn_8 = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN")
-        self.pool_2 = Pool()
 
-        self.flat = Flatten([-1, 25*25*8], "Fully_Connected")
-        self.fc_1 = FC(big_list, [25*25*8, output_size], "Layer_1_FC")
+        self.cnn_3 = Convolve(big_list, [3, 3, 12, 12], "Layer_3_CNN")
+
+        self.flat = Flatten([-1, 25*25*12], "Fully_Connected")
+        self.fc_1 = FC(big_list, [25*25*12, output_size], "Layer_1_FC")
         self.softmax = Softmax()
 
     def build_model_from_pickle(self, file_dir):
         big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
         self.cnn_init.build(from_file = True, weights = big_list[0:2])
-        self.resNetChunk.build_model_from_pickle(exclusive_list = big_list[2:6*2+2]) #there are 12 w and b
+        self.inception.build_model_from_pickle(exclusive_list = big_list[2:8]) #there are 12 w and b
 
-        self.cnn_8.build(from_file=True, weights=big_list[14:16])
-        self.fc_1.build(from_file = True, weights = big_list[16:18])
+        self.cnn_3.build(from_file=True, weights=big_list[8:10])
+        self.fc_1.build(from_file = True, weights = big_list[10:12])
 
     def build_model(self):
         self.cnn_init.build()
-        self.resNetChunk.build()
-        self.cnn_8.build()
+        self.inception.build()
+        self.cnn_3.build()
         self.fc_1.build()
 
     @tf.function
@@ -54,8 +53,8 @@ class Model():
         x = self.cnn_init.call(input) #layer 1
         l2loss = self.cnn_init.l2loss()
 
-        x = self.resNetChunk.call(x) #this should roll it all out
-        l2loss += self.resNetChunk.l2loss()
+        x = self.inception.call(x) #this should roll it all out
+        l2loss += self.inception.l2loss()
 
         x = self.pool_1.call(x)
 

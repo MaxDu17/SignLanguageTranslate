@@ -214,6 +214,13 @@ class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have 
 
         return output
 
+    def l2loss(self):
+        l2 = self.one_one.l2loss()
+        l2 += self.three_three.l2loss()
+        l2 += self.five_five.l2loss()
+
+        return l2
+
 
 
 
