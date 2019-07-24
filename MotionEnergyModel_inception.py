@@ -96,7 +96,7 @@ def Big_Train():
     print("Making model")
     model = Model()
     model.build_model()
-    print(len(big_list))
+
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
     for epoch in range(1001):

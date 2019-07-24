@@ -159,8 +159,9 @@ class ResNetChunk(): #this is a "super" model class, and it builds a resnet chun
 
     def l2loss(self): #wrapper function
         l2loss = 0
-        for layer in self.layer_list:
-            l2loss += layer.l2loss()
+        with tf.name_scope("ResNetL2Loss"):
+            for layer in self.layer_list:
+                l2loss += layer.l2loss()
 
         return l2loss
     
@@ -174,50 +175,52 @@ class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have 
     def build_model_from_pickle(self, exclusive_list):
         assert len(exclusive_list) == 3*2, "there seems to be a dimension problem with the pickle list"
         self.one_one = Convolve(self.current_list, shape = [1, 1, self.data_depth, self.data_depth], name = self.name +
-                           "_Inception")
+                           "_Inception_one")
         self.one_one.build(from_file = True, weights = exclusive_list[0:2])
 
         self.three_three = Convolve(self.current_list, shape=[3, 3, self.data_depth, self.data_depth], name=self.name +
-                                                                                                   "_Inception")
+                                                                                                   "_Inception_three")
         self.three_three.build(from_file=True, weights=exclusive_list[2:4])
 
         self.five_five = Convolve(self.current_list, shape=[5, 5, self.data_depth, self.data_depth], name=self.name +
-                                                                                                       "_Inception")
+                                                                                                       "_Inception_five")
         self.five_five.build(from_file=True, weights=exclusive_list[4:6])
 
 
     def build(self):
         self.one_one = Convolve(self.current_list, shape=[1, 1, self.data_depth, self.data_depth], name=self.name +
-                                                                                                   "_Inception")
+                                                                                                   "_Inception_one")
         self.one_one.build()
 
         self.three_three = Convolve(self.current_list, shape=[3, 3, self.data_depth, self.data_depth], name=self.name +
-                                                                                                       "_Inception")
+                                                                                                       "_Inception_three")
         self.three_three.build()
 
         self.five_five = Convolve(self.current_list, shape=[5, 5, self.data_depth, self.data_depth], name=self.name +
-                                                                                                     "_Inception")
+                                                                                                     "_Inception_five")
         self.five_five.build()
 
 
     def call(self, input):
-        one_one_out = self.one_one.call(input)
+        with tf.name_scope("Inception_net_prop"):
+            one_one_out = self.one_one.call(input)
 
-        three_three_out = self.three_three.call(input)
+            three_three_out = self.three_three.call(input)
 
-        five_five_out = self.five_five.call(input)
+            five_five_out = self.five_five.call(input)
 
-        output = tf.concat(values = [one_one_out, three_three_out, five_five_out], axis = 3)
+            output = tf.concat(values = [one_one_out, three_three_out, five_five_out], axis = 3)
 
 
         return output
 
     def l2loss(self):
-        l2 = self.one_one.l2loss()
-        l2 += self.three_three.l2loss()
-        l2 += self.five_five.l2loss()
+        with tf.name_scope("Inception_L2"):
+            l2 = self.one_one.l2loss()
+            l2 += self.three_three.l2loss()
+            l2 += self.five_five.l2loss()
 
-        return l2
+            return l2
 
 
 
