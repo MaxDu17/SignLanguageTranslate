@@ -18,7 +18,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.01
 
 big_list = list()
-
+DATA_TYPE = "History"
 
 class Model():
     def __init__(self):
@@ -76,7 +76,7 @@ def accuracy(pred, labels):
 
 def Big_Train():
     try:
-        os.mkdir("Graphs_and_Results/basic")
+        os.mkdir("Graphs_and_Results/basic/" + DATA_TYPE + "/"+ DATA_TYPE + "/")
     except:
         pass
 
@@ -84,14 +84,14 @@ def Big_Train():
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [DATA_TYPE])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = LEARNING_RATE_INIT)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/basic/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/basic/" + DATA_TYPE + "/")
     print("starting training")
 
     print("Making model")
@@ -100,13 +100,13 @@ def Big_Train():
     tf.summary.trace_on(graph=True, profiler=True)
 
 
-    train_logger = csv.writer(open("Graphs_and_Results/basic/xentropyloss.csv", "w"),
+    train_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/xentropyloss.csv", "w"),
                               lineterminator="\n")
-    acc_logger = csv.writer(open("Graphs_and_Results/basic/accuracy.csv", "w"),
+    acc_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/accuracy.csv", "w"),
                               lineterminator="\n")
-    l2_logger = csv.writer(open("Graphs_and_Results/basic/l2.csv", "w"),
+    l2_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/l2.csv", "w"),
                               lineterminator="\n")
-    valid_logger = csv.writer(open("Graphs_and_Results/basic/valid.csv", "w"),
+    valid_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/valid.csv", "w"),
                               lineterminator="\n")
 
     for epoch in range(1001):
@@ -124,7 +124,7 @@ def Big_Train():
 
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
-                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/basic")
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/basic/" + DATA_TYPE + "/")
 
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
@@ -149,10 +149,10 @@ def Big_Train():
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
                 try:
-                    os.remove("Graphs_and_Results/basic/SAVED_WEIGHTS.pkl")
+                    os.remove("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS.pkl")
                 except:
                     print("the saved weights were not removed, because they were not there!")
-                dbfile = open("Graphs_and_Results/basic/SAVED_WEIGHTS.pkl", "ab")
+                dbfile = open("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
@@ -184,9 +184,9 @@ def Test_live(model, datafeeder):
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/basic/SAVED_WEIGHTS")
+    model.build_model_from_pickle("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [DATA_TYPE])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
