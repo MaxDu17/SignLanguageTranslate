@@ -24,12 +24,12 @@ version = "History_Middle_Resnet"
 class Model():
     def __init__(self):
         self.cnn_1_m = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN_Middle")
-        self.resNetChunk_m = ResNetChunk(deep = 6, weight_shape = [3, 3, 4, 4], current_list = big_list, name = "Middle")
+        self.resNetChunk_m = ResNetChunk(deep = 4, weight_shape = [3, 3, 4, 4], current_list = big_list, name = "Middle")
         self.pool = Pool()
         self.cnn_8_m = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN_Middle")
 
         self.cnn_1_h = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN_History")
-        self.resNetChunk_h = ResNetChunk(deep=6, weight_shape=[3, 3, 4, 4], current_list=big_list, name = "History")
+        self.resNetChunk_h = ResNetChunk(deep=4, weight_shape=[3, 3, 4, 4], current_list=big_list, name = "History")
         self.pool = Pool()
         self.cnn_8_h = Convolve(big_list, [3, 3, 4, 8], "Layer_8_CNN_History")
 
@@ -42,14 +42,14 @@ class Model():
         big_list = unpickle(file_dir)
         #weights and biases are arranged alternating and in order of build
         self.cnn_1_m.build(from_file = True, weights = big_list[0:2])
-        self.resNetChunk_m.build_model_from_pickle(exclusive_list = big_list[2:14]) #there are 12 w and b
-        self.cnn_8_m.build(from_file=True, weights=big_list[14:16])
+        self.resNetChunk_m.build_model_from_pickle(exclusive_list = big_list[2:10]) #there are 8 w and b
+        self.cnn_8_m.build(from_file=True, weights=big_list[10:12])
 
-        self.cnn_1_h.build(from_file=True, weights=big_list[16:18])
-        self.resNetChunk_h.build_model_from_pickle(exclusive_list=big_list[18:30])  # there are 12 w and b
-        self.cnn_8_h.build(from_file=True, weights=big_list[30:32])
+        self.cnn_1_h.build(from_file=True, weights=big_list[12:14])
+        self.resNetChunk_h.build_model_from_pickle(exclusive_list=big_list[14:22])  # there are 8 w and b
+        self.cnn_8_h.build(from_file=True, weights=big_list[22:24])
 
-        self.fc_1.build(from_file = True, weights = big_list[32:34])
+        self.fc_1.build(from_file = True, weights = big_list[24:26])
 
     def build_model(self):
         self.cnn_1_m.build()
@@ -84,7 +84,7 @@ class Model():
             l2loss += self.cnn_8_h.l2loss()
             output_history = self.pool.call(x)
 
-        with tf.name_scope("Combine_and_to_output")
+        with tf.name_scope("Combine_and_to_output"):
             combined = self.combine.call(output_middle, output_history)
             x = self.flat.call(combined)
             x = self.fc_1.call(x) #fully connected layer
