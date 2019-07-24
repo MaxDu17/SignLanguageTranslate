@@ -209,8 +209,6 @@ class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have 
 
         output = tf.concat(values = [one_one_out, three_three_out, five_five_out], axis = 3)
 
-        print(np.shape(output))
-        raise Exception #this is for pre-diagnostics
 
         return output
 
