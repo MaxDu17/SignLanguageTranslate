@@ -150,6 +150,7 @@ class ResNetChunk(): #this is a "super" model class, and it builds a resnet chun
     def call(self, input): #disregard l2 norm for now, but add later
         current_input = input
         for i in range(0, self.depth, 2):
+            with tf.name_scope(name = "Resnet_layer_group_" + str(i))
             residual = current_input
             output_1 = self.layer_list[i].call(input)
             output_2 = self.layer_list[i+1].call(output_1)

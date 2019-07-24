@@ -64,30 +64,31 @@ class Model():
 
     @tf.function
     def call(self, input):
-        x = self.cnn_1_m.call(input[0]) #layer 1
-        l2loss = self.cnn_1_m.l2loss()
-        x = self.resNetChunk_m.call(x) #this should roll it all out
-        l2loss += self.resNetChunk_m.l2loss()
-        x = self.pool.call(x)
-        x = self.cnn_8_m.call(x) #layer 4
-        l2loss += self.cnn_8_m.l2loss()
-        output_middle = self.pool.call(x)
+        with tf.name_scope("Middle_data_level"):
+            x = self.cnn_1_m.call(input[0]) #layer 1
+            l2loss = self.cnn_1_m.l2loss()
+            x = self.resNetChunk_m.call(x) #this should roll it all out
+            l2loss += self.resNetChunk_m.l2loss()
+            x = self.pool.call(x)
+            x = self.cnn_8_m.call(x) #layer 4
+            l2loss += self.cnn_8_m.l2loss()
+            output_middle = self.pool.call(x)
 
-        x = self.cnn_1_h.call(input[1])  # layer 1
-        l2loss += self.cnn_1_h.l2loss()
-        x = self.resNetChunk_h.call(x)  # this should roll it all out
-        l2loss += self.resNetChunk_h.l2loss()
-        x = self.pool.call(x)
-        x = self.cnn_8_h.call(x)  # layer 4
-        l2loss += self.cnn_8_h.l2loss()
-        output_history = self.pool.call(x)
+        with tf.name_scope("History_data_level"):
+            x = self.cnn_1_h.call(input[1])  # layer 1
+            l2loss += self.cnn_1_h.l2loss()
+            x = self.resNetChunk_h.call(x)  # this should roll it all out
+            l2loss += self.resNetChunk_h.l2loss()
+            x = self.pool.call(x)
+            x = self.cnn_8_h.call(x)  # layer 4
+            l2loss += self.cnn_8_h.l2loss()
+            output_history = self.pool.call(x)
 
-        combined = self.combine.call(output_middle, output_history)
-
-        x = self.flat.call(combined)
-
-        x = self.fc_1.call(x) #fully connected layer
-        output = self.softmax.call(x)
+        with tf.name_scope("Combine_and_to_output")
+            combined = self.combine.call(output_middle, output_history)
+            x = self.flat.call(combined)
+            x = self.fc_1.call(x) #fully connected layer
+            output = self.softmax.call(x)
         return output, l2loss #we bypass the l2 error for now
 
 
