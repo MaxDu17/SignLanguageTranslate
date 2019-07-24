@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="" />
+    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_inception.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_inception.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,20 +43,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="102" column="22" lean-forward="true" selection-start-line="102" selection-start-column="22" selection-end-line="102" selection-end-column="22" />
+            <state relative-caret-position="238">
+              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="751">
-              <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
+            <state relative-caret-position="581">
+              <caret line="210" selection-start-line="210" selection-end-line="210" />
             </state>
           </provider>
         </entry>
@@ -152,8 +154,8 @@
         <option value="$PROJECT_DIR$/DualModel.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
         <option value="$PROJECT_DIR$/DualMode_resnetl.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
         <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
       </list>
     </option>
   </component>
@@ -615,17 +617,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
+    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="102" column="22" lean-forward="true" selection-start-line="102" selection-start-column="22" selection-end-line="102" selection-end-column="22" />
+        <state relative-caret-position="581">
+          <caret line="210" selection-start-line="210" selection-end-line="210" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="751">
-          <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
+        <state relative-caret-position="238">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
         </state>
       </provider>
     </entry>

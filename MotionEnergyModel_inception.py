@@ -29,8 +29,8 @@ class Model():
 
         self.cnn_3 = Convolve(big_list, [3, 3, 12, 12], "Layer_3_CNN")
 
-        self.flat = Flatten([-1, 25*25*12], "Fully_Connected")
-        self.fc_1 = FC(big_list, [25*25*12, output_size], "Layer_1_FC")
+        self.flat = Flatten([-1, 13*13*12], "Fully_Connected")
+        self.fc_1 = FC(big_list, [13*13*12, output_size], "Layer_1_FC")
         self.softmax = Softmax()
 
     def build_model_from_pickle(self, file_dir):
