@@ -102,11 +102,11 @@ def Big_Train():
 
     train_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/xentropyloss.csv", "w"),
                               lineterminator="\n")
-    acc_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/accuracy.csv", "w"),
+    acc_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/accuracy.csv", "w"),
                               lineterminator="\n")
-    l2_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/l2.csv", "w"),
+    l2_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/l2.csv", "w"),
                               lineterminator="\n")
-    valid_logger = csv.writer(open("Graphs_and_Results/basic" + DATA_TYPE + "/valid.csv", "w"),
+    valid_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/valid.csv", "w"),
                               lineterminator="\n")
 
     for epoch in range(1001):
