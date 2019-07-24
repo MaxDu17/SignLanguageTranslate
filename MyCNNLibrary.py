@@ -173,29 +173,29 @@ class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have 
 
     def build_model_from_pickle(self, exclusive_list):
         assert len(exclusive_list) == 3*2, "there seems to be a dimension problem with the pickle list"
-        self.one_one = Convolve(self.current_list, shape = [self.data_depth, self.data_depth, 1, 1], name = self.name +
+        self.one_one = Convolve(self.current_list, shape = [1, 1, self.data_depth, self.data_depth], name = self.name +
                            "_Inception")
         self.one_one.build(from_file = True, weights = exclusive_list[0:2])
 
-        self.three_three = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 3, 3], name=self.name +
+        self.three_three = Convolve(self.current_list, shape=[3, 3, self.data_depth, self.data_depth], name=self.name +
                                                                                                    "_Inception")
         self.three_three.build(from_file=True, weights=exclusive_list[2:4])
 
-        self.five_five = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 5, 5], name=self.name +
+        self.five_five = Convolve(self.current_list, shape=[5, 5, self.data_depth, self.data_depth], name=self.name +
                                                                                                        "_Inception")
         self.five_five.build(from_file=True, weights=exclusive_list[4:6])
 
 
     def build(self):
-        self.one_one = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 1, 1], name=self.name +
+        self.one_one = Convolve(self.current_list, shape=[1, 1, self.data_depth, self.data_depth], name=self.name +
                                                                                                    "_Inception")
         self.one_one.build()
 
-        self.three_three = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 3, 3], name=self.name +
+        self.three_three = Convolve(self.current_list, shape=[3, 3, self.data_depth, self.data_depth], name=self.name +
                                                                                                        "_Inception")
         self.three_three.build()
 
-        self.five_five = Convolve(self.current_list, shape=[self.data_depth, self.data_depth, 5, 5], name=self.name +
+        self.five_five = Convolve(self.current_list, shape=[5, 5, self.data_depth, self.data_depth], name=self.name +
                                                                                                      "_Inception")
         self.five_five.build()
 
