@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/MotionEnergyModel_inception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyCNNLibrary.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyCNNLibrary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,7 +39,7 @@
       <file leaf-file-name="DualMode_resnetl.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
+            <state relative-caret-position="-271">
               <caret line="86" column="52" selection-start-line="86" selection-start-column="52" selection-end-line="86" selection-end-column="52" />
             </state>
           </provider>
@@ -52,11 +54,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="768">
-              <caret line="212" column="56" selection-start-line="212" selection-start-column="56" selection-end-line="212" selection-end-column="56" />
+            <state relative-caret-position="581">
+              <caret line="179" column="63" lean-forward="true" selection-start-line="179" selection-start-column="63" selection-end-line="179" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -72,7 +83,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add_bias</find>
       <find>util</find>
       <find>shuffle</find>
       <find>np.float</find>
@@ -102,6 +112,7 @@
       <find>dualresnet</find>
       <find>data = data</find>
       <find>str(version)</find>
+      <find>resnet</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
@@ -112,6 +123,7 @@
       <replace>SELECTION_LIST</replace>
       <replace>dual</replace>
       <replace>version</replace>
+      <replace>inception</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -154,6 +166,7 @@
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
         <option value="$PROJECT_DIR$/DualMode_resnetl.py" />
         <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
       </list>
     </option>
   </component>
@@ -373,13 +386,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Miniconda3/Lib/site-packages/matplotlib/figure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="1151" column="47" selection-start-line="1151" selection-start-column="47" selection-end-line="1151" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../WindPower/Models/gru_c_CSV_FED_FORE.py" />
     <entry file="file://$USER_HOME$/Miniconda3/Lib/site-packages/tensorflow/python/summary/summary.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -598,9 +604,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1768">
+          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
+        <state relative-caret-position="-271">
           <caret line="86" column="52" selection-start-line="86" selection-start-column="52" selection-end-line="86" selection-end-column="52" />
         </state>
       </provider>
@@ -612,20 +628,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataProcess.py">
+    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1768">
-          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="581">
+          <caret line="179" column="63" lean-forward="true" selection-start-line="179" selection-start-column="63" selection-end-line="179" selection-end-column="63" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="768">
-          <caret line="212" column="56" selection-start-line="212" selection-start-column="56" selection-end-line="212" selection-end-column="56" />
+        <state relative-caret-position="357">
+          <caret line="78" column="18" lean-forward="true" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
         </state>
       </provider>
     </entry>
