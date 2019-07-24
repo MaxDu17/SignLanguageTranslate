@@ -64,7 +64,7 @@ class Model():
 
     @tf.function
     def call(self, input):
-        x = self.cnn_1_m.call(input) #layer 1
+        x = self.cnn_1_m.call(input[0]) #layer 1
         l2loss = self.cnn_1_m.l2loss()
         x = self.resNetChunk_m.call(x) #this should roll it all out
         l2loss += self.resNetChunk_m.l2loss()
@@ -73,7 +73,7 @@ class Model():
         l2loss += self.cnn_8_m.l2loss()
         output_middle = self.pool.call(x)
 
-        x = self.cnn_1_h.call(input)  # layer 1
+        x = self.cnn_1_h.call(input[1])  # layer 1
         l2loss += self.cnn_1_h.l2loss()
         x = self.resNetChunk_h.call(x)  # this should roll it all out
         l2loss += self.resNetChunk_h.l2loss()
