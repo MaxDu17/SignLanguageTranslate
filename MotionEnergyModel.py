@@ -164,6 +164,7 @@ def Validation(model, datafeeder):
     print("\n##############VALIDATION##############\n")
 
     data, label = datafeeder.GetValid_dom()
+    data = data[0]
     predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
     valid_accuracy = accuracy(predictions, label)
