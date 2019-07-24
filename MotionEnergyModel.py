@@ -75,6 +75,11 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def Big_Train():
+    try:
+        os.mkdir("Graphs_and_Results/basic")
+    except:
+        pass
+
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
@@ -86,13 +91,23 @@ def Big_Train():
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/basic/")
     print("starting training")
 
     print("Making model")
     model = Model()
     model.build_model()
     tf.summary.trace_on(graph=True, profiler=True)
+
+
+    train_logger = csv.writer(open("Graphs_and_Results/basic/xentropyloss.csv", "w"),
+                              lineterminator="\n")
+    acc_logger = csv.writer(open("Graphs_and_Results/basic/accuracy.csv", "w"),
+                              lineterminator="\n")
+    l2_logger = csv.writer(open("Graphs_and_Results/basic/l2.csv", "w"),
+                              lineterminator="\n")
+    valid_logger = csv.writer(open("Graphs_and_Results/basic/valid.csv", "w"),
+                              lineterminator="\n")
 
     for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
@@ -102,6 +117,11 @@ def Big_Train():
 
             pred_loss = loss_function(label, predictions) #this is the loss function
             pred_loss = pred_loss + L2WEIGHT * l2_loss #this implements lasso regularization
+
+            train_logger.writerow([np.asarray(pred_loss)])
+            acc_logger.writerow([accuracy(predictions, label)])
+            l2_logger.writerow([np.asarray(l2_loss)])
+
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results")
@@ -120,16 +140,19 @@ def Big_Train():
                         tf.summary.histogram(name = "Variable_" + name, data = var, step = epoch)
                     tf.summary.flush()
 
-            if epoch % 50 == 0 and epoch > 1:
-                Validation(model, datafeeder)
+            if epoch % 50 == 0:
+                valid_accuracy = Validation(model, datafeeder)
+                with summary_writer.as_default():
+                    tf.summary.scalar(name = "Validation_accuracy", data = valid_accuracy, step = epoch)
+                valid_logger.writerow([valid_accuracy])
 
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
                 try:
-                    os.remove("Graphs_and_Results/SAVED_WEIGHTS.pkl")
+                    os.remove("Graphs_and_Results/basic/SAVED_WEIGHTS.pkl")
                 except:
                     print("the saved weights were not removed, because they were not there!")
-                dbfile = open("Graphs_and_Results/SAVED_WEIGHTS.pkl", "ab")
+                dbfile = open("Graphs_and_Results/basic/SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
@@ -141,10 +164,11 @@ def Validation(model, datafeeder):
     print("\n##############VALIDATION##############\n")
 
     data, label = datafeeder.GetValid_dom()
-    data = data[0]  # this is because we now have multiple images in the pickle
     predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
-    print("This is the validation set accuracy: {}".format(accuracy(predictions, label)))
+    valid_accuracy = accuracy(predictions, label)
+    print("This is the validation set accuracy: {}".format(valid_accuracy))
+    return valid_accuracy
 
 def Test_live(model, datafeeder):
     print("\n##############TESTING##############\n")
@@ -159,7 +183,7 @@ def Test_live(model, datafeeder):
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/SAVED_WEIGHTS")
+    model.build_model_from_pickle("Graphs_and_Results/basic/SAVED_WEIGHTS")
 
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, ["Motion"])
     datafeeder.load_train_to_RAM()

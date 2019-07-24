@@ -148,6 +148,7 @@ def Big_Train():
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/dual/" + version + "/")
+
             train_logger.writerow([np.asarray(pred_loss)])
             acc_logger.writerow([accuracy(predictions, label)])
             l2_logger.writerow([np.asarray(l2_loss)])

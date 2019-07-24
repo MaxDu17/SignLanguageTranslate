@@ -79,6 +79,11 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def Big_Train():
+    try:
+        os.mkdir("Graphs_and_Results/inception/" + IMAGE + str(version))
+    except:
+        pass
+
     status = tf.test.is_gpu_available()
     print("Is there a GPU available: {}".format(status))
 
@@ -97,6 +102,17 @@ def Big_Train():
     print("Making model")
     model = Model()
     model.build_model()
+
+    train_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/xentropyloss.csv", "w"),
+                              lineterminator="\n")
+    acc_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/accuracy.csv", "w"),
+                              lineterminator="\n")
+    l2_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/l2.csv", "w"),
+                              lineterminator="\n")
+    valid_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/valid.csv", "w"),
+                              lineterminator="\n")
+
+
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
     for epoch in range(501):
@@ -107,6 +123,11 @@ def Big_Train():
 
             pred_loss_ = loss_function(label, predictions) #this is the loss function
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
+
+            train_logger.writerow([np.asarray(pred_loss)])
+            acc_logger.writerow([accuracy(predictions, label)])
+            l2_logger.writerow([np.asarray(l2_loss)])
+
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/resnet/" + IMAGE + str(version) + "/")
@@ -132,6 +153,7 @@ def Big_Train():
                 valid_accuracy = Validation(model, datafeeder)
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "Validation_accuracy", data = valid_accuracy, step = epoch)
+                valid_logger.writerow([valid_accuracy])
 
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")

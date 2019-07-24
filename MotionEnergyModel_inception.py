@@ -78,6 +78,10 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def Big_Train():
+    try:
+        os.mkdir("Graphs_and_Results/inception/" + IMAGE + str(version) + "/")
+    except:
+        pass
     status = tf.test.is_gpu_available()
     print("Is there a GPU available: {}".format(status))
 
@@ -97,7 +101,8 @@ def Big_Train():
     model = Model()
     model.build_model()
 
-    train_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/xentropyloss.csv", "w"), lineterminator="\n")
+    train_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/xentropyloss.csv", "w"),
+                              lineterminator="\n")
     acc_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/accuracy.csv", "w"),
                               lineterminator="\n")
     l2_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/l2.csv", "w"),
