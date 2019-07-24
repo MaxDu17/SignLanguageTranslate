@@ -98,7 +98,7 @@ def Big_Train():
     model.build_model()
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
-    for epoch in range(501):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
@@ -110,13 +110,6 @@ def Big_Train():
                 with summary_writer.as_default():
                     tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/inception/" + IMAGE + str(version) + "/")
 
-            print("***********************")
-            print("Finished epoch", epoch)
-            print("Accuracy: {}".format(accuracy(predictions, label)))
-            print("Loss: {}".format(np.asarray(pred_loss)))
-            print("L2 Loss: {}".format(np.asarray(l2_loss)))
-            print("***********************")
-
             if epoch % 20 == 0:
                 with summary_writer.as_default():
                     tf.summary.scalar(name = "XEntropyLoss", data = pred_loss_, step = epoch)
@@ -126,6 +119,12 @@ def Big_Train():
                         name = str(var.name)
                         tf.summary.histogram(name = name, data = var, step = epoch)
                     tf.summary.flush()
+                    print("***********************")
+                    print("Finished epoch", epoch)
+                    print("Accuracy: {}".format(accuracy(predictions, label)))
+                    print("Loss: {}".format(np.asarray(pred_loss)))
+                    print("L2 Loss: {}".format(np.asarray(l2_loss)))
+                    print("***********************")
 
             if epoch % 50 == 0:
                 valid_accuracy = Validation(model, datafeeder)
