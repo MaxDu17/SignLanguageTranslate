@@ -19,7 +19,7 @@ L2WEIGHT = 0.05
 
 big_list = list()
 IMAGE = "Motion"
-version = 2
+version = 1
 class Model():
     def __init__(self):
         self.cnn_init = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN")

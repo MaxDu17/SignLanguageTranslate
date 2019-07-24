@@ -207,9 +207,9 @@ class Inceptionv1Chunk_naive(): #for programming simplicity, this does NOT have 
 
         five_five_out = self.five_five.call(input)
 
-        output = tf.stack(values = [one_one_out, three_three_out, five_five_out], axis = 2)
+        output = tf.stack(values = [one_one_out, three_three_out, five_five_out])
 
-        print(tf.shape(output))
+        print(np.shape(output))
         raise Exception #this is for pre-diagnostics
 
         return output
