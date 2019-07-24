@@ -52,19 +52,17 @@ class Model():
     def call(self, input):
         x = self.cnn_init.call(input) #layer 1
         l2loss = self.cnn_init.l2loss()
+        x = self.pool.call(x)
 
         x = self.inception.call(x) #this should roll it all out
         l2loss += self.inception.l2loss()
+        x = self.pool.call(x)
 
-        x = self.pool_1.call(x)
-
-        x = self.cnn_8.call(x) #layer 4
-        l2loss += self.cnn_8.l2loss()
-
-        x = self.pool_2.call(x)
+        x = self.cnn_3.call(x) #layer 4
+        l2loss += self.cnn_3.l2loss()
+        x = self.pool.call(x)
 
         x = self.flat.call(x)
-
         x = self.fc_1.call(x) #fully connected layer
         output = self.softmax.call(x)
         return output, l2loss #we bypass the l2 error for now
