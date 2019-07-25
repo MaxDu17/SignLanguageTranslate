@@ -55,36 +55,17 @@ def doitall(basepath, savepath):
         #here is some programming debauchery. Also, I got rid of flipping and made translation better
         print("Image {} needs {} augmentations, doing that now!".format(i, aug_num))
         documentation.writerow([aug_num])
-        if aug_num == 1:
-            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-
-        if aug_num == 2:
-            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-            matrix_LR = tool.flip_lr(matrix)
-            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
-
-        if aug_num == 3:
-            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-            matrix_LR = tool.flip_lr(matrix)
-            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
-            matrix_UD = tool.flip_ud(matrix)
-            tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
-
-        else:
-            left = aug_num - 3
-            tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
-            matrix_LR = tool.flip_lr(matrix)
-            tool.save_image(matrix=matrix_LR, path=savepath + str(i) + "_1.jpg", type="L")
-            matrix_UD = tool.flip_ud(matrix)
-            tool.save_image(matrix=matrix_UD, path=savepath + str(i) + "_2.jpg", type="L")
 
 
-            for j in range(left):
+        left = aug_num - 1
+        tool.save_image(matrix=matrix, path=savepath + str(i) + "_0.jpg", type="L")
 
-                matrix_ = tool.trans_hor(matrix, random.randint(-5, 5), "L")
-                matrix_ = tool.trans_vert(matrix_, random.randint(-5, 5), "L")
-                matrix_ = tool.add_noise_L(matrix_)
-                tool.save_image(matrix=matrix_, path=savepath +  str(i) + "_" + str(j+3) + ".jpg", type="L")
+        for j in range(left):
+
+            matrix_ = tool.trans_hor(matrix, random.randint(-5, 5), "L")
+            matrix_ = tool.trans_vert(matrix_, random.randint(-5, 5), "L")
+            matrix_ = tool.add_noise_L(matrix_)
+            tool.save_image(matrix=matrix_, path=savepath +  str(i) + "_" + str(j+3) + ".jpg", type="L")
 
 
 def main():
