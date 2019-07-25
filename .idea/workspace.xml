@@ -2,7 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/SAVED_WEIGHTS.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/accuracy.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/events.out.tfevents.1564066117.set-Precision-5820-Tower.67967.5.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/events.out.tfevents.1564066118.set-Precision-5820-Tower.profile-empty" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/l2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/plugins/profile/2019-07-25_10-48-38/local.trace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/valid.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/Motion/xentropyloss.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/SAVED_WEIGHTS.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/accuracy.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/events.out.tfevents.1563999880.set-Precision-5820-Tower.58836.5.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/l2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/valid.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy_old/xentropyloss.csv" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +31,8 @@
       <file leaf-file-name="DataProcess.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="564">
-              <caret line="92" column="69" selection-start-line="92" selection-start-column="68" selection-end-line="92" selection-end-column="69" />
+            <state relative-caret-position="20">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -46,8 +61,8 @@
       <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="208" column="20" lean-forward="true" selection-start-line="208" selection-start-column="20" selection-end-line="208" selection-end-column="20" />
+            <state relative-caret-position="391">
+              <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -179,8 +194,8 @@
         <option value="$PROJECT_DIR$/DualModel.py" />
         <option value="$PROJECT_DIR$/Augment_simple.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
-        <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
+        <option value="$PROJECT_DIR$/DataProcess.py" />
       </list>
     </option>
   </component>
@@ -669,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="92" column="69" selection-start-line="92" selection-start-column="68" selection-end-line="92" selection-end-column="69" />
+        <state relative-caret-position="20">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -679,8 +694,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="208" column="20" lean-forward="true" selection-start-line="208" selection-start-column="20" selection-end-line="208" selection-end-column="20" />
+        <state relative-caret-position="391">
+          <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
         </state>
       </provider>
     </entry>
