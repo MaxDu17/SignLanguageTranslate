@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DataProcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/SAVED_WEIGHTS.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/accuracy.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/events.out.tfevents.1563999880.set-Precision-5820-Tower.58836.5.v2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/l2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/valid.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/basic/energy/xentropyloss.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

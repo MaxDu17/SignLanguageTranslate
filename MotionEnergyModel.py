@@ -18,7 +18,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.01
 
 big_list = list()
-DATA_TYPE = "Motion"
+DATA_TYPE = "Energy"
 
 class Model():
     def __init__(self):
