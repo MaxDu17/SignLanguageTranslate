@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_inception.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_inception.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,24 +43,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-425">
-              <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MotionEnergyModel_resnet_deep.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="28" column="28" lean-forward="true" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Augment.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Augment.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1207">
-              <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
+            <state relative-caret-position="255">
+              <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -183,7 +165,6 @@
         <option value="$PROJECT_DIR$/csv_to_mat.py" />
         <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
         <option value="$PROJECT_DIR$/DualMode_resnetl.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
         <option value="$PROJECT_DIR$/DualModel.py" />
         <option value="$PROJECT_DIR$/Augment_simple.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
@@ -191,6 +172,7 @@
         <option value="$PROJECT_DIR$/DataProcess.py" />
         <option value="$PROJECT_DIR$/Augment.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
       </list>
     </option>
   </component>
@@ -618,13 +600,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DualModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="836">
@@ -666,13 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Augment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -680,17 +648,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-425">
-          <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="28" column="28" lean-forward="true" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-425">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
         </state>
       </provider>
     </entry>
