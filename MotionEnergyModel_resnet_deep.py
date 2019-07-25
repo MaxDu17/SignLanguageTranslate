@@ -103,13 +103,13 @@ def Big_Train():
     model = Model()
     model.build_model()
 
-    train_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/xentropyloss.csv", "w"),
+    train_logger = csv.writer(open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/xentropyloss.csv", "w"),
                               lineterminator="\n")
-    acc_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/accuracy.csv", "w"),
+    acc_logger = csv.writer(open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/accuracy.csv", "w"),
                               lineterminator="\n")
-    l2_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/l2.csv", "w"),
+    l2_logger = csv.writer(open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/l2.csv", "w"),
                               lineterminator="\n")
-    valid_logger = csv.writer(open("Graphs_and_Results/inception/" + IMAGE + str(version) + "/valid.csv", "w"),
+    valid_logger = csv.writer(open("Graphs_and_Results/resnet/" + IMAGE + str(version) + "/valid.csv", "w"),
                               lineterminator="\n")
 
 
