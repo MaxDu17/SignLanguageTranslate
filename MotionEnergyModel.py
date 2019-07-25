@@ -179,6 +179,11 @@ def Test_live(model, datafeeder):
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions)
+    image_list = list()
+    '''
+    for i in range(len(data)):
+        if np.argmax(label) != np.argmax(predictions):
+    '''
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 def Test():

@@ -33,15 +33,15 @@ non_reader = list(csv.reader(open("../LINKED/Storage/Data/BIG/non_labels.csv")))
 
 big_list = list()
 basepath = "../LINKED/Storage/Data/BIG/"
-path_list = ["augmented_overlap/", "augmented_edge_history/", "augmented_history/", "augmented_middle/",
-             "augmented_motion/"]
+path_list = ["basic_augmented_overlap/", "basic_augmented_edge_history/", "basic_augmented_history/", "basic_augmented_middle/",
+             "basic_augmented_motion/"]
 print(len(dom_reader))
 input("Press enter to start dumping to pickle")
 for i in range(len(dom_reader)):
     print(i)
     dom = [int(k) for k in dom_reader[i]]
     non = [int(k) for k in non_reader[i]]
-    for j in range(500):
+    for j in range(15):
         try:
             path_over = basepath + path_list[0] + str(i) + "_" + str(j) + ".jpg"
             path_ehist = basepath + path_list[1] + str(i) + "_" + str(j) + ".jpg"
@@ -62,5 +62,5 @@ for i in range(len(dom_reader)):
             break
 
 random.shuffle(big_list)
-dbfile = open("../LINKED/Storage/Data/BIG/SignLanguageData.pkl", "ab") #extension is important
+dbfile = open("../LINKED/Storage/Data/BIG/BASIC_SignLanguageData.pkl", "ab") #extension is important
 pickle.dump(big_list, dbfile)
