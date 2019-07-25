@@ -115,7 +115,7 @@ def Big_Train():
 
     tf.summary.trace_on(graph=True, profiler=False) #set profiler to true if you want compute history
 
-    for epoch in range(501):
+    for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
         data = data[0]
         with tf.GradientTape() as tape:
