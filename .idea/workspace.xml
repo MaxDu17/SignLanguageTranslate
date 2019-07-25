@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="" />
+    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +17,7 @@
         <entry file="file://$PROJECT_DIR$/DataProcess.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="20">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -36,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="23" column="14" lean-forward="true" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+              <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -44,8 +46,8 @@
       <file leaf-file-name="MotionEnergyModel_resnet_deep.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+            <state relative-caret-position="323">
+              <caret line="25" column="126" selection-start-line="25" selection-start-column="126" selection-end-line="25" selection-end-column="126" />
             </state>
           </provider>
         </entry>
@@ -79,7 +81,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>numpy</find>
       <find>asarray</find>
       <find>motion</find>
       <find>unpickle</find>
@@ -109,6 +110,7 @@
       <find>&quot;Motion&quot;</find>
       <find>&quot;Graphs_and_Results/basic/&quot;</find>
       <find>try</find>
+      <find>inception</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
@@ -126,6 +128,7 @@
       <replace>DATA_TYPE</replace>
       <replace>&quot;Graphs_and_Results/basic/&quot; + DATA_TYPE + &quot;/&quot;</replace>
       <replace>&quot;Graphs_and_Results/basic/</replace>
+      <replace>resnet</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -163,13 +166,13 @@
         <option value="$PROJECT_DIR$/csv_to_mat.py" />
         <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
         <option value="$PROJECT_DIR$/DualMode_resnetl.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
         <option value="$PROJECT_DIR$/DualModel.py" />
         <option value="$PROJECT_DIR$/Augment_simple.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
         <option value="$PROJECT_DIR$/DataProcess.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
       </list>
     </option>
   </component>
@@ -645,7 +648,7 @@
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -662,14 +665,14 @@
     <entry file="file://$PROJECT_DIR$/DualMode_resnetl.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="23" column="14" lean-forward="true" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
+        <state relative-caret-position="323">
+          <caret line="25" column="126" selection-start-line="25" selection-start-column="126" selection-end-line="25" selection-end-column="126" />
         </state>
       </provider>
     </entry>
