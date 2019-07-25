@@ -41,7 +41,7 @@ for i in range(len(dom_reader)):
     print(i)
     dom = [int(k) for k in dom_reader[i]]
     non = [int(k) for k in non_reader[i]]
-    for j in range(200):
+    for j in range(500):
         try:
             path_over = basepath + path_list[0] + str(i) + "_" + str(j) + ".jpg"
             path_ehist = basepath + path_list[1] + str(i) + "_" + str(j) + ".jpg"
