@@ -141,7 +141,6 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(150)
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
-            input("enter")
             pred_loss_ = loss_function(label, predictions) #this is the loss function
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
 
@@ -195,7 +194,6 @@ def Validation(model, datafeeder):
     print("\n##############VALIDATION##############\n")
 
     data, label = datafeeder.GetValid_dom()
-    data = data[0]
     predictions, l2loss = model.call(data)
     assert len(label) == len(predictions)
     valid_accuracy = accuracy(predictions, label)
