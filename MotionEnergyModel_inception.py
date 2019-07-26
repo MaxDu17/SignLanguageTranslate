@@ -18,7 +18,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.05
 
 big_list = list()
-IMAGE = "History"
+IMAGE = "Middle"
 version = ""
 class Model():
     def __init__(self):
