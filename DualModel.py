@@ -81,13 +81,14 @@ class Model():
         l2 += self.cnn_3_h.l2loss()
         out_history = self.pool.call(x)
 
-        print(np.shape(out_history))
-        raise Exception()
+
         combined = self.combine.call(out_energy, out_history)
 
         x = self.flat.call(combined)
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
+        print(np.shape(output))
+        raise Exception()
         return output, l2
 
 def accuracy(pred, labels):
