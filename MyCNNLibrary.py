@@ -43,6 +43,8 @@ class Convolve():
 
 
     def call(self, input):
+        print(np.shape(input))
+        raise Exception
         with tf.name_scope("Convolve"):
             conv = tf.nn.relu(tf.nn.conv2d(input, self.w_conv, strides=[1, 1, 1, 1], padding='SAME', name="conv"))
             conv = conv + self.b_conv

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DualModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyCNNLibrary.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyCNNLibrary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,10 +34,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DualModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="918">
               <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
             </state>
           </provider>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4267">
-              <caret line="254" column="91" selection-start-line="254" selection-start-column="91" selection-end-line="254" selection-end-column="91" />
+            <state relative-caret-position="717">
+              <caret line="46" column="23" selection-start-line="46" selection-start-column="23" selection-end-line="46" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -172,7 +172,6 @@
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet.py" />
         <option value="$PROJECT_DIR$/DatasetMaker_lstm-based.py" />
         <option value="$PROJECT_DIR$/csv_to_mat.py" />
-        <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
         <option value="$PROJECT_DIR$/DualMode_resnetl.py" />
         <option value="$PROJECT_DIR$/Augment_simple.py" />
         <option value="$PROJECT_DIR$/DatasetMaker.py" />
@@ -182,6 +181,7 @@
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
         <option value="$PROJECT_DIR$/DualModel.py" />
+        <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
       </list>
     </option>
   </component>
@@ -602,13 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4267">
-          <caret line="254" column="91" selection-start-line="254" selection-start-column="91" selection-end-line="254" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Augment_simple.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-99">
@@ -677,8 +670,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DualModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="918">
           <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="717">
+          <caret line="46" column="23" selection-start-line="46" selection-start-column="23" selection-end-line="46" selection-end-column="23" />
         </state>
       </provider>
     </entry>
