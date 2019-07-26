@@ -295,7 +295,7 @@ def main():
         Test()
 
 
-if __name__ == '__main__':
+if __name__ == '__main__': #this is the main
     main()
 
 

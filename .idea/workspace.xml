@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DualModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualModel.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DualModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="632">
-              <caret line="294" column="14" lean-forward="true" selection-start-line="294" selection-start-column="14" selection-end-line="294" selection-end-column="14" />
+            <state relative-caret-position="683">
+              <caret line="297" column="44" selection-start-line="297" selection-start-column="44" selection-end-line="297" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -669,8 +668,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DualModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="632">
-          <caret line="294" column="14" lean-forward="true" selection-start-line="294" selection-start-column="14" selection-end-line="294" selection-end-column="14" />
+        <state relative-caret-position="683">
+          <caret line="297" column="44" selection-start-line="297" selection-start-column="44" selection-end-line="297" selection-end-column="44" />
         </state>
       </provider>
     </entry>
