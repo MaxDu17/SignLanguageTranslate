@@ -141,7 +141,7 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(150)
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
-            input()
+            input("enter")
             pred_loss_ = loss_function(label, predictions) #this is the loss function
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
 
