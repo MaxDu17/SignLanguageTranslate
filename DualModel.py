@@ -103,7 +103,7 @@ def record_error(data, labels, pred):
     print(np.shape(data))
     print(np.shape(labels))
     print(np.shape(pred))
-    assert len(data) == len(pred), "your data and prediction don't match"
+    assert len(data[0]) == len(pred), "your data and prediction don't match"
     assert len(pred) == len(labels), "your prediction and labels don't match"
 
     wrong = list()
