@@ -100,16 +100,13 @@ def accuracy(pred, labels):
     return float(counter)/len(pred)
 
 def record_error(data, labels, pred):
-    print(np.shape(data))
-    print(np.shape(labels))
-    print(np.shape(pred))
     assert len(data[0]) == len(pred), "your data and prediction don't match"
     assert len(pred) == len(labels), "your prediction and labels don't match"
 
     wrong = list()
-    for i in range(len(data)):
+    for i in range(len(data[0])):
         if np.argmax(pred[i]) != np.argmax(labels[i]):
-            wrong.append(data[i])
+            wrong.append(data[0][i])
     return wrong
 
 
@@ -288,6 +285,7 @@ def Test():
     for i in range(len(wrong)):
         print("Saving wrong image {}".format(i))
         util.save_image(wrong[i], "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
