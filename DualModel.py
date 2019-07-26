@@ -7,6 +7,7 @@ from Utility import Utility
 import pickle
 util = Utility()
 from DataProcess import DataStructure
+import shutil
 from MyCNNLibrary import * #this is my own "keras" extension onto tensorflow
 
 hold_prob = 0.8
@@ -280,7 +281,7 @@ def Test():
     try:
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
     except:
-        os.rmdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
 
     for i in range(len(wrong)):
