@@ -105,10 +105,13 @@ def record_error(data, labels, pred):
     assert len(pred) == len(labels), "your prediction and labels don't match"
 
     wrong = list()
+    right = list()
     for i in range(len(data[0])):
         if np.argmax(pred[i]) != np.argmax(labels[i]):
             wrong.append(data[0][i])
-    return wrong
+        else:
+            right.append(data[0][i])
+    return right, wrong
 
 
 def Big_Train():
@@ -200,16 +203,26 @@ def Big_Train():
         gradients = tape.gradient(pred_loss, big_list)
 
         optimizer.apply_gradients(zip(gradients, big_list))
-    wrong = Test_live(model, datafeeder)
+    right, wrong = Test_live(model, datafeeder)
 
     try:
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
     except:
-        os.rmdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/right/")
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
 
     for i in range(len(wrong)):
-        util.save_image(wrong[i],"Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
 
 
 def Validation(model, datafeeder):
@@ -245,7 +258,7 @@ def Test_live(model, datafeeder):
         logger.writerow(iterate)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
-    wrong = record_error(data, label, predictions)
+    right, wrong = record_error(data, label, predictions)
     return wrong
 
 def Test():
@@ -275,19 +288,25 @@ def Test():
         logger.writerow(iterate)
 
 
-    wrong = Test_live(model, datafeeder)
-    print(np.shape(wrong))
-
+    right, wrong = Test_live(model, datafeeder)
     try:
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
     except:
         shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/right/")
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
 
     for i in range(len(wrong)):
         print("Saving wrong image {}".format(i))
         carrier = np.reshape(wrong[i], [100, 100])
-        util.save_image(255*carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
