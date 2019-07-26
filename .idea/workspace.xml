@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_inception.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_inception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,8 +55,8 @@
       <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+            <state relative-caret-position="238">
+              <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -90,21 +90,21 @@
       <find>Retr</find>
       <find>learning_rate</find>
       <find>l1</find>
-      <find># this uses a keras layer structure but with a custom layer</find>
+      <find />
       <find>_1</find>
       <find>graphs</find>
       <find>big_list</find>
       <find>resnet/</find>
       <find>Motion</find>
       <find>print</find>
-      <find>&quot; + IMAGE + &quot;</find>
-      <find>resnet/&quot; + IMAGE</find>
+      <find />
+      <find />
       <find>[IMAGE]</find>
       <find>dualresnet</find>
-      <find>data = data</find>
+      <find />
       <find>str(version)</find>
       <find>resnet</find>
-      <find>inception/&quot; + IMAGE + str(version) + &quot;</find>
+      <find />
       <find>&quot;Graphs_and_Results/</find>
       <find>Graphs_and_Results/</find>
       <find>&quot;Motion&quot;</find>
@@ -115,18 +115,18 @@
     <replaceStrings>
       <replace>add_weight</replace>
       <replace>l2</replace>
-      <replace>&quot; + IMAGE + &quot;</replace>
-      <replace>&quot; + IMAGE + str(version) + &quot;</replace>
+      <replace />
+      <replace />
       <replace>dualresnet/&quot;</replace>
       <replace>SELECTION_LIST</replace>
       <replace>dual</replace>
       <replace>version</replace>
       <replace>inception</replace>
-      <replace>dual/' + version + &quot;</replace>
-      <replace>dual/&quot; + version + &quot;</replace>
+      <replace />
+      <replace />
       <replace>basic</replace>
       <replace>DATA_TYPE</replace>
-      <replace>&quot;Graphs_and_Results/basic/&quot; + DATA_TYPE + &quot;/&quot;</replace>
+      <replace />
       <replace>&quot;Graphs_and_Results/basic/</replace>
       <replace>resnet</replace>
     </replaceStrings>
@@ -671,8 +671,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+        <state relative-caret-position="238">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
         </state>
       </provider>
     </entry>
