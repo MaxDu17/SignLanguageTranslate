@@ -127,9 +127,9 @@ def Big_Train():
                               lineterminator="\n")
     acc_logger = csv.writer(open("Graphs_and_Results/dual/"+ version + "/accuracy.csv", "w"),
                               lineterminator="\n")
-    l2_logger = csv.writer(open("Graphs_and_Results/inception/dual/"+ version + "/l2.csv", "w"),
+    l2_logger = csv.writer(open("Graphs_and_Results/dual/"+ version + "/l2.csv", "w"),
                               lineterminator="\n")
-    valid_logger = csv.writer(open("Graphs_and_Results/inception/dual/"+ version + "/valid.csv", "w"),
+    valid_logger = csv.writer(open("Graphs_and_Results/dual/"+ version + "/valid.csv", "w"),
                               lineterminator="\n")
     
 
