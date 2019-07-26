@@ -259,7 +259,7 @@ def Test_live(model, datafeeder):
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
     right, wrong = record_error(data, label, predictions)
-    return wrong
+    return right, wrong
 
 def Test():
     print("Making model")
