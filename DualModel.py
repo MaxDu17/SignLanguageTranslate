@@ -308,9 +308,6 @@ def Test():
         carrier = np.reshape(right[i], [100, 100])
         util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
 
-    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
-
-
 def main():
     print("Starting the program!")
     query = input("What mode do you want? Train (t) or Test from model (m)?\n")

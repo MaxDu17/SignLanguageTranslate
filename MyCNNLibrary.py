@@ -282,4 +282,29 @@ class Inceptionv1Chunk(): #for programming simplicity, this does NOT have poolin
             return l2
 
 
+class Metrics():
+    def accuracy(self, pred, labels):
+        assert len(pred) == len(labels), "lengths of prediction and labels are not the same"
+        counter = 0
+        for i in range(len(pred)):
+            k = np.argmax(pred[i])
+            l = np.argmax(labels[i])
+            if k == l:
+                counter += 1
+        return float(counter) / len(pred)
+
+    def record_error(self, data, labels, pred):
+        assert len(data[0]) == len(pred), "your data and prediction don't match"
+        assert len(pred) == len(labels), "your prediction and labels don't match"
+
+        wrong = list()
+        right = list()
+        for i in range(len(data[0])):
+            if np.argmax(pred[i]) != np.argmax(labels[i]):
+                wrong.append(data[0][i])
+            else:
+                right.append(data[0][i])
+        return right, wrong
+
+
 

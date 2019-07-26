@@ -8,6 +8,7 @@ import pickle
 util = Utility()
 from DataProcess import DataStructure
 from MyCNNLibrary import * #this is my own "keras" extension onto tensorflow
+import shutil
 
 hold_prob = 0.8
 _, _, output_size = util.get_dictionaries()
@@ -76,6 +77,19 @@ def accuracy(pred, labels):
         if k == l:
             counter += 1
     return float(counter)/len(pred)
+
+def record_error(data, labels, pred):
+    assert len(data[0]) == len(pred), "your data and prediction don't match"
+    assert len(pred) == len(labels), "your prediction and labels don't match"
+
+    wrong = list()
+    right = list()
+    for i in range(len(data[0])):
+        if np.argmax(pred[i]) != np.argmax(labels[i]):
+            wrong.append(data[0][i])
+        else:
+            right.append(data[0][i])
+    return right, wrong
 
 def Big_Train():
     try:
@@ -227,6 +241,27 @@ def Test():
 
     for iterate in conf:
         logger.writerow(iterate)
+
+    right, wrong = record_error(data, label, predictions)
+    try:
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+    except:
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+
+    for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(right[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
+
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 

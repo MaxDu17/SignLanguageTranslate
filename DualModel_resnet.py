@@ -4,7 +4,7 @@ import numpy as np
 import csv
 import os
 from Utility import Utility
-import pickle
+import shutil
 util = Utility()
 from DataProcess import DataStructure
 from MyCNNLibrary import * #this is my own "keras" extension onto tensorflow
@@ -102,6 +102,20 @@ def accuracy(pred, labels):
             counter += 1
     return float(counter)/len(pred)
 
+def record_error(data, labels, pred):
+    assert len(data[0]) == len(pred), "your data and prediction don't match"
+    assert len(pred) == len(labels), "your prediction and labels don't match"
+
+    wrong = list()
+    right = list()
+    for i in range(len(data[0])):
+        if np.argmax(pred[i]) != np.argmax(labels[i]):
+            wrong.append(data[0][i])
+        else:
+            right.append(data[0][i])
+    return right, wrong
+
+
 def Big_Train():
     try:
         os.mkdir("Graphs_and_Results/dual/" + version)
@@ -189,7 +203,27 @@ def Big_Train():
         gradients = tape.gradient(pred_loss, big_list)
 
         optimizer.apply_gradients(zip(gradients, big_list))
-    Test_live(model, datafeeder)
+
+    right, wrong = Test_live(model, datafeeder)
+    try:
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+    except:
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+
+    for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(right[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
+
 
 def Validation(model, datafeeder):
     print("\n##############VALIDATION##############\n")
@@ -224,6 +258,8 @@ def Test_live(model, datafeeder):
         logger.writerow(iterate)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    right, wrong = record_error(data, label, predictions)
+    return right, wrong
 
 def Test():
     print("Making model")
@@ -250,8 +286,28 @@ def Test():
 
     for iterate in conf:
         logger.writerow(iterate)
-    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
+    right, wrong = record_error(data, label, predictions)
+    try:
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+    except:
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/dual/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/right/")
+
+    for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(right[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
+
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 def main():
     print("Starting the program!")
