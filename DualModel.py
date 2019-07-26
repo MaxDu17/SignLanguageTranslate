@@ -70,8 +70,7 @@ class Model():
         x = self.cnn_3_e.call(x)
         l2 += self.cnn_3_e.l2loss()
         out_energy = self.pool.call(x)
-        print(np.shape(x))
-        raise Exception()
+
 
         x = self.cnn_1_h.call(input[1])
         l2 = self.cnn_1_h.l2loss()
@@ -82,6 +81,8 @@ class Model():
         l2 += self.cnn_3_h.l2loss()
         out_history = self.pool.call(x)
 
+        print(np.shape(out_history))
+        raise Exception()
         combined = self.combine.call(out_energy, out_history)
 
         x = self.flat.call(combined)

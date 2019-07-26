@@ -46,8 +46,8 @@
       <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DualModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+            <state relative-caret-position="646">
+              <caret line="83" column="34" selection-start-line="83" selection-start-column="34" selection-end-line="83" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -90,21 +90,21 @@
       <find>Retr</find>
       <find>learning_rate</find>
       <find>l1</find>
-      <find />
+      <find># this uses a keras layer structure but with a custom layer</find>
       <find>_1</find>
       <find>graphs</find>
       <find>big_list</find>
       <find>resnet/</find>
       <find>Motion</find>
       <find>print</find>
-      <find />
-      <find />
+      <find>&quot; + IMAGE + &quot;</find>
+      <find>resnet/&quot; + IMAGE</find>
       <find>[IMAGE]</find>
       <find>dualresnet</find>
-      <find />
+      <find>data = data</find>
       <find>str(version)</find>
       <find>resnet</find>
-      <find />
+      <find>inception/&quot; + IMAGE + str(version) + &quot;</find>
       <find>&quot;Graphs_and_Results/</find>
       <find>Graphs_and_Results/</find>
       <find>&quot;Motion&quot;</find>
@@ -115,18 +115,18 @@
     <replaceStrings>
       <replace>add_weight</replace>
       <replace>l2</replace>
-      <replace />
-      <replace />
+      <replace>&quot; + IMAGE + &quot;</replace>
+      <replace>&quot; + IMAGE + str(version) + &quot;</replace>
       <replace>dualresnet/&quot;</replace>
       <replace>SELECTION_LIST</replace>
       <replace>dual</replace>
       <replace>version</replace>
       <replace>inception</replace>
-      <replace />
-      <replace />
+      <replace>dual/' + version + &quot;</replace>
+      <replace>dual/&quot; + version + &quot;</replace>
       <replace>basic</replace>
       <replace>DATA_TYPE</replace>
-      <replace />
+      <replace>&quot;Graphs_and_Results/basic/&quot; + DATA_TYPE + &quot;/&quot;</replace>
       <replace>&quot;Graphs_and_Results/basic/</replace>
       <replace>resnet</replace>
     </replaceStrings>
@@ -176,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="3192" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -668,8 +668,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DualModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+        <state relative-caret-position="646">
+          <caret line="83" column="34" selection-start-line="83" selection-start-column="34" selection-end-line="83" selection-end-column="34" />
         </state>
       </provider>
     </entry>
