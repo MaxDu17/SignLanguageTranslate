@@ -286,7 +286,7 @@ def Test():
     for i in range(len(wrong)):
         print("Saving wrong image {}".format(i))
         carrier = np.reshape(wrong[i], [100, 100])
-        util.save_image(carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+        util.save_image(255*carrier, "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
