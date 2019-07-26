@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DualModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualModel.py" afterDir="false" />
-    </list>
+    <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
