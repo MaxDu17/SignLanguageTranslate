@@ -138,6 +138,8 @@ def Big_Train():
 
     for epoch in range(1001):
         data, label = datafeeder.nextBatchTrain_dom(150)
+        print(np.shape(data))
+        raise Exception
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
 
