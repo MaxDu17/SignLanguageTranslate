@@ -14,8 +14,8 @@ _, _, output_size = util.get_dictionaries()
 TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
-LEARNING_RATE_INIT = 0.001
-L2WEIGHT = 0.1
+LEARNING_RATE_INIT = 0.0025
+L2WEIGHT = 0.01
 
 big_list = list()
 SELECTION_LIST = ["History", "Middle"]
