@@ -99,6 +99,17 @@ def accuracy(pred, labels):
             counter += 1
     return float(counter)/len(pred)
 
+def record_error(data, labels, pred):
+    assert len(data) == len(pred), "your data and prediction don't match"
+    assert len(pred) == len(labels), "your prediction and labels don't match"
+
+    wrong = list()
+    for i in range(len(data)):
+        if np.argmax(pred[i]) != np.argmax(labels[i]):
+            wrong.append(data[i])
+    return wrong
+
+
 def Big_Train():
     try:
         os.mkdir("Graphs_and_Results/dual/" + version)
@@ -188,7 +199,17 @@ def Big_Train():
         gradients = tape.gradient(pred_loss, big_list)
 
         optimizer.apply_gradients(zip(gradients, big_list))
-    Test_live(model, datafeeder)
+    wrong = Test_live(model, datafeeder)
+
+    try:
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+    except:
+        os.rmdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+
+    for i in range(len(wrong)):
+        util.save_image(wrong[i],"Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
 
 def Validation(model, datafeeder):
     print("\n##############VALIDATION##############\n")
@@ -223,6 +244,8 @@ def Test_live(model, datafeeder):
         logger.writerow(iterate)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    wrong = record_error(data, label, predictions)
+    return wrong
 
 def Test():
     print("Making model")
@@ -250,6 +273,17 @@ def Test():
     for iterate in conf:
         logger.writerow(iterate)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+
+    wrong = Test_live(model, datafeeder)
+
+    try:
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+    except:
+        os.rmdir("Graphs_and_Results/dual/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
+
+    for i in range(len(wrong)):
+        util.save_image(wrong[i], "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
 
 
 def main():
