@@ -275,7 +275,7 @@ def Test():
 
     for iterate in conf:
         logger.writerow(iterate)
-    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+
 
     wrong = Test_live(model, datafeeder)
 
@@ -286,7 +286,9 @@ def Test():
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
 
     for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
         util.save_image(wrong[i], "Graphs_and_Results/dual/" + version + "/wrong/" + str(i) + ".jpg", "L")
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
 
 def main():
