@@ -63,6 +63,7 @@ class Model():
     @tf.function
     def call(self, input):
         x= self.cnn_1_e.call(input[0])
+        print(np.shape(x))
         raise Exception()
         l2 = self.cnn_1_e.l2loss()
         x = self.cnn_2_e.call(x)
