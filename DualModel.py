@@ -87,8 +87,6 @@ class Model():
         x = self.flat.call(combined)
         x = self.fc_1.call(x)
         output = self.softmax.call(x)
-        print(np.shape(output))
-        raise Exception()
         return output, l2
 
 def accuracy(pred, labels):
@@ -143,7 +141,7 @@ def Big_Train():
         data, label = datafeeder.nextBatchTrain_dom(150)
         with tf.GradientTape() as tape:
             predictions, l2_loss = model.call(data) #this is the big call
-
+            input()
             pred_loss_ = loss_function(label, predictions) #this is the loss function
             pred_loss = pred_loss_ + L2WEIGHT * l2_loss
 
