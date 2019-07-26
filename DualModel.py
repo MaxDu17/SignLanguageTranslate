@@ -275,6 +275,7 @@ def Test():
 
 
     wrong = Test_live(model, datafeeder)
+    print(np.shape(wrong))
 
     try:
         os.mkdir("Graphs_and_Results/dual/" + version + "/wrong/")
