@@ -63,8 +63,6 @@ class Model():
     @tf.function
     def call(self, input):
         x= self.cnn_1_e.call(input[0])
-        print(np.shape(x))
-        raise Exception()
         l2 = self.cnn_1_e.l2loss()
         x = self.cnn_2_e.call(x)
         l2 += self.cnn_2_e.l2loss()
@@ -72,6 +70,8 @@ class Model():
         x = self.cnn_3_e.call(x)
         l2 += self.cnn_3_e.l2loss()
         out_energy = self.pool.call(x)
+        print(np.shape(x))
+        raise Exception()
 
         x = self.cnn_1_h.call(input[1])
         l2 = self.cnn_1_h.l2loss()

@@ -46,8 +46,8 @@
       <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DualModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+            <state relative-caret-position="578">
+              <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -64,8 +64,8 @@
       <file leaf-file-name="MyCNNLibrary.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
+            <state relative-caret-position="697">
+              <caret line="44" column="26" lean-forward="true" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -90,21 +90,21 @@
       <find>Retr</find>
       <find>learning_rate</find>
       <find>l1</find>
-      <find># this uses a keras layer structure but with a custom layer</find>
+      <find />
       <find>_1</find>
       <find>graphs</find>
       <find>big_list</find>
       <find>resnet/</find>
       <find>Motion</find>
       <find>print</find>
-      <find>&quot; + IMAGE + &quot;</find>
-      <find>resnet/&quot; + IMAGE</find>
+      <find />
+      <find />
       <find>[IMAGE]</find>
       <find>dualresnet</find>
-      <find>data = data</find>
+      <find />
       <find>str(version)</find>
       <find>resnet</find>
-      <find>inception/&quot; + IMAGE + str(version) + &quot;</find>
+      <find />
       <find>&quot;Graphs_and_Results/</find>
       <find>Graphs_and_Results/</find>
       <find>&quot;Motion&quot;</find>
@@ -115,18 +115,18 @@
     <replaceStrings>
       <replace>add_weight</replace>
       <replace>l2</replace>
-      <replace>&quot; + IMAGE + &quot;</replace>
-      <replace>&quot; + IMAGE + str(version) + &quot;</replace>
+      <replace />
+      <replace />
       <replace>dualresnet/&quot;</replace>
       <replace>SELECTION_LIST</replace>
       <replace>dual</replace>
       <replace>version</replace>
       <replace>inception</replace>
-      <replace>dual/' + version + &quot;</replace>
-      <replace>dual/&quot; + version + &quot;</replace>
+      <replace />
+      <replace />
       <replace>basic</replace>
       <replace>DATA_TYPE</replace>
-      <replace>&quot;Graphs_and_Results/basic/&quot; + DATA_TYPE + &quot;/&quot;</replace>
+      <replace />
       <replace>&quot;Graphs_and_Results/basic/</replace>
       <replace>resnet</replace>
     </replaceStrings>
@@ -176,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="3192" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -631,6 +631,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Augment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="44" column="26" lean-forward="true" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Frequency Analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -645,31 +666,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyCNNLibrary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Augment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DualModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+        <state relative-caret-position="578">
+          <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
         </state>
       </provider>
     </entry>
