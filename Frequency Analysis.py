@@ -4,19 +4,21 @@ import numpy as np
 
 big_list = list()
 non_aug = list()
-k = open("experimental/dom_labels.csv", "r")
+k = open("dom_labels.csv", "r")
 dom = list(csv.reader(k))
 
 w = open("augmentations.csv", "r")
 aug = list(csv.reader(w))
-
+print(len(dom))
+print(len(aug))
 for i in range(len(dom)):
+
     aug_num = int(aug[i][0])
     for j in range(aug_num):
         big_list.extend(dom[i]) #kind of a dumb way to do this, but it works!
     non_aug.extend(dom[i])
 
-print(Counter(big_list))
+#print(Counter(big_list))
 #print(Counter(non_aug))
 #this no longer is frequency analysis
 k = list(Counter(big_list).keys())
@@ -38,4 +40,5 @@ i = 0
 for element in k:
     look_up_dict[i] = element
     i = i + 1
+
 print(look_up_dict)
