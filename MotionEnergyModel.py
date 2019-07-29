@@ -193,7 +193,7 @@ def Test_live(model, datafeeder):
 
     data, label = datafeeder.GetTest_dom()
     predictions, l2loss = model.call(data)
-
+    data = data[0]
     assert len(label) == len(predictions)
     conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
     for i in range(len(predictions)):
