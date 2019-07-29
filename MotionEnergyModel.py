@@ -50,7 +50,7 @@ class Model():
 
     @tf.function
     def call(self, input):
-        print(np.shape(input))
+        print("I am in calling {}".format(np.shape(input)))
         x= self.cnn_1.call(input)
         l2 = self.cnn_1.l2loss()
         x = self.cnn_2.call(x)
