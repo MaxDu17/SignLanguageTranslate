@@ -7,6 +7,7 @@ from Utility import Utility
 import pickle
 util = Utility()
 from DataProcess import DataStructure
+import shutil
 from MyCNNLibrary import * #this is my own "keras" extension onto tensorflow
 
 hold_prob = 0.8
@@ -18,7 +19,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.05
 
 big_list = list()
-IMAGE = "Overlap"
+IMAGE = "Motion"
 version = ""
 class Model():
     def __init__(self):
@@ -77,6 +78,21 @@ def accuracy(pred, labels):
         if k == l:
             counter += 1
     return float(counter)/len(pred)
+
+def record_error(data, labels, pred):
+    assert len(data[0]) == len(pred), "your data and prediction don't match"
+    assert len(pred) == len(labels), "your prediction and labels don't match"
+
+    wrong = list()
+    right = list()
+    wrong_index = list()
+    for i in range(len(data)):
+        if np.argmax(pred[i]) != np.argmax(labels[i]):
+            wrong.append(data[i])
+            wrong_index.append(np.argmax(labels[i]))
+        else:
+            right.append(data[i])
+    return right, wrong, wrong_index
 
 def Big_Train():
     try:
@@ -233,6 +249,33 @@ def Test():
     for iterate in conf:
         logger.writerow(iterate)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+
+    right, wrong, wrong_list = record_error(data, label, predictions)
+
+    print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    try:
+        os.mkdir("Graphs_and_Results/inception/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/inception/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/wrongs/")
+    except:
+        shutil.rmtree("Graphs_and_Results/inception/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/inception/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/inception/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/inception/" + version + "/right/")
+
+    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + "Resnet.csv", "w"),
+                              lineterminator="\n")
+    for element in wrong_list:
+        wrong_logger.writerow([element])
+    for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/inception/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(right[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/inception/" + version + "/right/" + str(i) + ".jpg", "L")
 
 
 def main():

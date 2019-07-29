@@ -19,7 +19,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.05
 
 big_list = list()
-IMAGE = "Overlap"
+IMAGE = "Motion"
 version = ""
 class Model():
     def __init__(self):
@@ -257,7 +257,7 @@ def Test():
         os.mkdir("Graphs_and_Results/inception/" + version + "/wrong/")
         os.mkdir("Graphs_and_Results/inception/" + version + "/right/")
 
-    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + "SimpleCNN.csv", "w"),
+    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + "Inception.csv", "w"),
                               lineterminator="\n")
     for element in wrong_list:
         wrong_logger.writerow([element])
