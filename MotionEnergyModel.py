@@ -242,7 +242,8 @@ def Test():
 
     wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + ".csv", "w"),
                               lineterminator="\n")
-    wrong_logger.writerows([wrong_list])
+    for element in wrong_list:
+        wrong_logger.writerow([element])
     for i in range(len(wrong)):
         print("Saving wrong image {}".format(i))
         carrier = np.reshape(wrong[i], [100, 100])
