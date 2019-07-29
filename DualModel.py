@@ -16,11 +16,11 @@ TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.0025
-L2WEIGHT = 0.01
+L2WEIGHT = 0.05
 
 big_list = list()
-SELECTION_LIST = ["History", "Middle"]
-version = "History_Middle"
+SELECTION_LIST = ["Motion", "Middle"]
+version = "Energy_Middle"
 class Model():
     def __init__(self):
         self.cnn_1_e = Convolve(big_list, [3, 3, 1, 4], "Layer_1_CNN_energy")
