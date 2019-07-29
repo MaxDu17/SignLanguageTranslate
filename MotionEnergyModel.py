@@ -240,7 +240,7 @@ def Test():
         os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
         os.mkdir("Graphs_and_Results/basic/" + version + "/right/")
 
-    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + ".csv", "w"),
+    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + "SimpleCNN.csv", "w"),
                               lineterminator="\n")
     for element in wrong_list:
         wrong_logger.writerow([element])

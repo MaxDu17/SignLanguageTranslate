@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/DualModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Graphs_and_Results/wrongs/Motion.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel_inception.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel_inception.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DualModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DualModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="313" column="31" selection-start-line="313" selection-start-column="31" selection-end-line="313" selection-end-column="31" />
+            <state relative-caret-position="281">
+              <caret line="158" column="39" selection-start-line="158" selection-start-column="39" selection-end-line="158" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -35,8 +37,8 @@
       <file leaf-file-name="MotionEnergyModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="204" column="20" selection-start-line="204" selection-start-column="20" selection-end-line="204" selection-end-column="20" />
+            <state relative-caret-position="408">
+              <caret line="78" selection-start-line="78" selection-end-line="91" selection-end-column="36" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -44,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MotionEnergyModel_inception.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="237" column="94" selection-start-line="237" selection-start-column="94" selection-end-line="237" selection-end-column="94" />
+            <state relative-caret-position="1533">
+              <caret line="264" column="48" lean-forward="true" selection-start-line="264" selection-start-column="48" selection-end-line="264" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -128,11 +130,11 @@
       <find>&quot;Graphs_and_Results/basic/&quot;</find>
       <find>try</find>
       <find>inception</find>
-      <find>basic</find>
       <find>dual</find>
       <find>DATA_TYPE</find>
       <find>SAVED_WEIGHTS</find>
       <find>print(np.</find>
+      <find>basic</find>
     </findStrings>
     <replaceStrings>
       <replace>add_weight</replace>
@@ -141,7 +143,6 @@
       <replace>&quot; + IMAGE + str(version) + &quot;</replace>
       <replace>dualresnet/&quot;</replace>
       <replace>SELECTION_LIST</replace>
-      <replace>inception</replace>
       <replace>dual/' + version + &quot;</replace>
       <replace>dual/&quot; + version + &quot;</replace>
       <replace>DATA_TYPE</replace>
@@ -152,6 +153,7 @@
       <replace>basic</replace>
       <replace>VERSION</replace>
       <replace>version</replace>
+      <replace>inception</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -193,10 +195,10 @@
         <option value="$PROJECT_DIR$/Augment.py" />
         <option value="$PROJECT_DIR$/MotionEnergyModel_resnet_deep.py" />
         <option value="$PROJECT_DIR$/MyCNNLibrary.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
         <option value="$PROJECT_DIR$/DualModel_resnet.py" />
-        <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
         <option value="$PROJECT_DIR$/DualModel.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel.py" />
+        <option value="$PROJECT_DIR$/MotionEnergyModel_inception.py" />
       </list>
     </option>
   </component>
@@ -388,7 +390,7 @@
     <frame x="3192" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22497366" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22497366" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.63284135" />
@@ -408,22 +410,22 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09957851" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.63284135" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22497366" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.63284135" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
-      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -656,13 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="237" column="94" selection-start-line="237" selection-start-column="94" selection-end-line="237" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataProcess.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
@@ -680,20 +675,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DualModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="158" column="39" selection-start-line="158" selection-start-column="39" selection-end-line="158" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MotionEnergyModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="204" column="20" selection-start-line="204" selection-start-column="20" selection-end-line="204" selection-end-column="20" />
+        <state relative-caret-position="408">
+          <caret line="78" selection-start-line="78" selection-end-line="91" selection-end-column="36" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DualModel.py">
+    <entry file="file://$PROJECT_DIR$/MotionEnergyModel_inception.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="313" column="31" selection-start-line="313" selection-start-column="31" selection-end-line="313" selection-end-column="31" />
+        <state relative-caret-position="1533">
+          <caret line="264" column="48" lean-forward="true" selection-start-line="264" selection-start-column="48" selection-end-line="264" selection-end-column="48" />
         </state>
       </provider>
     </entry>
