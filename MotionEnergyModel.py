@@ -223,15 +223,12 @@ def Test():
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [version])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
-    print(np.shape(data))
     data = data[0]  # this is because we now have multiple images in the pickle
-    print(np.shape(data))
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
+    right, wrong, wrong_list = record_error(data, label, predictions)
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
-    right, wrong, wrong_list = Test_live(model, datafeeder)
-
     try:
         os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
         os.mkdir("Graphs_and_Results/basic/" + version + "/right/")
