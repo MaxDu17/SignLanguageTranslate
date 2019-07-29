@@ -83,12 +83,12 @@ def record_error(data, labels, pred):
     wrong = list()
     right = list()
     wrong_index = list()
-    for i in range(len(data[0])):
+    for i in range(len(data)):
         if np.argmax(pred[i]) != np.argmax(labels[i]):
-            wrong.append(data[0][i])
+            wrong.append(data[i])
             wrong_index.append(np.argmax(labels[i]))
         else:
-            right.append(data[0][i])
+            right.append(data[i])
     return right, wrong, wrong_index
 
 def Big_Train():
@@ -228,7 +228,7 @@ def Test():
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     right, wrong, wrong_list = record_error(data, label, predictions)
-    print(np.shape(wrong))
+
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
     try:
         os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
