@@ -228,6 +228,7 @@ def Test():
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     right, wrong, wrong_list = record_error(data, label, predictions)
+    print(np.shape(wrong))
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
     try:
         os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
