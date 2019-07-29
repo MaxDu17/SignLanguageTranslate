@@ -50,7 +50,6 @@ class Model():
 
     @tf.function
     def call(self, input):
-        print(np.shape(input))
         x= self.cnn_1.call(input)
         l2 = self.cnn_1.l2loss()
         x = self.cnn_2.call(x)
@@ -223,7 +222,10 @@ def Test():
     datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [version])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
+    print(np.shape(data))
     data = data[0]  # this is because we now have multiple images in the pickle
+    print(np.shape(data))
+    raise Exception()
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
