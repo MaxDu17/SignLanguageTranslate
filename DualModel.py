@@ -16,7 +16,8 @@ TEST_AMOUNT = 100
 VALID_AMOUNT = 50
 
 LEARNING_RATE_INIT = 0.0025
-L2WEIGHT = 0.1
+L2WEIGHT = 0.3
+L1WEIGHT = 0.1
 
 big_list = list()
 SELECTION_LIST = ["Motion", "Middle"]
@@ -307,7 +308,7 @@ def Test():
 
     wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + ".csv", "w"),
                               lineterminator="\n")
-    wrong_logger.writerows(wrong_list)
+    wrong_logger.writerows([wrong_list])
     for i in range(len(wrong)):
         print("Saving wrong image {}".format(i))
         carrier = np.reshape(wrong[i], [100, 100])
