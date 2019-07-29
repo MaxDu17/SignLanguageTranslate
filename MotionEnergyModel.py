@@ -4,6 +4,7 @@ import numpy as np
 import csv
 import os
 from Utility import Utility
+import shutil
 import pickle
 util = Utility()
 from DataProcess import DataStructure
@@ -18,7 +19,7 @@ LEARNING_RATE_INIT = 0.001
 L2WEIGHT = 0.01
 
 big_list = list()
-DATA_TYPE = "Motion"
+version = "Motion"
 
 class Model():
     def __init__(self):
@@ -74,9 +75,24 @@ def accuracy(pred, labels):
             counter += 1
     return float(counter)/len(pred)
 
+def record_error(data, labels, pred):
+    assert len(data[0]) == len(pred), "your data and prediction don't match"
+    assert len(pred) == len(labels), "your prediction and labels don't match"
+
+    wrong = list()
+    right = list()
+    wrong_index = list()
+    for i in range(len(data[0])):
+        if np.argmax(pred[i]) != np.argmax(labels[i]):
+            wrong.append(data[0][i])
+            wrong_index.append(np.argmax(labels[i]))
+        else:
+            right.append(data[0][i])
+    return right, wrong, wrong_index
+
 def Big_Train():
     try:
-        os.mkdir("Graphs_and_Results/basic/" + DATA_TYPE + "/"+ DATA_TYPE + "/")
+        os.mkdir("Graphs_and_Results/basic/" + version + "/"+ version + "/")
     except:
         pass
 
@@ -84,14 +100,14 @@ def Big_Train():
     print(tf.test.is_gpu_available())
     print("*****************Training*****************")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [DATA_TYPE])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [version])
 
     optimizer = tf.keras.optimizers.Adam(learning_rate = LEARNING_RATE_INIT)
     loss_function = tf.keras.losses.CategoricalCrossentropy()
 
     print("loading dataset")
     datafeeder.load_train_to_RAM()  # loads the training data to RAM
-    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/basic/" + DATA_TYPE + "/")
+    summary_writer = tf.summary.create_file_writer(logdir="Graphs_and_Results/basic/" + version + "/")
     print("starting training")
 
     print("Making model")
@@ -100,13 +116,13 @@ def Big_Train():
     tf.summary.trace_on(graph=True, profiler=True)
 
 
-    train_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/xentropyloss.csv", "w"),
+    train_logger = csv.writer(open("Graphs_and_Results/basic/" + version + "/xentropyloss.csv", "w"),
                               lineterminator="\n")
-    acc_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/accuracy.csv", "w"),
+    acc_logger = csv.writer(open("Graphs_and_Results/basic/" + version + "/accuracy.csv", "w"),
                               lineterminator="\n")
-    l2_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/l2.csv", "w"),
+    l2_logger = csv.writer(open("Graphs_and_Results/basic/" + version + "/l2.csv", "w"),
                               lineterminator="\n")
-    valid_logger = csv.writer(open("Graphs_and_Results/basic/" + DATA_TYPE + "/valid.csv", "w"),
+    valid_logger = csv.writer(open("Graphs_and_Results/basic/" + version + "/valid.csv", "w"),
                               lineterminator="\n")
 
     for epoch in range(1001):
@@ -124,7 +140,7 @@ def Big_Train():
 
             if epoch == 0: #creates graph
                 with summary_writer.as_default():
-                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/basic/" + DATA_TYPE + "/")
+                    tf.summary.trace_export(name="Graph", step=0, profiler_outdir="Graphs_and_Results/basic/" + version + "/")
 
             if epoch % 20 == 0 and epoch > 1:
                 print("***********************")
@@ -149,10 +165,10 @@ def Big_Train():
             if epoch % 100 == 0 and epoch > 1:
                 print("\n##############SAVING MODE##############\n")
                 try:
-                    os.remove("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS.pkl")
+                    os.remove("Graphs_and_Results/basic/" + version + "/" + "SAVED_WEIGHTS.pkl")
                 except:
                     print("the saved weights were not removed, because they were not there!")
-                dbfile = open("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS.pkl", "ab")
+                dbfile = open("Graphs_and_Results/basic/" + version + "/" + "SAVED_WEIGHTS.pkl", "ab")
                 pickle.dump(big_list, dbfile)
 
         gradients = tape.gradient(pred_loss, big_list)
@@ -171,27 +187,39 @@ def Validation(model, datafeeder):
     print("This is the validation set accuracy: {}".format(valid_accuracy))
     return valid_accuracy
 
+
 def Test_live(model, datafeeder):
     print("\n##############TESTING##############\n")
 
     data, label = datafeeder.GetTest_dom()
-    data = data[0]  # this is because we now have multiple images in the pickle
     predictions, l2loss = model.call(data)
 
     assert len(label) == len(predictions)
-    image_list = list()
-    '''
-    for i in range(len(data)):
-        if np.argmax(label) != np.argmax(predictions):
-    '''
+    conf = np.zeros(shape=[len(label[0]), len(predictions[0])])
+    for i in range(len(predictions)):
+        k = np.argmax(predictions[i])
+        l = np.argmax(label[i])
+        conf[k][l] += 1
+    test = open("Graphs_and_Results/basic/" + version + "/confusion.csv", "w")
+    logger = csv.writer(test, lineterminator="\n")
+
+    test_ = open("Graphs_and_Results/basic/" + version + "/results.csv", "w")
+    logger_ = csv.writer(test_, lineterminator="\n")
+    logger_.writerow([accuracy(predictions, label)])
+
+    for iterate in conf:
+        logger.writerow(iterate)
+
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    right, wrong, wrong_index = record_error(data, label, predictions)
+    return right, wrong, wrong_index
 
 def Test():
     print("Making model")
     model = Model()
-    model.build_model_from_pickle("Graphs_and_Results/basic/" + DATA_TYPE + "/" + "SAVED_WEIGHTS")
+    model.build_model_from_pickle("Graphs_and_Results/basic/" + version + "/" + "SAVED_WEIGHTS")
 
-    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [DATA_TYPE])
+    datafeeder = Prep(TEST_AMOUNT, VALID_AMOUNT, [version])
     datafeeder.load_train_to_RAM()
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
@@ -199,6 +227,30 @@ def Test():
 
     assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
+    right, wrong, wrong_list = Test_live(model, datafeeder)
+
+    try:
+        os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/basic/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/wrongs/")
+    except:
+        shutil.rmtree("Graphs_and_Results/basic/" + version + "/wrong/")
+        shutil.rmtree("Graphs_and_Results/basic/" + version + "/right/")
+        os.mkdir("Graphs_and_Results/basic/" + version + "/wrong/")
+        os.mkdir("Graphs_and_Results/basic/" + version + "/right/")
+
+    wrong_logger = csv.writer(open("Graphs_and_Results/wrongs/" + version + ".csv", "w"),
+                              lineterminator="\n")
+    wrong_logger.writerows([wrong_list])
+    for i in range(len(wrong)):
+        print("Saving wrong image {}".format(i))
+        carrier = np.reshape(wrong[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/basic/" + version + "/wrong/" + str(i) + ".jpg", "L")
+
+    for i in range(len(right)):
+        print("Saving right image {}".format(i))
+        carrier = np.reshape(right[i], [100, 100])
+        util.save_image(255 * carrier, "Graphs_and_Results/basic/" + version + "/right/" + str(i) + ".jpg", "L")
 
 
 def main():
