@@ -316,7 +316,7 @@ def Test():
 
     for i in range(len(right)):
         print("Saving right image {}".format(i))
-        carrier = np.reshape(wrong[i], [100, 100])
+        carrier = np.reshape(right[i], [100, 100])
         util.save_image(255 * carrier, "Graphs_and_Results/dual/" + version + "/right/" + str(i) + ".jpg", "L")
 
 def main():
