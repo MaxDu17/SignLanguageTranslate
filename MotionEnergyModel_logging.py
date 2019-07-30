@@ -139,8 +139,8 @@ def Test_live(model, datafeeder):
     print("\n##############TESTING##############\n")
 
     data, label = datafeeder.GetTest_dom()
-    predictions, l2loss = model.call(data)
     data = data[0]
+    predictions, l2loss = model.call(data)
     logger.test_log(predictions, label)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
@@ -157,9 +157,6 @@ def Test():
     data, label = datafeeder.GetTest_dom()
     data = data[0]  # this is because we now have multiple images in the pickle
     predictions, l2loss = model.call(data)
-
-    assert len(label) == len(predictions), "something is wrong with the loaded model or labels"
-    right, wrong, wrong_list = record_error_with_labels(data, label, predictions)
 
     print("This is the test set accuracy: {}".format(accuracy(predictions, label)))
 
