@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d26c3f75-1774-46c8-8b10-c2c829e900a8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/FindMutualImages.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Graphs_and_Results/wrongs/types.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dom_labels.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DataStructure.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MotionEnergyModel_logging.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frequency Analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frequency Analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/augmentations.csv" beforeDir="false" afterPath="$PROJECT_DIR$/augmentations.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MotionEnergyModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/MotionEnergyModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyCNNLibrary.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyCNNLibrary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,59 +21,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>pickle.du</find>
-      <find>Retr</find>
-      <find>learning_rate</find>
-      <find>l1</find>
-      <find># this uses a keras layer structure but with a custom layer</find>
-      <find>_1</find>
-      <find>graphs</find>
-      <find>big_list</find>
-      <find>resnet/</find>
-      <find>Motion</find>
-      <find>print</find>
-      <find>&quot; + IMAGE + &quot;</find>
-      <find>resnet/&quot; + IMAGE</find>
-      <find>[IMAGE]</find>
-      <find>dualresnet</find>
-      <find>data = data</find>
-      <find>str(version)</find>
-      <find>resnet</find>
-      <find>inception/&quot; + IMAGE + str(version) + &quot;</find>
-      <find>&quot;Graphs_and_Results/</find>
-      <find>Graphs_and_Results/</find>
-      <find>&quot;Motion&quot;</find>
-      <find>&quot;Graphs_and_Results/basic/&quot;</find>
-      <find>try</find>
-      <find>inception</find>
-      <find>dual</find>
-      <find>DATA_TYPE</find>
-      <find>SAVED_WEIGHTS</find>
-      <find>print(np.</find>
-      <find>basic</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>add_weight</replace>
-      <replace>l2</replace>
-      <replace>&quot; + IMAGE + &quot;</replace>
-      <replace>&quot; + IMAGE + str(version) + &quot;</replace>
-      <replace>dualresnet/&quot;</replace>
-      <replace>SELECTION_LIST</replace>
-      <replace>dual/' + version + &quot;</replace>
-      <replace>dual/&quot; + version + &quot;</replace>
-      <replace>DATA_TYPE</replace>
-      <replace>&quot;Graphs_and_Results/basic/&quot; + DATA_TYPE + &quot;/&quot;</replace>
-      <replace>&quot;Graphs_and_Results/basic/</replace>
-      <replace>resnet</replace>
-      <replace>dual</replace>
-      <replace>basic</replace>
-      <replace>VERSION</replace>
-      <replace>inception</replace>
-      <replace>version</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -86,17 +32,17 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Max Du/Desktop/Repos/CSIRE-2019/CNN start/csv_to_mat.py" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../VideoProcessor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\unused" />
-      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019" />
       <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\CNN start" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\unused" />
+      <recent name="C:\Users\Max Du\Desktop\Repos\CSIRE-2019\" />
     </key>
   </component>
   <component name="RunDashboard">

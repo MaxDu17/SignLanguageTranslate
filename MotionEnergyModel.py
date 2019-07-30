@@ -93,7 +93,7 @@ def record_error(data, labels, pred):
 
 def Big_Train():
     try:
-        os.mkdir("Graphs_and_Results/basic/" + version + "/"+ version + "/")
+        os.mkdir("Graphs_and_Results/basic/" + version + "/")
     except:
         pass
 
