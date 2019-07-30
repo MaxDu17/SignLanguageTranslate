@@ -22,6 +22,10 @@ big_list = list()
 version = "Motion"
 
 base_directory = "Graphs_and_Results/basic_test/" + version + "/"
+try:
+    os.mkdir(base_directory)
+except:
+    pass
 logger = Logging(base_directory, 20, 20, 100)
 
 class Model():
@@ -70,10 +74,6 @@ class Model():
         return output, l2
 
 def Big_Train():
-    try:
-        os.mkdir(base_directory)
-    except:
-        pass
 
     print("Is there a GPU available: "),
     print(tf.test.is_gpu_available())
