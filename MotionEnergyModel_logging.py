@@ -24,6 +24,7 @@ version = "Motion"
 base_directory = "Graphs_and_Results/basic_test/" + version + "/"
 try:
     os.mkdir(base_directory)
+    print("made directory {}".format(base_directory)) #this can only go one layer deep
 except:
     pass
 logger = Logging(base_directory, 20, 20, 100)
